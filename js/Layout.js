@@ -69,14 +69,14 @@
 		this.eleType = "layout";
 		this.ele;
 		this.view;
-		this.clView;
-		this.width;
-		this.height;
+		this._clView;
+		this._width;
+		this._height;
 		
 		HLayout.prototype.setSize = function(width, height){
 			this.view.setSize(width, height);
-			this.width = width;
-			this.height = height;
+			this._width = width;
+			this._height = height;
 		};
 		
 		HLayout.prototype.setContainer = function(obj){
@@ -87,10 +87,10 @@
 		};
 		HLayout.prototype.add = function(obj,args){
 			var panel = new Layout("ele_fl");
-			if(this.height == null){
+			if(this._height == null){
 				panel.setHeight("100%");
 			}else{
-				panel.setHeight(this.height);
+				panel.setHeight(this._height);
 			}
 			if(typeof(args) == "object"){
 				if(typeof(args.float) != "undefined"){
@@ -109,13 +109,13 @@
 				}
 			}
 			panel.add(obj);
-			this.view.remove(this.clView);
+			this.view.remove(this._clView);
 			this.view.add(panel);
-			this.view.add(this.clView);
+			this.view.add(this._clView);
 		};
 		HLayout.prototype.clear = function(){
 			this.view.clear();
-			this.view.add(this.clView);
+			this.view.add(this._clView);
 		};
 		HLayout.prototype.getView = function(){
 			return this.view;
@@ -123,8 +123,8 @@
 		
 		HLayout.prototype._init = function(){
 			this.view = new Layout();
-			this.clView = new Layout("ele_cl");
-			this.view.add(this.clView);
+			this._clView = new Layout("ele_cl");
+			this.view.add(this._clView);
 			this.ele = this.view.ele;
 		};
 		this._init();
@@ -137,21 +137,21 @@
 		this.eleType = "layout";
 		this.ele;
 		this.view;
-		this.width;
-		this.height;
+		this._width;
+		this._height;
 		
 		VLayout.prototype.setSize = function(width, height){
 			this.view.setSize(width, height);
-			this.width = width;
-			this.height = height;
+			this._width = width;
+			this._height = height;
 		};
 		
 		VLayout.prototype.add = function(obj,args){
 			var panel = new Layout();
-			if(this.width == null){
+			if(this._width == null){
 				panel.setWidth("100%");
 			}else{
-				panel.setWidth(this.width);
+				panel.setWidth(this._width);
 			}
 			panel.setHeight("auto");
 			if(typeof(args) == "object"){
