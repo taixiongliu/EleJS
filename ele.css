@@ -1,0 +1,42 @@
+/** common css **/
+.ele_fl{
+	float: left;
+}
+.ele_fr{
+	float: right;
+}
+.ele_cl{
+	clear: both;
+}
+.ele_shade_pl {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 10003;
+	display: none;
+}
+.ele_shade_bg {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 10004;
+	background-color: #CCCCCC;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+}
+.ele_ml2{
+	margin-left: 2px;
+}
+.ele_ml5{
+	margin-left: 5px;
+}
+.ele_ml10{
+	margin-left: 10px;
+}
+.ele_llh30{
+	line-height: 30px;
+	vertical-align: middle;
+}

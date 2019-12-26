@@ -15,12 +15,21 @@ var Ele = window.Ele = Ele || {
 			throw "Ele load model must be a array.";
 			return;
 		}
+		this._loadUtil();
 		this._loadModels = models.length;
 		this._loadCount = 0;
 		for(var i = 0; i < models.length; i++) {
 			this._loadCSS(models[i]);
 			this._loadJS(models[i], this._loadHandler);
 		}
+	},
+	
+	/**
+	 * 加载工具类 自动加载
+	 */
+	_loadUtil:function(){
+		this._loadJS("Ajax");
+		this._loadJS("WinInner");
 	},
 	
 	/**
