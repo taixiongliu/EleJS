@@ -106,18 +106,20 @@
 	};
 	
 	var Confirm = Ele.Confirm = function() {
-		this.ele = null;
-		this.msg = null;
-		this.sureHandler = null;
-		this.cancelHandler = null;
-		this.onsuredown = false;
+		this.eleType = "layout";
+		this.ele;
+		this.view;
+		this._msg = null;
+		this._sureHandler = null;
+		this._cancelHandler = null;
+		this._onsuredown = false;
 		
 		Confirm.prototype._init = function() {
 			var context = this;
 			
 			var body = document.getElementsByTagName('body')[0];
-			var view = new Ele.Layout("ele_shade_pl");
-			this.ele = view.ele;
+			this.view = new Ele.Layout("ele_shade_pl");
+			this.ele = this.view.ele;
 			var bg = new Ele.Layout("ele_shade_bg");
 			
 			var content = new Ele.Layout("ele_confirm_panel");
@@ -132,9 +134,9 @@
 			var content_view = new Ele.Layout("ele_confirm_view");
 			content_view.setAlign("center");
 			
-			this.msg = new Ele.Label("确认继续该操作？","ele_confirm_txt");
+			this._msg = new Ele.Label("确认继续该操作？","ele_confirm_txt");
 			
-			content_view.add(this.msg);
+			content_view.add(this._msg);
 			
 			var btn_view = new Ele.Layout("ele_confirm_btn_view");
 			
@@ -143,22 +145,22 @@
 			
 			btn_sure.ele.onmousedown = function(){
 				btn_sure.ele.className = "ele_confirm_btn_sure_over";
-				context.onsuredown = true;
+				context._onsuredown = true;
 			};
 			btn_sure.ele.onmouseup = function(){
 				btn_sure.ele.className = "ele_confirm_btn_sure";
-				context.onsuredown = false;
+				context._onsuredown = false;
 			};
 			btn_sure.ele.onmouseout = function(){
-				if(context.onsuredown){
+				if(context._onsuredown){
 					btn_sure.ele.className = "ele_confirm_btn_sure";
-					context.onsuredown = false;
+					context._onsuredown = false;
 				}
 			};
 			btn_sure.ele.onclick = function(){
 				context.hide();
-				if(context.sureHandler != null){
-					context.sureHandler();
+				if(context._sureHandler != null){
+					context._sureHandler();
 				}
 			};
 	
@@ -171,16 +173,16 @@
 			btn_cancel.setAlign("center");
 			btn_cancel.ele.onmousedown = function(){
 				btn_cancel.ele.className = "ele_confirm_btn_cancel_over";
-				context.onsuredown = true;
+				context._onsuredown = true;
 			};
 			btn_cancel.ele.onmouseup = function(){
 				btn_cancel.ele.className = "ele_confirm_btn_cancel";
-				context.onsuredown = false;
+				context._onsuredown = false;
 			};
 			btn_cancel.ele.onmouseout = function(){
-				if(context.onsuredown){
+				if(context._onsuredown){
 					btn_cancel.ele.className = "ele_confirm_btn_cancel";
-					context.onsuredown = false;
+					context._onsuredown = false;
 				}
 			};
 			btn_cancel.ele.onclick = function(){
@@ -200,14 +202,14 @@
 			content.add(divider);
 			content.add(btn_view);
 			
-			view.add(bg);
-			view.add(content);
+			this.view.add(bg);
+			this.view.add(content);
 			
-			view.setContainer(body);
+			this.view.setContainer(body);
 		};
 		
 		Confirm.prototype.setSureHandler = function(handler){
-			this.sureHandler = handler;
+			this._sureHandler = handler;
 		};
 		
 		Confirm.prototype.setCancelHandler = function(handler){
@@ -215,8 +217,8 @@
 		};
 		
 		Confirm.prototype.setMsg = function(msgStr){
-			if(this.msg != null){
-				this.msg.setText(msgStr);
+			if(this._msg != null){
+				this._msg.setText(msgStr);
 			}
 		};
 		

@@ -35,6 +35,7 @@ var Ele = window.Ele = Ele || {
 		models.push("Img");
 		models.push("Alert");
 		models.push("Label");
+		models.push("Button");
 		
 		this._loadUtil();
 		this._loadModels = models.length;
