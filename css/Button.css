@@ -1,0 +1,120 @@
+/** button **/
+.ele_button{
+	width: 120px;
+	height: 30px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	color: #FFFFFF;
+	font-weight: bold;
+	line-height: 30px;
+	vertical-align: middle;
+	cursor: pointer;
+	font-family: "微软雅黑";
+	letter-spacing: 2px;
+}
+.ele_button_blue{
+	font-size: 14px;
+	background-color: #5CA7ED;
+	text-shadow: 0px -1px 1px #00488C;
+	box-shadow: 0px 2px 2px #00488C;
+	-webkit-box-shadow: 0px 2px 2px #00488C;
+	-moz-window-shadow: 0px 2px 2px #00488C;
+	border-top: 1px #93C5F5 solid;
+	border-bottom: 1px #0077E8 solid;
+}
+.ele_button_blue_down{
+	background-color: #4F9DE7;
+	text-shadow: 0px -1px 1px #00488C;
+	border-top: 1px #93C5F5 solid;
+	border-bottom: 1px #0077E8 solid;
+	font-size: 13px;
+}
+.ele_button_green{
+	font-size: 14px;
+	background-color: #AACE2C;
+	text-shadow: 0px -1px 1px #638000;
+	box-shadow: 0px 2px 2px #638000;
+	-webkit-box-shadow: 0px 2px 2px #638000;
+	-moz-window-shadow: 0px 2px 2px #638000;
+	border-top: 1px #D6F274 solid;
+	border-bottom: 1px #638000 solid;
+}
+.ele_button_green_down{
+	background-color: #97C200;
+	text-shadow: 0px -1px 1px #638000;
+	border-top: 1px #D6F274 solid;
+	border-bottom: 1px #638000 solid;
+	font-size: 13px;
+}
+.ele_button_pink{
+	font-size: 14px;
+	background-color: #ED5CB2;
+	text-shadow: 0px -1px 1px #A60062;
+	box-shadow: 0px 2px 2px #A60062;
+	-webkit-box-shadow: 0px 2px 2px #A60062;
+	-moz-window-shadow: 0px 2px 2px #A60062;
+	border-top: 1px #FCA4D8 solid;
+	border-bottom: 1px #A60062 solid;
+}
+.ele_button_pink_down{
+	background-color: #DE439E;
+	text-shadow: 0px -1px 1px #A60062;
+	border-top: 1px #FCA4D8 solid;
+	border-bottom: 1px #A60062 solid;
+	font-size: 13px;
+}
+.ele_button_orange{
+	font-size: 14px;
+	background-color: #FF8230;
+	text-shadow: 0px -1px 1px #BA4A00;
+	box-shadow: 0px 2px 2px #BA4A00;
+	-webkit-box-shadow: 0px 2px 2px #BA4A00;
+	-moz-window-shadow: 0px 2px 2px #BA4A00;
+	border-top: 1px #FFB88A solid;
+	border-bottom: 1px #BA4A00 solid;
+}
+.ele_button_orange_down{
+	background-color: #F26A11;
+	text-shadow: 0px -1px 1px #BA4A00;
+	border-top: 1px #FFB88A solid;
+	border-bottom: 1px #BA4A00 solid;
+	font-size: 13px;
+}
+.ele_button_red{
+	font-size: 14px;
+	background-color: #EF595B;
+	text-shadow: 0px -1px 1px #A80002;
+	box-shadow: 0px 2px 2px #A80002;
+	-webkit-box-shadow: 0px 2px 2px #A80002;
+	-moz-window-shadow: 0px 2px 2px #A80002;
+	border-top: 1px #FFA3A4 solid;
+	border-bottom: 1px #A80002 solid;
+}
+.ele_button_red_down{
+	background-color: #E84345;
+	text-shadow: 0px -1px 1px #A80002;
+	border-top: 1px #FFA3A4 solid;
+	border-bottom: 1px #A80002 solid;
+	font-size: 13px;
+}
+.ele_button_yellow{
+	font-size: 14px;
+	background-color: #FFC63E;
+	text-shadow: 0px -1px 1px #B07C00;
+	box-shadow: 0px 2px 2px #B07C00;
+	-webkit-box-shadow: 0px 2px 2px #B07C00;
+	-moz-window-shadow: 0px 2px 2px #B07C00;
+	border-top: 1px #FFE29C solid;
+	border-bottom: 1px #B07C00 solid;
+}
+.ele_button_yellow_down{
+	background-color: #FAB511;
+	text-shadow: 0px -1px 1px #B07C00;
+	border-top: 1px #FFE29C solid;
+	border-bottom: 1px #B07C00 solid;
+	font-size: 13px;
+}

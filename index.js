@@ -22,6 +22,7 @@ function init(){
 		panel.add(item2,{float:"right"});
 		main.add(panel);
 		main.add(new Ele.Button("中文按钮","green"));
+		main.add(new Ele.TextBox());
 
 //		var ajaxload = new Ele.AjaxLoad();
 //		ajaxload.show();

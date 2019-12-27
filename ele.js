@@ -36,6 +36,7 @@ var Ele = window.Ele = Ele || {
 		models.push("Alert");
 		models.push("Label");
 		models.push("Button");
+		models.push("TextBox");
 		
 		this._loadUtil();
 		this._loadModels = models.length;
@@ -52,6 +53,7 @@ var Ele = window.Ele = Ele || {
 	_loadUtil:function(){
 		this._loadJS("Ajax");
 		this._loadJS("WinInner");
+		this._loadJS("Filter");
 	},
 	
 	/**
