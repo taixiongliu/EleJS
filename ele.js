@@ -8,13 +8,34 @@ var Ele = window.Ele = Ele || {
 	 * @param {Object} models
 	 * @param {Object} callback
 	 */
-	load: function(models, callback) {
+	loadComponent: function(models, callback) {
 		this._loadCallback = callback || function() {};
 		if(!this._isArray(models)) {
 			console.log("Ele load model must be a array.");
 			throw "Ele load model must be a array.";
 			return;
 		}
+		this._loadUtil();
+		this._loadModels = models.length;
+		this._loadCount = 0;
+		for(var i = 0; i < models.length; i++) {
+			this._loadCSS(models[i]);
+			this._loadJS(models[i], this._loadHandler);
+		}
+	},
+	
+	/**
+	 * 加载工具类 自动加载
+	 */
+	load:function(callback){
+		this._loadCallback = callback || function() {};
+		var models = [];
+		models.push("Layout");
+		models.push("AjaxLoad");
+		models.push("Img");
+		models.push("Alert");
+		models.push("Label");
+		
 		this._loadUtil();
 		this._loadModels = models.length;
 		this._loadCount = 0;

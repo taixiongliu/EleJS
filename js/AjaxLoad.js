@@ -15,8 +15,8 @@
 			var winInner = new Ele.WinInner();
 			var width = winInner.getWidth();
 			var height = winInner.getHeight();
-			content.ele.style.marginTop = (height/2 - 26)+"px";
-			content.ele.style.marginLeft = (width/2 - 130)+"px";
+			content.ele.style.marginTop = (height/2 - 18)+"px";
+			content.ele.style.marginLeft = (width/2 - 90)+"px";
 			
 			var img_panel = new Ele.Layout("ele_ajaxload_content_img");
 			var img_item = new Ele.Img("icons/load.gif");

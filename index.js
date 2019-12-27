@@ -1,6 +1,6 @@
 window.onload = init;
 function init(){
-	Ele.load(["Layout","AjaxLoad","Img"],function(){
+	Ele.load(function(){
 		console.log("ele .load ...");
 		//创建一个面板
 		var main = new Ele.Layout();
@@ -23,7 +23,11 @@ function init(){
 //		main.add(panel);
 
 //		var ajaxload = new Ele.AjaxLoad();
-//		ajaxload.setMsg("数据加载中...");
 //		ajaxload.show();
+		
+		var a = new Ele.Confirm();
+		a.setMsg("Helloween good..");
+		a.setSureHandler(function(){console.log("sure click..")});
+		a.show();
 	});
 }
