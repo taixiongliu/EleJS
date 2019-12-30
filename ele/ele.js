@@ -38,6 +38,10 @@ var Ele = window.Ele = Ele || {
 		models.push("Button");
 		models.push("TextBox");
 		models.push("DateBox");
+		models.push("ListGrid");
+		models.push("TreeNode");
+		models.push("MenuList");
+		models.push("PopWindow");
 		
 		this._loadUtil();
 		this._loadModels = models.length;

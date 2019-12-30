@@ -1,0 +1,43 @@
+/** listgrid **/
+.ele_listgrid_title{
+	background-color: #E9F3FC;
+	font-family: "微软雅黑";
+	font-size: 12px;
+	color: #4C4C4C;
+	font-weight: bold;
+	border-bottom: 1px #F2F2F2 solid;
+	border-top: 1px #F2F2F2 solid;
+}
+.ele_listgrid_bg_single{
+	background-color: #F6F7F9;
+}
+.ele_listgrid_bg_double{
+	background-color: #FFFFFF;
+}
+.ele_listgrid_bg_selected{
+	background-color: #ECFBD4;
+}
+.ele_listgrid_item{
+	width: auto;
+	height: 100%;
+	font-family: "微软雅黑";
+	font-size: 12px;
+	color: #4C4C4C;
+	border-bottom: 1px #F2F2F2 solid;
+}
+.ele_listgrid_h_divider{
+	width: 100%;
+	height: 1px;
+	background-color: #FFFFFF;
+}
+.ele_listgrid_v_divider{
+	width: 1px;
+	height: 100%;
+	background-color: #FFFFFF;
+}
+.ele_listgrid_icon{
+	width: 20px;
+	height: 20px;
+	margin-top: 5px;
+	cursor: pointer;
+}

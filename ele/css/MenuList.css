@@ -1,0 +1,24 @@
+/** menulist **/
+.ele_menulist_title_view{
+	width: 100%;
+	height: 25px;
+	padding-top: 5px;
+	background-color: #A4B5C8;
+	font-size: 0px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.ele_menulist_title_img{
+	width: 20px;
+	height: 20px;
+}
+.ele_menulist_title_txt{
+	width: auto;
+	height: 20px;
+	font-family: "微软雅黑";
+	font-size: 14px;
+	color: #FFFFFF;
+	vertical-align: top;
+	line-height: 20px;
+}
