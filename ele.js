@@ -37,6 +37,7 @@ var Ele = window.Ele = Ele || {
 		models.push("Label");
 		models.push("Button");
 		models.push("TextBox");
+		models.push("DateBox");
 		
 		this._loadUtil();
 		this._loadModels = models.length;

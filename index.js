@@ -22,14 +22,22 @@ function init(){
 		panel.add(item2,{float:"right"});
 		main.add(panel);
 		main.add(new Ele.Button("中文按钮","green"));
-		main.add(new Ele.TextBox());
+		var tb =  new Ele.TextBox()
+		main.add(tb);
 
 //		var ajaxload = new Ele.AjaxLoad();
 //		ajaxload.show();
 		
-		var a = new Ele.Confirm();
-		a.setMsg("Helloween good..");
-		a.setSureHandler(function(){console.log("sure click..")});
-		a.show();
+//		var a = new Ele.Confirm();
+//		a.setMsg("Helloween good..");
+//		a.setSureHandler(function(){console.log("sure click..")});
+//		a.show();
+
+		var datebox = new Ele.DateBox();
+		datebox.setSelectUpdateHandler(function(){
+			var selectdate = datebox.getSelectDateString();
+			console.log("selected:"+selectdate);
+		})
+		datebox.showBelowLeft(tb.ele);
 	});
 }
