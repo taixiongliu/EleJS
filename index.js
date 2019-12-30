@@ -33,11 +33,14 @@ function init(){
 //		a.setSureHandler(function(){console.log("sure click..")});
 //		a.show();
 
-		var datebox = new Ele.DateBox();
-		datebox.setSelectUpdateHandler(function(){
-			var selectdate = datebox.getSelectDateString();
-			console.log("selected:"+selectdate);
-		})
-		datebox.showBelowLeft(tb.ele);
+//		var datebox = new Ele.DateBox();
+//		datebox.setSelectUpdateHandler(function(){
+//			var selectdate = datebox.getSelectDateString();
+//			console.log("selected:"+selectdate);
+//		})
+//		datebox.showBelowLeft(tb.ele);
+		
+		var il_updpass = new Ele.IconLabel({focusStyle:"top_icon_label_focus",textStyle:"info_name",icon:"img/tab.png",text:"修改密码",onclick:function(){}});
+		main.add(il_updpass);
 	});
 }

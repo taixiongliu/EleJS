@@ -95,7 +95,7 @@ var Ele = window.Ele = Ele || {
 				fn(context,model);
 			};
 		}
-		script.src = "js/"+model + ".js";
+		script.src = "ele/js/"+model + ".js";
 		document.getElementsByTagName('head')[0].appendChild(script);
 	},
 	
@@ -108,7 +108,7 @@ var Ele = window.Ele = Ele || {
 		var link = document.createElement('link');
 		link.type='text/css';
 		link.rel = 'stylesheet';
-		link.href = "css/"+model+".css";
+		link.href = "ele/css/"+model+".css";
 		head.appendChild(link);
 	},
 	
