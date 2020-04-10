@@ -2,6 +2,14 @@ var Ele = window.Ele = Ele || {
 	_loadCallback:{},
 	_loadModels:0,
 	_loadCount:0,
+	_pathPrefix:"/",
+	
+	initPath:function(path){
+		if(typeof path === "string"){
+			this._pathPrefix = "/"+path+"/";
+		}
+		
+	},
 	
 	/**
 	 * 初始化加载设置
@@ -99,7 +107,7 @@ var Ele = window.Ele = Ele || {
 				fn(context,model);
 			};
 		}
-		script.src = "ele/js/"+model + ".js";
+		script.src = this._pathPrefix+"ele/js/"+model + ".js";
 		document.getElementsByTagName('head')[0].appendChild(script);
 	},
 	
@@ -112,7 +120,7 @@ var Ele = window.Ele = Ele || {
 		var link = document.createElement('link');
 		link.type='text/css';
 		link.rel = 'stylesheet';
-		link.href = "ele/css/"+model+".css";
+		link.href = this._pathPrefix+"ele/css/"+model+".css";
 		head.appendChild(link);
 	},
 	

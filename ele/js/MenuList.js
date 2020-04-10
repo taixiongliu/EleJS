@@ -11,7 +11,7 @@
 			var para = {};
 			if(typeof(args) != "object"){
 				para.width = (this.width - 20)+"px";
-				para.icon = "ele/icons/icon_menuitem.png";
+				para.icon = Ele._pathPrefix+"ele/icons/icon_menuitem.png";
 			}else{
 				para = args;
 				para.width = (this.width - 20)+"px";
@@ -44,9 +44,9 @@
 			}
 			var title = new Ele.Layout("ele_menulist_title_view");
 			title.setAlign("center");
-			var imgLeft = new Ele.Img("ele/icons/icon_menu.png", "ele_menulist_title_img");
+			var imgLeft = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_menu.png", "ele_menulist_title_img");
 			this.title = new Ele.Label("功能菜单", "ele_menulist_title_txt ele_ml5");
-			var imgRight = new Ele.Img("ele/icons/icon_menu.png", "ele_menulist_title_img ele_ml5");
+			var imgRight = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_menu.png", "ele_menulist_title_img ele_ml5");
 			title.add(imgLeft);
 			title.add(this.title);
 			title.add(imgRight);
