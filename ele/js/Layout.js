@@ -65,7 +65,7 @@
 	/**
 	 * 横向布局
 	 */
-	var HLayout = Ele.HLayout = function(){
+	var HLayout = Ele.HLayout = function(styleName){
 		this.eleType = "layout";
 		this.ele;
 		this.view;
@@ -122,7 +122,7 @@
 		};
 		
 		HLayout.prototype._init = function(){
-			this.view = new Layout();
+			this.view = new Layout(styleName);
 			this._clView = new Layout("ele_cl");
 			this.view.add(this._clView);
 			this.ele = this.view.ele;
@@ -133,7 +133,7 @@
 	/**
 	 * 竖向布局
 	 */
-	var VLayout = Ele.VLayout = function(){
+	var VLayout = Ele.VLayout = function(styleName){
 		this.eleType = "layout";
 		this.ele;
 		this.view;
@@ -179,7 +179,7 @@
 		};
 		
 		VLayout.prototype._init = function(){
-			this.view = new Layout();
+			this.view = new Layout(styleName);
 			this.ele = this.view.ele;
 		};
 		this._init();
