@@ -51,9 +51,11 @@
 		};
 		TreeNode.prototype.close = function(){
 			this.listView.ele.style.display="none";
+			this.isExpend = false;
 		};
 		TreeNode.prototype.expend = function(){
 			this.listView.ele.style.display="block";
+			this.isExpend = true;
 		};
 		TreeNode.prototype.clear = function(){
 			this.listView.setHtml("");
@@ -96,7 +98,6 @@
 				}else{
 					context.expend();
 				}
-				context.isExpend = !context.isExpend;
 				if(this.onClickHandler != null){
 					this.onClickHandler(context.expend);
 				}

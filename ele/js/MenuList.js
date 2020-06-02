@@ -23,6 +23,11 @@
 					node.add(para.children[i]);
 				}
 			}
+			if(typeof(para.expend) == "boolean"){
+				if(para.expend){
+					node.expend();
+				}
+			}
 			
 			this.view.add(node);
 		};
