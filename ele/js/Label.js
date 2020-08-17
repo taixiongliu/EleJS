@@ -27,6 +27,7 @@
 		this.view;
 		this._style;
 		this._focusStyle;
+		this.data="";
 		
 		IconLabel.prototype._init = function(){
 			this._style = "ele_icon_label";
@@ -54,7 +55,9 @@
 					txt.ele.className = args.textStyle+" ele_icon_label_txt ele_ml2";
 				}
 				if(typeof(args.onclick) == "function"){
-					this.ele.onclick = args.onclick;
+					this.ele.onclick = function(){
+						args.onclick(context.data);
+					};
 				}
 			}
 			if(img != null){

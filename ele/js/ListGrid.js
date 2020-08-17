@@ -13,6 +13,8 @@
 		this.oprs;
 		this.selectOpr = null;
 		this.selectArray = [];
+		this.main_pr = 0;//主体表单右间距
+		this.main_pl = 0;//主体表单左间距
 		
 		this.titleView;
 		this.listView;
@@ -42,18 +44,16 @@
 			if(this.count%2 == 0){
 				rowCss = "ele_listgrid_bg_single";
 			}
-			var line = new Ele.HLayout();
+			var line = new Ele.Layout("ele_listgrid_line_view "+rowCss);
 			line.setSize("100%", this.itemHeight+"px");
-			line.ele.className = rowCss;
-			line.ele.rowcss = rowCss;
-			var first = true;
+			line.ele.rowcss = "ele_listgrid_line_view "+rowCss;
 			
 			if(this.selectOpr != null){
-				var selitem = new Ele.Layout();
-				selitem.setHeight("26px");
-				selitem.setLineHeight("26px");
-				if(typeof(this.selectOpr.width) != "undefined"){
-					selitem.setWidth(this.selectOpr.width);
+				var selitem = new Ele.Layout("ele_listgrid_cb");
+				selitem.setHeight(this.itemHeight+"px");
+				selitem.setLineHeight(this.itemHeight+"px");
+				if(typeof(this.selectOpr.width) == "number"){
+					selitem.setWidth(this.selectOpr.width+"px");
 				}else{
 					selitem.setWidth(this.itemWidth+"px");
 				}
@@ -63,39 +63,15 @@
 				var ele = {ele:cbox,data:row};
 				selitem.add(ele);
 				line.add(selitem);
-				first = false;
 				this.selectArray.push(ele);
 			}
 			
-			for(var f in this.fields){
-				if(!first){
-					var divider = new Ele.Layout("ele_listgrid_v_divider");
-					line.add(divider);
-				}else{
-					first = false;
-				}
-				
-				var rowItem = new Ele.Layout("ele_listgrid_item");
-				rowItem.setHeight(this.itemHeight+"px");
-				rowItem.setLineHeight(this.itemHeight+"px");
-				if(typeof(this.fields[f].fieldWidth) != "undefined"){
-					rowItem.setWidth(this.fields[f].fieldWidth);
-				}else{
-					rowItem.setWidth(this.itemWidth+"px");
-				}
-				rowItem.setAlign("center");
-				rowItem.setHtml(row[f]);
-				line.add(rowItem);
-			}
-			
+			var bar = new Ele.HLayout("ele_listgrid_line_bar");
 			if(this.oprs != null){
-				if(!first){
-					line.add(new Ele.Layout("ele_listgrid_v_divider"));
-				}
-				var opitem = new Ele.HLayout();
+				var opitem = new Ele.HLayout("");
 				opitem.getView().setHeight(this.itemHeight+"px");
-				if(typeof(this.oprs.width) != "undefined"){
-					opitem.getView().setWidth(this.oprs.width);
+				if(typeof(this.oprs.width) == "number"){
+					opitem.getView().setWidth(this.oprs.width+"px");
 				}else{
 					opitem.getView().setWidth(this.itemWidth+"px");
 				}
@@ -104,20 +80,40 @@
 				if(typeof(this.oprs.menus) != "undefined" && this.oprs.menus.length > 0){
 					for(var i = 0; i < this.oprs.menus.length; i ++){
 						var ic = new Ele.IconLabel(this.oprs.menus[i]);
-						opitem.add(ic,{ppadding:"0px 0px 0px 4px"});
+						ic.data = row;
+						opitem.add(ic,{padding:"0px 0px 0px 4px"});
 					}
 				}
-				
-				line.add(opitem);
+				bar.add(opitem);
 			}
+			line.add(bar);
+			
+			var lineItemPanel = new Ele.HLayout("ele_listgrid_title_item_view");
+			lineItemPanel.setSize("100%", this.itemHeight+"px");
+			lineItemPanel.ele.style.padding = "0px "+(this.main_pr - 17)+"px 0px "+this.main_pl+"px";
+			for(var f in this.fields){
+				var rowItem = new Ele.Layout("ele_listgrid_item");
+				rowItem.setHeight(this.itemHeight+"px");
+				rowItem.setLineHeight(this.itemHeight+"px");
+				var tempWidth = this.itemWidth;
+				if(typeof(this.fields[f].fieldWidth) != "undefined"){
+					tempWidth = this.fields[f].fieldWidth;
+				}
+				rowItem.setAlign("center");
+				rowItem.setHtml(row[f]);
+				lineItemPanel.add(rowItem,{width:tempWidth});
+			}
+			line.add(lineItemPanel);
+			
+			
 			line.ele.onmouseover = function(){
-				this.className = "ele_listgrid_bg_selected";
+				this.className = "ele_listgrid_line_view ele_listgrid_bg_selected";
 			};
 			line.ele.onmouseout = function(){
 				this.className = this.rowcss;
 			};
 			
-			this.listView.add(line);
+			this.listView.add(line,{height:this.itemHeight+"px"});
 			this.count ++;
 		};
 		ListGrid.prototype.clear = function(){
@@ -135,7 +131,7 @@
 		};
 		
 		ListGrid.prototype._init = function(){
-			this.view = new Ele.Layout();
+			this.view = new Ele.Layout('ele_listgrid_view');
 			this.ele = this.view.ele;
 			if(typeof(args) == "object"){
 				if(typeof(args.widthPx) == "number"){
@@ -168,79 +164,70 @@
 					len ++;
 				}
 				if(this.width != null){
-					//滚动条17 加分割少1
-					this.itemWidth = (this.width - 16 - len)/len;
+					//滚动条17
+					this.itemWidth = (this.width - 17)/len;
 				}
-				this.titleView = new Ele.HLayout();
-				this.titleView.setSize("100%", this.itemHeight+"px");
-				var first = true;
+				this.titleView = new Ele.Layout('ele_listgrid_title_view');
+				//padding left 数值
 				if(this.selectOpr != null){
-					var selitem = new Ele.Layout("ele_listgrid_title");
+					var selitem = new Ele.Layout("ele_listgrid_title_cb");
 					selitem.setHeight("26px");
 					selitem.setLineHeight("26px");
-					if(typeof(this.selectOpr.width) != "undefined"){
-						selitem.setWidth(this.selectOpr.width);
+					if(typeof(this.selectOpr.width) == "number"){
+						selitem.setWidth(this.selectOpr.width+"px");
+						this.main_pl = this.selectOpr.width;
 					}else{
 						selitem.setWidth(this.itemWidth+"px");
+						this.main_pl = this.itemWidth;
 					}
 					selitem.setAlign("center");
 					selitem.setHtml("选择");
 					this.titleView.add(selitem);
-					first = false;
 				}
-				for(var f in this.fields){
-					if(!first){
-						var divider = new Ele.Layout("ele_listgrid_v_divider");
-						this.titleView.add(divider);
-					}else{
-						first = false;
-					}
-					
-					var titleItem = new Ele.Layout("ele_listgrid_title");
-					titleItem.setHeight("26px");
-					titleItem.setLineHeight("26px");
-					if(typeof(this.fields[f].fieldWidth) != "undefined"){
-						titleItem.setWidth(this.fields[f].fieldWidth);
-					}else{
-						titleItem.setWidth(this.itemWidth+"px");
-					}
-					titleItem.setAlign("center");
-					titleItem.setHtml(this.fields[f].fieldName);
-					this.titleView.add(titleItem);
-				}
+				//padding right 数值
+				var bar = new Ele.HLayout("ele_listgrid_title_bar");
 				if(this.oprs != null){
-					if(!first){
-						this.titleView.add(new Layout("ele_listgrid_v_divider"));
-					}
-					var opitem = new Ele.Layout("ele_listgrid_title");
+					var opitem = new Ele.Layout("ele_listgrid_title ele_listgrid_br");
 					opitem.setHeight("26px");
 					opitem.setLineHeight("26px");
-					if(typeof(this.oprs.width) != "undefined"){
-						opitem.setWidth(this.oprs.width);
+					if(typeof(this.oprs.width) == "number"){
+						opitem.setWidth(this.oprs.width+px);
+						this.main_pr += this.oprs.width;
 					}else{
 						opitem.setWidth(this.itemWidth+"px");
+						this.main_pr += this.itemWidth;
 					}
 					opitem.setAlign("center");
 					opitem.setHtml("操作");
-					this.titleView.add(opitem);
+					bar.add(opitem);
 				}
 				
-				var dividerRoll = new Ele.Layout("ele_listgrid_v_divider");
 				var rollItem = new Ele.Layout("ele_listgrid_title");
 				rollItem.setSize("16px","26px");
-				this.titleView.add(dividerRoll);
-				this.titleView.add(rollItem);
+				bar.add(rollItem);
+				this.main_pr += 16;
+				this.titleView.add(bar);
+				
+				var titleItemPanel = new Ele.HLayout("ele_listgrid_title_item_view");
+				titleItemPanel.ele.style.padding = "0px "+this.main_pr+"px 0px "+this.main_pl+"px";
+				for(var f in this.fields){
+					var titleItem = new Ele.Layout("ele_listgrid_title ele_listgrid_br");
+					titleItem.setHeight("26px");
+					titleItem.setLineHeight("26px");
+					var tempWidth = this.itemWidth;
+					if(typeof(this.fields[f].fieldWidth) != "undefined"){
+						tempWidth = this.fields[f].fieldWidth;
+					}
+					titleItem.setAlign("center");
+					titleItem.setHtml(this.fields[f].fieldName);
+					titleItemPanel.add(titleItem,{width:tempWidth});
+				}
+				this.titleView.add(titleItemPanel);
+				
 				this.view.add(this.titleView);
 			}
 			
-			this.listView = new Ele.VLayout();
-			var lh = this.itemHeight * 10;
-			if(this.height != null){
-				lh = this.height - this.itemHeight;
-			}
-			this.listView.setSize("100%", lh+"px");
-			this.listView.getView().setOverflowX("hidden");
-			this.listView.getView().setOverflowY("auto");
+			this.listView = new Ele.VLayout('ele_listgrid_list_view');
 			this.addEmpty();
 			this.view.add(this.listView);
 		};

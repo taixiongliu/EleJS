@@ -1,4 +1,43 @@
 /** listgrid **/
+.ele_listgrid_view{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.ele_listgrid_list_view{
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
+}
+.ele_listgrid_title_view{
+	width: 100%;
+	height: 26px;
+	position: relative;
+}
+.ele_listgrid_title_cb{
+	position: absolute;
+	z-index: 2;
+	background-color: #E9F3FC;
+	font-family: "微软雅黑";
+	font-size: 12px;
+	color: #4C4C4C;
+	font-weight: bold;
+	border-bottom: 1px #F2F2F2 solid;
+	border-top: 1px #F2F2F2 solid;
+	border-right: 1px #FFFFFF solid;
+	box-sizing: border-box;
+}
+
+.ele_listgrid_title_bar{
+	position: absolute;
+	z-index: 2;
+	right: 0;
+}
+.ele_listgrid_title_item_view{
+	width: 100%;
+	height: 26px;
+	box-sizing: border-box;
+}
 .ele_listgrid_title{
 	background-color: #E9F3FC;
 	font-family: "微软雅黑";
@@ -7,6 +46,23 @@
 	font-weight: bold;
 	border-bottom: 1px #F2F2F2 solid;
 	border-top: 1px #F2F2F2 solid;
+}
+.ele_listgrid_cb{
+	position: absolute;
+	z-index: 1;
+}
+.ele_listgrid_line_view{
+	width: 100%;
+	position: relative;
+}
+.ele_listgrid_line_bar{
+	position: absolute;
+	z-index: 1;
+	right: 0px;
+}
+.ele_listgrid_br{
+	border-right: 1px #FFFFFF solid;
+	box-sizing: border-box;
 }
 .ele_listgrid_bg_single{
 	background-color: #F6F7F9;
@@ -24,15 +80,12 @@
 	font-size: 12px;
 	color: #4C4C4C;
 	border-bottom: 1px #F2F2F2 solid;
+	border-right: 1px #FFFFFF solid;
+	box-sizing: border-box;
 }
 .ele_listgrid_h_divider{
 	width: 100%;
 	height: 1px;
-	background-color: #FFFFFF;
-}
-.ele_listgrid_v_divider{
-	width: 1px;
-	height: 100%;
 	background-color: #FFFFFF;
 }
 .ele_listgrid_icon{
