@@ -9,7 +9,7 @@
 		this.width;
 		this.height;
 		this.itemWidth = 120;
-		this.itemHeight = 26;
+		this.itemHeight = 40;
 		this.oprs;
 		this.selectOpr = null;
 		this.selectArray = [];
@@ -26,11 +26,33 @@
 			}
 			for(var i = 0; i < this.selectArray.length; i++){
 				var ele = this.selectArray[i];
-				if(ele.ele.checked){
+				if(ele.isChecked()){
 					temp.push(ele.data);
 				}
 			}
 			return temp;
+		};
+		ListGrid.prototype.selectAll = function(){
+			if(this.selectArray.length < 1){
+				return ;
+			}
+			for(var i = 0; i < this.selectArray.length; i++){
+				var ele = this.selectArray[i];
+				if(!ele.isChecked()){
+					ele.checked();
+				}
+			}
+		};
+		ListGrid.prototype.unSelectAll = function(){
+			if(this.selectArray.length < 1){
+				return ;
+			}
+			for(var i = 0; i < this.selectArray.length; i++){
+				var ele = this.selectArray[i];
+				if(ele.isChecked()){
+					ele.unChecked();
+				}
+			}
 		};
 		
 		ListGrid.prototype.addRow = function(row){
@@ -58,12 +80,12 @@
 					selitem.setWidth(this.itemWidth+"px");
 				}
 				selitem.setAlign("center");
-				var cbox = document.createElement("input");
-				cbox.type = "checkbox";
-				var ele = {ele:cbox,data:row};
-				selitem.add(ele);
+				var cbox = new Ele.ICheckBox();
+				cbox.ele.style.marginTop="10px";
+				cbox.data = row;
+				selitem.add(cbox);
 				line.add(selitem);
-				this.selectArray.push(ele);
+				this.selectArray.push(cbox);
 			}
 			
 			var bar = new Ele.HLayout("ele_listgrid_line_bar");
@@ -79,6 +101,12 @@
 				
 				if(typeof(this.oprs.menus) != "undefined" && this.oprs.menus.length > 0){
 					for(var i = 0; i < this.oprs.menus.length; i ++){
+						if(typeof(this.oprs.menus[i].format) == "function"){
+							if(!this.oprs.menus[i].format(row)){
+								continue;
+							}
+						}
+						
 						var ic = new Ele.IconLabel(this.oprs.menus[i]);
 						ic.data = row;
 						opitem.add(ic,{padding:"0px 0px 0px 4px"});
@@ -100,7 +128,7 @@
 					tempWidth = this.fields[f].fieldWidth;
 				}
 				rowItem.setAlign("center");
-				rowItem.setHtml(row[f]);
+				rowItem.setHtml(row[this.fields[f].fieldName]);
 				lineItemPanel.add(rowItem,{width:tempWidth});
 			}
 			line.add(lineItemPanel);
@@ -133,6 +161,7 @@
 		ListGrid.prototype._init = function(){
 			this.view = new Ele.Layout('ele_listgrid_view');
 			this.ele = this.view.ele;
+			var context = this;
 			if(typeof(args) == "object"){
 				if(typeof(args.widthPx) == "number"){
 					this.view.setWidth(args.widthPx+"px");
@@ -171,8 +200,8 @@
 				//padding left 数值
 				if(this.selectOpr != null){
 					var selitem = new Ele.Layout("ele_listgrid_title_cb");
-					selitem.setHeight("26px");
-					selitem.setLineHeight("26px");
+					selitem.setHeight(this.itemHeight+"px");
+					selitem.setLineHeight(this.itemHeight+"px");
 					if(typeof(this.selectOpr.width) == "number"){
 						selitem.setWidth(this.selectOpr.width+"px");
 						this.main_pl = this.selectOpr.width;
@@ -181,15 +210,26 @@
 						this.main_pl = this.itemWidth;
 					}
 					selitem.setAlign("center");
-					selitem.setHtml("选择");
+					var cbox = new Ele.ICheckBox();
+					cbox.addClickEvent(function(){
+						if(cbox.isChecked()){
+							context.selectAll();
+						}else{
+							context.unSelectAll();
+						}
+					});
+					cbox.ele.style.marginTop="10px";
+					selitem.add(cbox);
+					var label = new Ele.Label("全选","ele_listgrid_cb_title");
+					selitem.add(label);
 					this.titleView.add(selitem);
 				}
 				//padding right 数值
 				var bar = new Ele.HLayout("ele_listgrid_title_bar");
 				if(this.oprs != null){
 					var opitem = new Ele.Layout("ele_listgrid_title ele_listgrid_br");
-					opitem.setHeight("26px");
-					opitem.setLineHeight("26px");
+					opitem.setHeight(this.itemHeight+"px");
+					opitem.setLineHeight(this.itemHeight+"px");
 					if(typeof(this.oprs.width) == "number"){
 						opitem.setWidth(this.oprs.width+px);
 						this.main_pr += this.oprs.width;
@@ -203,23 +243,23 @@
 				}
 				
 				var rollItem = new Ele.Layout("ele_listgrid_title");
-				rollItem.setSize("16px","26px");
+				rollItem.setSize("17px",this.itemHeight+"px");
 				bar.add(rollItem);
-				this.main_pr += 16;
+				this.main_pr += 17;
 				this.titleView.add(bar);
 				
 				var titleItemPanel = new Ele.HLayout("ele_listgrid_title_item_view");
 				titleItemPanel.ele.style.padding = "0px "+this.main_pr+"px 0px "+this.main_pl+"px";
 				for(var f in this.fields){
 					var titleItem = new Ele.Layout("ele_listgrid_title ele_listgrid_br");
-					titleItem.setHeight("26px");
-					titleItem.setLineHeight("26px");
+					titleItem.setHeight(this.itemHeight+"px");
+					titleItem.setLineHeight(this.itemHeight+"px");
 					var tempWidth = this.itemWidth;
 					if(typeof(this.fields[f].fieldWidth) != "undefined"){
 						tempWidth = this.fields[f].fieldWidth;
 					}
 					titleItem.setAlign("center");
-					titleItem.setHtml(this.fields[f].fieldName);
+					titleItem.setHtml(this.fields[f].textName);
 					titleItemPanel.add(titleItem,{width:tempWidth});
 				}
 				this.titleView.add(titleItemPanel);

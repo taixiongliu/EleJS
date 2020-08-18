@@ -1,0 +1,11 @@
+.ele_check_style{
+	vertical-align: middle;
+}
+.ele_check_img{
+	width: 20px;
+	height: 20px;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	vertical-align: top;
+}

@@ -11,7 +11,7 @@
 }
 .ele_listgrid_title_view{
 	width: 100%;
-	height: 26px;
+	height: 40px;
 	position: relative;
 }
 .ele_listgrid_title_cb{
@@ -19,9 +19,8 @@
 	z-index: 2;
 	background-color: #E9F3FC;
 	font-family: "微软雅黑";
-	font-size: 12px;
+	font-size: 14px;
 	color: #4C4C4C;
-	font-weight: bold;
 	border-bottom: 1px #F2F2F2 solid;
 	border-top: 1px #F2F2F2 solid;
 	border-right: 1px #FFFFFF solid;
@@ -35,18 +34,24 @@
 }
 .ele_listgrid_title_item_view{
 	width: 100%;
-	height: 26px;
+	height: 40px;
 	box-sizing: border-box;
 }
 .ele_listgrid_title{
 	background-color: #E9F3FC;
 	font-family: "微软雅黑";
-	font-size: 12px;
+	font-size: 14px;
 	color: #4C4C4C;
-	font-weight: bold;
 	border-bottom: 1px #F2F2F2 solid;
 	border-top: 1px #F2F2F2 solid;
 }
+.ele_listgrid_cb_title{
+	font-family: "微软雅黑";
+	font-size: 14px;
+	color: #4C4C4C;
+	margin-left: 6px;
+}
+
 .ele_listgrid_cb{
 	position: absolute;
 	z-index: 1;
