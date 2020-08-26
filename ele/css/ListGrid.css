@@ -64,6 +64,7 @@
 	position: absolute;
 	z-index: 1;
 	right: 0px;
+	padding-top: 7px;
 }
 .ele_listgrid_br{
 	border-right: 1px #FFFFFF solid;

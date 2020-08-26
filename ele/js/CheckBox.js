@@ -45,10 +45,6 @@
 			this._handler = handler;
 		};
 		
-		ICheckBox.prototype.addClickEvent = function(handler){
-			this._handler = handler;
-		};
-		
 		ICheckBox.prototype._init = function(){
 			this._checked = false;
 			this.view = new Ele.Img(Ele._pathPrefix+"ele/icons/cb_none.png","ele_check_img");

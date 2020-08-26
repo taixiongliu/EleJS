@@ -165,7 +165,7 @@
 			this._selectedUpdateHandler = funName;
 		};
 		//移除日期选择更新事件
-		DateBox.prototype.removeSelectUpdateHandler = function(funName){
+		DateBox.prototype.removeSelectUpdateHandler = function(){
 			this._selectedUpdateHandler = null;
 		};
 		//设置日期翻页事件
@@ -173,7 +173,7 @@
 			this._pageUpdateHandler = funName;
 		};
 		//移除日期翻页事件
-		DateBox.prototype.removePageUpdateHandler = function(funName){
+		DateBox.prototype.removePageUpdateHandler = function(){
 			this._pageUpdateHandler = null;
 		};
 		
