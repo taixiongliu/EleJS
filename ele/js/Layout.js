@@ -92,19 +92,19 @@
 			}else{
 				panel.setHeight(this._height);
 			}
-			if(typeof(args) == "object"){
-				if(typeof(args.float) != "undefined"){
+			if(typeof(args) == "object" && args != null){
+				if(args.float){
 					if(args.float == "right"){
 						panel.ele.className = "ele_fr";
 					}
 				}
-				if(typeof(args.width) != "undefined"){
+				if(args.width){
 					panel.setWidth(args.width);
 				}
-				if(typeof(args.align) != "undefined"){
+				if(args.align){
 					panel.ele.align = args.align;
 				}
-				if(typeof(args.padding) != "undefined"){
+				if(args.padding){
 					panel.ele.style.padding = args.padding;
 				}
 			}
@@ -122,6 +122,9 @@
 		};
 		
 		HLayout.prototype._init = function(){
+			if(typeof(styleName) != "string"){
+				styleName = "ele_layout";
+			}
 			this.view = new Layout(styleName);
 			this._clView = new Layout("ele_cl");
 			this.view.add(this._clView);
@@ -154,11 +157,11 @@
 				panel.setWidth(this._width);
 			}
 			panel.setHeight("auto");
-			if(typeof(args) == "object"){
-				if(typeof(args.heigth) != "undefined"){
+			if(typeof(args) == "object" && args != null){
+				if(args.heigth){
 					panel.setHeight(args.heigth);
 				}
-				if(typeof(args.align) != "undefined"){
+				if(args.align){
 					panel.ele.align = args.align;
 				}
 			}
@@ -179,6 +182,9 @@
 		};
 		
 		VLayout.prototype._init = function(){
+			if(typeof(styleName) != "string"){
+				styleName = "ele_layout";
+			}
 			this.view = new Layout(styleName);
 			this.ele = this.view.ele;
 		};

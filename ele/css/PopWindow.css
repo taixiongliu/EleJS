@@ -17,7 +17,7 @@
 	height: auto;
 	position: absolute;
 	z-index: 101;
-	background-color: #008AD4;
+	background-color: #009999;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -27,7 +27,7 @@
 .ele_popwindow_title_view{
 	width: auto;
 	margin-left: 4px;
-	height: 24px;
+	height: 28px;
 }
 
 .ele_popwindow_title_name_view{
@@ -40,14 +40,17 @@
 .ele_popwindow_title_close_view{
 	width: 18px;
 	height: 18px;
-	margin-top: 3px;
+	margin-top: 4px;
 	float: left;
 }
 
 .ele_popwindow_title_icon_close{
-	width: 16px;
-	height: 16px;
+	width: 18px;
+	height: 18px;
 	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
 }
 
 .ele_popwindow_txt_title{

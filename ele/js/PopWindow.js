@@ -10,7 +10,7 @@
 			width = wid + 8;
 		}
 		if(typeof(hgt) == "number"){
-			height = hgt + 28;
+			height = hgt + 32;
 		}
 		this.title;
 		var contentView;
@@ -37,7 +37,7 @@
 			titleNameView.add(this.title);
 			
 			var titleCloseView = new Ele.Layout("ele_popwindow_title_close_view");
-			var imgClose = new Ele.Img(Ele._pathPrefix+"img/icon_close.png", "ele_popwindow_title_icon_close");
+			var imgClose = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_close.png", "ele_popwindow_title_icon_close");
 			imgClose.ele.onclick = function(){
 				context.hide();
 			};
@@ -49,7 +49,7 @@
 			titleView.add(clearFloat);
 			
 			contentView = new Ele.Layout("ele_popwindow_content_view");
-			contentView.setSize((width - 8) +"px", (height - 28)+"px");
+			contentView.setSize((width - 8) +"px", (height - 32)+"px");
 			
 			console.log(titleView.ele);
 			this.view.add(titleView);

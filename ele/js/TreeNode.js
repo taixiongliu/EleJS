@@ -8,6 +8,7 @@
 		this.onClickHandler;
 		this.onItemClickHandler;
 		this.count = 0;
+		this.selected = 0;
 		
 		TreeNode.prototype.add = function(args){
 			if(this.count == 0){
@@ -16,6 +17,12 @@
 			var cellStyle = " ele_treenode_double";
 			if(this.count % 2 == 0){
 				cellStyle = " ele_treenode_single";
+			}
+			if(typeof(args.selected) != "undefined"){
+				if(args.selected){
+					cellStyle = " ele_treenode_selected";
+					this.selected = args.id;
+				}
 			}
 			var item = new Ele.Layout("ele_treenode_item_view"+cellStyle);
 			item.setAlign("left");
@@ -40,9 +47,15 @@
 				}
 			};
 			item.ele.onmouseover = function(){
+				if(this.data.id == context.selected){
+					return ;
+				}
 				this.className = "ele_treenode_item_view ele_treenode_over";
 			};
 			item.ele.onmouseout = function(){
+				if(this.data.id == context.selected){
+					return ;
+				}
 				this.className = "ele_treenode_item_view"+this.cellStyle;
 			};
 			
