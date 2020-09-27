@@ -45,6 +45,7 @@ var Ele = window.Ele = Ele || {
 		models.push("Label");
 		models.push("Button");
 		models.push("TextBox");
+		models.push("TextArea");
 		models.push("CheckBox");
 		models.push("DateBox");
 		models.push("ListGrid");
