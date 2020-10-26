@@ -24,6 +24,7 @@ var Ele = window.Ele = Ele || {
 			return;
 		}
 		this._loadUtil();
+		this._loadEchart();
 		this._loadModels = models.length;
 		this._loadCount = 0;
 		for(var i = 0; i < models.length; i++) {
@@ -52,8 +53,10 @@ var Ele = window.Ele = Ele || {
 		models.push("TreeNode");
 		models.push("MenuList");
 		models.push("PopWindow");
+		//models.push("echarts/Radar");
 		
 		this._loadUtil();
+		this._loadEchart();
 		this._loadModels = models.length;
 		this._loadCount = 0;
 		for(var i = 0; i < models.length; i++) {
@@ -69,6 +72,12 @@ var Ele = window.Ele = Ele || {
 		this._loadJS("Ajax");
 		this._loadJS("WinInner");
 		this._loadJS("Filter");
+	},
+	/**
+	 * 加载图表类控件 自动加载
+	 */
+	_loadEchart:function(){
+		this._loadJS("Radar");
 	},
 	
 	/**
