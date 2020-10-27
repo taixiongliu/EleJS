@@ -78,6 +78,7 @@ var Ele = window.Ele = Ele || {
 	 */
 	_loadEchart:function(){
 		this._loadJS("Radar");
+		this._loadJS("BrokenLine");
 	},
 	
 	/**

@@ -80,12 +80,6 @@
 	
 		//画雷达图
 		Radar.prototype.draw = function(data){
-			this._create();
-			
-			var color = "#8bbef5";
-			var cfill = "rgba(139,190,245, 0.28)";
-			
-			
 			var mCenter = this.width / 2; //中心点
 			var mRadius = mCenter - this.padding;
 			var numCount = data.length;
