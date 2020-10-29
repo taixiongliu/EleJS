@@ -1,3 +1,6 @@
+// var radar = new Ele.Radar();
+// var data = [{key:"A",value:85},{key:"B",value:30},{key:"C",value:80},{key:"D",value:45},{key:"E",value:70},{key:"F",value:90}];
+// radar.draw(data, 200);
 (function(){
 	var Radar = Ele.Radar = function(opts){
 		this.eleType = "canvas";
@@ -16,6 +19,7 @@
 		this.itemFillColor="rgba(250,138,157, 0.28)";//节点填充颜色rgba(160,224,163, 0.28)
 		this.itemlineWidth=1;//节点线条宽度
 		this.itemPointWeight=2;//节点半径
+		this.data;
 	
 		Radar.prototype._init = function(){
 			if(typeof(opts) != "object"){
@@ -79,7 +83,14 @@
 		};
 	
 		//画雷达图
-		Radar.prototype.draw = function(data){
+		Radar.prototype.draw = function(data, max){
+			if(typeof(data) == "undefined"){
+				return ;
+			}
+			if(typeof(max) != "number"){
+				max = 100;
+			}
+			this.data = data;
 			var mCenter = this.width / 2; //中心点
 			var mRadius = mCenter - this.padding;
 			var numCount = data.length;
@@ -88,27 +99,35 @@
 			this.drawRadarEdge(mCenter, numCount, mRadius, mAngle); //边框
 			this.drawRadarLinePoint(mCenter, numCount, mRadius, mAngle);//交叉线
 			this.drawRadarText(data, mCenter, numCount, mRadius, mAngle);//文本
-			this.drawRadarCircle(data, mCenter, numCount, mRadius, mAngle)//节点
-			this.drawRadarRegion(data, mCenter, numCount, mRadius, mAngle)//区域
+			this.drawRadarCircle(data, mCenter, numCount, mRadius, mAngle, max)//节点
+			this.drawRadarRegion(data, mCenter, numCount, mRadius, mAngle, max)//区域
 		};
 		
-		Radar.prototype.drawRadarRegion = function (mData, mCenter, numCount, mRadius, mAngle) {
-		  this.ctx.beginPath();
-		  for (var m = 0; m < numCount; m++) {
-		    var x = mCenter + mRadius * Math.cos(mAngle * m) * mData[m].value / 100;
-		    var y = mCenter + mRadius * Math.sin(mAngle * m) * mData[m].value / 100;
-		    this.ctx.lineTo(x, y);
-		  }
-		  this.ctx.closePath();
-		  this.ctx.fillStyle = this.itemFillColor;
-		  this.ctx.fill();
+		Radar.prototype.drawRadarRegion = function (mData, mCenter, numCount, mRadius, mAngle, max) {
+			this.ctx.beginPath();
+			for (var m = 0; m < numCount; m++) {
+				var val = mData[m].value;
+				if(val > max){
+					val = max;
+				}
+				var x = mCenter + mRadius * Math.cos(mAngle * m) * val / max;
+				var y = mCenter + mRadius * Math.sin(mAngle * m) * val / max;
+				this.ctx.lineTo(x, y);
+			}
+			this.ctx.closePath();
+			this.ctx.fillStyle = this.itemFillColor;
+			this.ctx.fill();
 		};
 		
 		//画雷达值小圆点
-		Radar.prototype.drawRadarCircle = function (mData, mCenter, numCount, mRadius, mAngle) {
+		Radar.prototype.drawRadarCircle = function (mData, mCenter, numCount, mRadius, mAngle, max) {
 			for (var i = 0; i < numCount; i++) {
-				var x = mCenter + mRadius * Math.cos(mAngle * i) * mData[i].value / 100;
-				var y = mCenter + mRadius * Math.sin(mAngle * i) * mData[i].value / 100;
+				var val = mData[i].value;
+				if(val > max){
+					val = max;
+				}
+				var x = mCenter + mRadius * Math.cos(mAngle * i) * val / max;
+				var y = mCenter + mRadius * Math.sin(mAngle * i) * val / max;
 				this.ctx.beginPath();
 				this.ctx.arc(x, y, this.itemPointWeight, 0, Math.PI * 2);
 				this.ctx.fillStyle = this.itemColor; 
@@ -123,7 +142,6 @@
 			for (var n = 0; n < numCount; n++) {
 				var x = mCenter + mRadius * Math.cos(mAngle * n);
 				var y = mCenter + mRadius * Math.sin(mAngle * n);
-				// radCtx.fillText(mData[n][0], x, y); 
 				//通过不同的位置，调整文本的显示位置 
 				if (mAngle * n >= 0 && mAngle * n <= Math.PI / 2) {
 					this.ctx.fillText(mData[n].key, x + 5, y + 5);
