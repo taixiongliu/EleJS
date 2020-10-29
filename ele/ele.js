@@ -6,7 +6,11 @@ var Ele = window.Ele = Ele || {
 	
 	initPath:function(path){
 		if(typeof path === "string"){
-			this._pathPrefix = "/"+path+"/";
+			if(path.charAt(0) == "/"){
+				this._pathPrefix = path+"/";
+			}else{
+				this._pathPrefix = "/"+path+"/";
+			}
 		}
 		
 	},
