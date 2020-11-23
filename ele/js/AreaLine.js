@@ -1,4 +1,4 @@
-// var brokenLine = new Ele.BrokenLine({padding:40,showTitle:true});
+// var areaLine = new Ele.AreaLine({padding:40,showTitle:true});
 // var data = {
 // 	title:"线路统计图Ab123"
 // 	,max:1000
@@ -8,9 +8,9 @@
 // 	,values:[{lineId:1,value:{a:{key:"", value:30},b:{key:"90", value:90},c:{key:"50", value:50},d:{key:"60", value:60},e:{key:"80", value:80}}},
 // {lineId:2,value:{a:{key:"", value:200},b:{key:"600", value:600},c:{key:"300", value:300},d:{key:"400", value:400},e:{key:"600", value:600}}}]
 // 	};
-// brokenLine.draw(data);
+// areaLine.draw(data);
 (function() {
-	var BrokenLine = Ele.BrokenLine = function(opts) {
+	var AreaLine = Ele.AreaLine = function(opts) {
 		this.eleType = "canvas";
 		this.ele;
 		this.ctx;
@@ -37,7 +37,7 @@
 		this._rectH = 16;//方形高度
 		this._txt_h_offset = 6;//字体左右对齐偏移量
 
-		BrokenLine.prototype._init = function() {
+		AreaLine.prototype._init = function() {
 			if (typeof(opts) != "object") {
 				return;
 			}
@@ -84,7 +84,7 @@
 				this.itemPointWeight = opts.itemPointWeight;
 			}
 		};
-		BrokenLine.prototype._create = function() {
+		AreaLine.prototype._create = function() {
 			this._init();
 
 			this.ele = document.createElement("canvas");
@@ -96,11 +96,11 @@
 			this.ctx = this.ele.getContext("2d");
 		};
 
-		BrokenLine.prototype.setContainerById = function(id) {
+		AreaLine.prototype.setContainerById = function(id) {
 			document.getElementById(id).appendChild(this.ele);
 		};
 		//画折线图
-		BrokenLine.prototype.draw = function(data) {
+		AreaLine.prototype.draw = function(data) {
 			if(typeof(data) != "object"){
 				return ;
 			}
@@ -133,7 +133,7 @@
 			this.drawData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY);
 			
 		};
-		BrokenLine.prototype.drawData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY) {
+		AreaLine.prototype.drawData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY) {
 			var values = this.data.values;
 			if(typeof(this.data.nodes) == "undefined"){
 				for(var i = 0; i < values.length; i ++){
@@ -177,7 +177,7 @@
 				}
 			}
 		};
-		BrokenLine.prototype.drawArrayData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, data, color) {
+		AreaLine.prototype.drawArrayData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, data, color) {
 			if(typeof(this.data.max) != "number"){
 				return ;
 			}
@@ -187,8 +187,8 @@
 			this.ctx.strokeStyle = color;
 			this.ctx.lineWidth = this.itemlineWidth;
 			this.ctx.beginPath();
-			var sx;
-			var sy;
+			
+			var points = [];
 			
 			//横向刻度值
 			for (var i = 0; i < len; i++) {
@@ -202,8 +202,8 @@
 				//小圆点
 				this.ctx.beginPath();
 				this.ctx.arc(x, y, this.itemPointWeight, 0, Math.PI * 2);
-				this.ctx.closePath();
 				this.ctx.fill();
+				this.ctx.closePath();
 				
 				//数据文本
 				this.ctx.beginPath();
@@ -211,20 +211,12 @@
 				this.ctx.closePath();
 				this.ctx.stroke();
 			
-				if (i != 0) {
-					//连线
-					this.ctx.beginPath();
-					this.drawLinePx(sx, sy, x, y);
-					this.ctx.closePath();
-					this.ctx.stroke();
-				}
-				sx = x;
-				sy = y;
+				points.push({x:x,y:y})
 			}
-			
+			this.drawQuadraticCurvePx(points, vNodeX, hNodeY);
 		};
 		
-		BrokenLine.prototype.drawEdgeLine = function(nodeHeight,vNodeX, nodeWidth, hNodeY, top) {
+		AreaLine.prototype.drawEdgeLine = function(nodeHeight,vNodeX, nodeWidth, hNodeY, top) {
 			this.ctx.strokeStyle = this.edgeLineColor;
 			this.ctx.lineWidth = this.edgelineWidth; //设置线宽
 			this.ctx.beginPath();
@@ -254,7 +246,7 @@
 			this.ctx.closePath();
 			this.ctx.stroke();
 		};
-		BrokenLine.prototype.drawEdgeText = function(nodeHeight, vNodeX, nodeWidth, hNodeY, top) {
+		AreaLine.prototype.drawEdgeText = function(nodeHeight, vNodeX, nodeWidth, hNodeY, top) {
 			//竖向刻度值
 			this.ctx.fillStyle = this.edgeLineColor;
 			this.ctx.textBaseline = 'top';
@@ -271,7 +263,7 @@
 				this.ctx.textAlign = 'left';
 			}
 		};
-		BrokenLine.prototype.drawTitleText = function() {
+		AreaLine.prototype.drawTitleText = function() {
 			if(typeof(this.data.nodes) == "undefined"){
 				return ;
 			}
@@ -306,12 +298,46 @@
 			}
 			
 		};
-		BrokenLine.prototype.drawLinePx = function(sx, sy, ex, ey) {
+		AreaLine.prototype.drawLinePx = function(sx, sy, ex, ey) {
 			this.ctx.moveTo(sx, sy);
 			this.ctx.lineTo(ex, ey);
 		};
+		AreaLine.prototype.drawQuadraticCurvePx = function(points, vNodeX, hNodeY) {
+			if(points.length < 2){
+				return ;
+			}
+			
+			var cx;
+			var cy;
+			this.ctx.fillStyle=this.edgeLineHintColor;
+			this.ctx.beginPath();
+			this.ctx.moveTo(vNodeX, hNodeY);
+			this.ctx.lineTo(points[0].x,points[0].y);
+			for(var i = 1; i < points.length; i ++){
+				this.ctx.lineTo(points[i].x,points[i].y);
+				// var tempX = (points[i].x + points[i-1].x)/2;
+				// var tempY = (points[i].y + points[i-1].y)/2;
+
+				// if(i == 2){
+				// 	this.ctx.moveTo(points[i-2].x, points[i-2].y);
+				// 	this.ctx.quadraticCurveTo(points[i-1].x -20, points[i-1].y-20, points[i-1].x, points[i-1].y);
+					
+				// 	this.ctx.stroke();
+				// 	cx = tempX;
+				// 	cy = tempY;
+				// 	continue;
+				// }
+			}
+			this.ctx.lineTo(points[points.length - 1].x, hNodeY);
+			//this.ctx.lineTo(0, 0);
+			
+			// //
+			//this.ctx.stroke();
+			this.ctx.fill();
+			this.ctx.closePath();
+		};
 		
-		BrokenLine.prototype.strLen = function(str){
+		AreaLine.prototype.strLen = function(str){
 			var len = 0;
 			for(var i = 0; i < str.length; i ++){
 				if(this.filter.isChinese(str.charAt(i))){
