@@ -2,7 +2,7 @@
 // var data = [{key:"A",value:85},{key:"B",value:30},{key:"C",value:80},{key:"D",value:45},{key:"E",value:70},{key:"F",value:90}];
 // radar.draw(data, 200);
 (function(){
-	var Radar = Ele.Radar = function(opts){
+	var Radar = Ele.Charts.Radar = function(opts){
 		this.eleType = "canvas";
 		this.ele;
 		this.ctx;

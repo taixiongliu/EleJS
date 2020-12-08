@@ -1,15 +1,16 @@
-// var areaLine = new Ele.AreaLine({padding:40,showTitle:true});
+// var brokenLine = new Ele.BrokenLine({padding:40,showTitle:true});
 // var data = {
 // 	title:"线路统计图Ab123"
 // 	,max:1000
 // 	,X:[{text:"AAA",fieldName:"a"},{text:"B",fieldName:"b"},{text:"C",fieldName:"c"},{text:"D",fieldName:"d"},{text:"E",fieldName:"e"}]
 // 	,Y:["0","200","400","600","800","1000"]
-// 	,nodes:[{id:1,name:"分支线",color:"#41BABD", areaColor:"rgba(94,204,204, 0.6)"},{id:2,name:"总线Ab123",color:"#b502a4",areaColor:"rgba(211,0,201, 0.6)"}]
-// 	,values:[{lineId:1,value:{a:{key:"", value:200},b:{key:"600", value:600},c:{key:"300", value:300},d:{key:"400", value:400},e:{key:"600", value:600}}},{lineId:2,value:{a:{key:"", value:30},b:{key:"90", value:90},c:{key:"50", value:50},d:{key:"60", value:60},e:{key:"80", value:80}}}]
+// 	,nodes:[{id:1,name:"总线Ab123",color:"#ff6600"},{id:2,name:"分支线",color:"#41BABD"}]
+// 	,values:[{lineId:1,value:{a:{key:"", value:30},b:{key:"90", value:90},c:{key:"50", value:50},d:{key:"60", value:60},e:{key:"80", value:80}}},
+// {lineId:2,value:{a:{key:"", value:200},b:{key:"600", value:600},c:{key:"300", value:300},d:{key:"400", value:400},e:{key:"600", value:600}}}]
 // 	};
-// areaLine.draw(data);
-// (function() {
-	var AreaLine = Ele.AreaLine = function(opts) {
+// brokenLine.draw(data);
+(function() {
+	var BrokenLine = Ele.Charts.BrokenLine = function(opts) {
 		this.eleType = "canvas";
 		this.ele;
 		this.ctx;
@@ -27,7 +28,6 @@
 		this.itemColor = "#41BABD"; //节点颜色a0e0a3
 		this.itemlineWidth = 1; //节点线条宽度
 		this.itemPointWeight = 4; //节点半径
-		this.offset = 0.4; //偏移量 0-1之间 落差百分比
 		this.data;
 		this.filter = new Ele.Filter();
 		
@@ -37,7 +37,7 @@
 		this._rectH = 16;//方形高度
 		this._txt_h_offset = 6;//字体左右对齐偏移量
 
-		AreaLine.prototype._init = function() {
+		BrokenLine.prototype._init = function() {
 			if (typeof(opts) != "object") {
 				return;
 			}
@@ -83,11 +83,8 @@
 			if (typeof(opts.itemPointWeight) == "number") {
 				this.itemPointWeight = opts.itemPointWeight;
 			}
-			if (typeof(opts.offset) == "number") {
-				this.offset = opts.offset;
-			}
 		};
-		AreaLine.prototype._create = function() {
+		BrokenLine.prototype._create = function() {
 			this._init();
 
 			this.ele = document.createElement("canvas");
@@ -99,11 +96,11 @@
 			this.ctx = this.ele.getContext("2d");
 		};
 
-		AreaLine.prototype.setContainerById = function(id) {
+		BrokenLine.prototype.setContainerById = function(id) {
 			document.getElementById(id).appendChild(this.ele);
 		};
-		//画区域图
-		AreaLine.prototype.draw = function(data) {
+		//画折线图
+		BrokenLine.prototype.draw = function(data) {
 			if(typeof(data) != "object"){
 				return ;
 			}
@@ -136,7 +133,7 @@
 			this.drawData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY);
 			
 		};
-		AreaLine.prototype.drawData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY) {
+		BrokenLine.prototype.drawData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY) {
 			var values = this.data.values;
 			if(typeof(this.data.nodes) == "undefined"){
 				for(var i = 0; i < values.length; i ++){
@@ -174,17 +171,13 @@
 					}
 				}
 				if(node == null || typeof(node.color) != "string"){
-					this.drawArrayData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, arr, this.itemColor, this.edgeLineColor);
+					this.drawArrayData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, arr, this.itemColor);
 				}else{
-					var areaColor = this.edgeLineHintColor;
-					if(typeof(node.areaColor) == "string"){
-						areaColor = node.areaColor;
-					}
-					this.drawArrayData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, arr, node.color, areaColor);
+					this.drawArrayData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, arr, node.color);
 				}
 			}
 		};
-		AreaLine.prototype.drawArrayData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, data, color, areaColor) {
+		BrokenLine.prototype.drawArrayData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, data, color) {
 			if(typeof(this.data.max) != "number"){
 				return ;
 			}
@@ -194,8 +187,8 @@
 			this.ctx.strokeStyle = color;
 			this.ctx.lineWidth = this.itemlineWidth;
 			this.ctx.beginPath();
-			
-			var points = [];
+			var sx;
+			var sy;
 			
 			//横向刻度值
 			for (var i = 0; i < len; i++) {
@@ -209,8 +202,8 @@
 				//小圆点
 				this.ctx.beginPath();
 				this.ctx.arc(x, y, this.itemPointWeight, 0, Math.PI * 2);
-				this.ctx.fill();
 				this.ctx.closePath();
+				this.ctx.fill();
 				
 				//数据文本
 				this.ctx.beginPath();
@@ -218,12 +211,20 @@
 				this.ctx.closePath();
 				this.ctx.stroke();
 			
-				points.push({x:x,y:y})
+				if (i != 0) {
+					//连线
+					this.ctx.beginPath();
+					this.drawLinePx(sx, sy, x, y);
+					this.ctx.closePath();
+					this.ctx.stroke();
+				}
+				sx = x;
+				sy = y;
 			}
-			this.drawQuadraticCurvePx(points, vNodeX, hNodeY, areaColor);
+			
 		};
 		
-		AreaLine.prototype.drawEdgeLine = function(nodeHeight,vNodeX, nodeWidth, hNodeY, top) {
+		BrokenLine.prototype.drawEdgeLine = function(nodeHeight,vNodeX, nodeWidth, hNodeY, top) {
 			this.ctx.strokeStyle = this.edgeLineColor;
 			this.ctx.lineWidth = this.edgelineWidth; //设置线宽
 			this.ctx.beginPath();
@@ -253,7 +254,7 @@
 			this.ctx.closePath();
 			this.ctx.stroke();
 		};
-		AreaLine.prototype.drawEdgeText = function(nodeHeight, vNodeX, nodeWidth, hNodeY, top) {
+		BrokenLine.prototype.drawEdgeText = function(nodeHeight, vNodeX, nodeWidth, hNodeY, top) {
 			//竖向刻度值
 			this.ctx.fillStyle = this.edgeLineColor;
 			this.ctx.textBaseline = 'top';
@@ -270,7 +271,7 @@
 				this.ctx.textAlign = 'left';
 			}
 		};
-		AreaLine.prototype.drawTitleText = function() {
+		BrokenLine.prototype.drawTitleText = function() {
 			if(typeof(this.data.nodes) == "undefined"){
 				return ;
 			}
@@ -305,74 +306,12 @@
 			}
 			
 		};
-		AreaLine.prototype.drawLinePx = function(sx, sy, ex, ey) {
+		BrokenLine.prototype.drawLinePx = function(sx, sy, ex, ey) {
 			this.ctx.moveTo(sx, sy);
 			this.ctx.lineTo(ex, ey);
 		};
-		AreaLine.prototype.drawQuadraticCurvePx = function(points, vNodeX, hNodeY, areaColor) {
-			if(points.length < 2){
-				return ;
-			}
-			
-			this.ctx.fillStyle = areaColor;
-			this.ctx.beginPath();
-			this.ctx.moveTo(vNodeX, hNodeY);
-			this.ctx.lineTo(points[0].x,points[0].y);
-			var px = points[0].x;
-			var py = points[0].y;
-			//横坐标均等，两次找中点被划分为四段
-			var offsetX = (points[1].x - points[0].x)/4 * this.offset;
-			for(var i = 1; i < points.length; i ++){
-				//两点间的中点
-				var centerX = (points[i].x + points[i-1].x)/2;
-				var centerY = (points[i].y + points[i-1].y)/2;
-				var type = (points[i].y - points[i-1].y) > 0?2:1;//1=增 2=减
-				
-				//中点距前一点的中点
-				var tempX = (centerX + points[i-1].x)/2;
-				var tempY = (centerY + points[i-1].y)/2;
-				console.log(tempX+"-"+tempY);
-				var offsetY = 0;
-				if(type == 1){
-					offsetY = (points[i-1].y - tempY) * this.offset;
-					tempX = tempX + offsetX;
-					tempY = tempY + offsetY;
-				}else{
-					offsetY = (tempY - points[i-1].y) * this.offset;
-					tempX = tempX + offsetX;
-					tempY = tempY - offsetY;
-				}
-				console.log(offsetX+"-"+offsetY);
-				//中点前半段
-				this.ctx.quadraticCurveTo(tempX, tempY, centerX, centerY);
-				
-				//中点距后一点的中点
-				tempX = (centerX + points[i].x)/2;
-				tempY = (centerY + points[i].y)/2;
-				offsetY = 0;
-				if(type == 1){
-					offsetY = (tempY - points[i].y) * this.offset;
-					tempX = tempX - offsetX;
-					tempY = tempY - offsetY;
-				}else{
-					offsetY = (points[i].y - tempY) * this.offset;
-					tempX = tempX - offsetX;
-					tempY = tempY + offsetY;
-				}
-				//中点后半段
-				this.ctx.quadraticCurveTo(tempX, tempY, points[i].x, points[i].y);
-				this.ctx.stroke();
-			}
-			this.ctx.lineTo(points[points.length - 1].x, hNodeY);
-			//this.ctx.lineTo(0, 0);
-			
-			// //
-			// this.ctx.stroke();
-			this.ctx.fill();
-			this.ctx.closePath();
-		};
 		
-		AreaLine.prototype.strLen = function(str){
+		BrokenLine.prototype.strLen = function(str){
 			var len = 0;
 			for(var i = 0; i < str.length; i ++){
 				if(this.filter.isChinese(str.charAt(i))){

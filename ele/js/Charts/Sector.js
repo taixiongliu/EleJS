@@ -20,7 +20,7 @@
 // 	]};
 // sector.draw(data);
 (function() {
-	var Sector = Ele.Sector = function(opts) {
+	var Sector = Ele.Charts.Sector = function(opts) {
 		this.eleType = "canvas";
 		this.ele;
 		this.ctx;

@@ -1,4 +1,5 @@
 var Ele = window.Ele = Ele || {
+	Charts : {},//目录对象申明
 	_loadCallback:{},
 	_loadModels:0,
 	_loadCount:0,
@@ -81,10 +82,10 @@ var Ele = window.Ele = Ele || {
 	 * 加载图表类控件 自动加载
 	 */
 	_loadEchart:function(){
-		this._loadJS("Radar");
-		this._loadJS("BrokenLine");
-		this._loadJS("AreaLine");
-		this._loadJS("Sector");
+		this._loadJS("Charts/Radar");
+		this._loadJS("Charts/BrokenLine");
+		this._loadJS("Charts/AreaLine");
+		this._loadJS("Charts/Sector");
 	},
 	
 	/**
