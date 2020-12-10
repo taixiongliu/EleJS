@@ -1,4 +1,4 @@
-// var sector = new Ele.Sector({showTitle:true});
+// var sector = new Ele.Charts.Sector({showTitle:true});
 // var data = {title:"用户人群分布",value:[
 // 		{
 // 			title: '15-20岁',

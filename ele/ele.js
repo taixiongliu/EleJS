@@ -86,6 +86,7 @@ var Ele = window.Ele = Ele || {
 		this._loadJS("Charts/BrokenLine");
 		this._loadJS("Charts/AreaLine");
 		this._loadJS("Charts/Sector");
+		this._loadJS("Charts/Histogram");
 	},
 	
 	/**

@@ -1,4 +1,4 @@
-// var areaLine = new Ele.AreaLine({padding:40,showTitle:true});
+// var areaLine = new Ele.Charts.AreaLine({padding:40,showTitle:true});
 // var data = {
 // 	title:"线路统计图Ab123"
 // 	,max:1000

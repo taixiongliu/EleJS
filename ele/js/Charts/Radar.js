@@ -1,4 +1,4 @@
-// var radar = new Ele.Radar();
+// var radar = new Ele.Charts.Radar();
 // var data = [{key:"A",value:85},{key:"B",value:30},{key:"C",value:80},{key:"D",value:45},{key:"E",value:70},{key:"F",value:90}];
 // radar.draw(data, 200);
 (function(){

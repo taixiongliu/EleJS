@@ -1,16 +1,20 @@
-// var brokenLine = new Ele.Charts.BrokenLine({padding:40,showTitle:true});
+// var histogram = new Ele.Charts.Histogram({padding:40,showTitle:true,showBrokenLine:true});
 // var data = {
 // 	title:"线路统计图Ab123"
 // 	,max:1000
 // 	,X:[{text:"AAA",fieldName:"a"},{text:"B",fieldName:"b"},{text:"C",fieldName:"c"},{text:"D",fieldName:"d"},{text:"E",fieldName:"e"}]
 // 	,Y:["0","200","400","600","800","1000"]
 // 	,nodes:[{id:1,name:"总线Ab123",color:"#ff6600"},{id:2,name:"分支线",color:"#41BABD"}]
-// 	,values:[{lineId:1,value:{a:{key:"", value:30},b:{key:"90", value:90},c:{key:"50", value:50},d:{key:"60", value:60},e:{key:"80", value:80}}},
-// {lineId:2,value:{a:{key:"", value:200},b:{key:"600", value:600},c:{key:"300", value:300},d:{key:"400", value:400},e:{key:"600", value:600}}}]
+// 	,values:[{lineId:1,value:{a:{key:"30", value:30},b:{key:"90", value:90},c:{key:"50", value:50},d:{key:"60", value:60},e:{key:"80", value:80}}},
+// {lineId:2,value:{a:{key:"200", value:200},b:{key:"600", value:600},c:{key:"300", value:300},d:{key:"400", value:400},e:{key:"600", value:600}}}]
 // 	};
-// brokenLine.draw(data);
+// histogram.draw(data);
+
+// main.add(ta);
+// main.add(bt);
+// main.add(histogram);
 (function() {
-	var BrokenLine = Ele.Charts.BrokenLine = function(opts) {
+	var Histogram = Ele.Charts.Histogram = function(opts) {
 		this.eleType = "canvas";
 		this.ele;
 		this.ctx;
@@ -27,7 +31,8 @@
 		this.showTitle = false;
 		this.itemColor = "#41BABD"; //节点颜色a0e0a3
 		this.itemlineWidth = 1; //节点线条宽度
-		this.itemPointWeight = 4; //节点半径
+		this.itemWidth = 20; //柱状宽度，当长度不够时自动计算
+		this.showBrokenLine = false;//是否显示折线
 		this.data;
 		this.filter = new Ele.Filter();
 		
@@ -35,9 +40,9 @@
 		this._title_height = 36;//标题布局高度
 		this._rectW = 16;//方形宽度
 		this._rectH = 16;//方形高度
-		this._txt_h_offset = 6;//字体左右对齐偏移量
+		this._txt_h_offset = 12;//字体左右对齐偏移量
 
-		BrokenLine.prototype._init = function() {
+		Histogram.prototype._init = function() {
 			if (typeof(opts) != "object") {
 				return;
 			}
@@ -80,11 +85,14 @@
 			if (typeof(opts.itemlineWidth) == "number") {
 				this.itemlineWidth = opts.itemlineWidth;
 			}
-			if (typeof(opts.itemPointWeight) == "number") {
-				this.itemPointWeight = opts.itemPointWeight;
+			if (typeof(opts.itemWidth) == "number") {
+				this.itemWidth = opts.itemWidth;
+			}
+			if (typeof(opts.showBrokenLine) == "boolean") {
+				this.showBrokenLine = opts.showBrokenLine;
 			}
 		};
-		BrokenLine.prototype._create = function() {
+		Histogram.prototype._create = function() {
 			this._init();
 
 			this.ele = document.createElement("canvas");
@@ -96,11 +104,11 @@
 			this.ctx = this.ele.getContext("2d");
 		};
 
-		BrokenLine.prototype.setContainerById = function(id) {
+		Histogram.prototype.setContainerById = function(id) {
 			document.getElementById(id).appendChild(this.ele);
 		};
 		//画折线图
-		BrokenLine.prototype.draw = function(data) {
+		Histogram.prototype.draw = function(data) {
 			if(typeof(data) != "object"){
 				return ;
 			}
@@ -125,7 +133,7 @@
 			}
 			var nodeHeight = vheight/(data.Y.length - 1);
 			var vNodeX = this.padding + this._node_lenght + this.edgeLeftSpacing;
-			var nodeWidth = hwidth/(data.X.length - 1);
+			var nodeWidth = hwidth/(data.X.length);
 			var hNodeY =  this.height - this.padding - this._node_lenght - this.edgeBottomSpacing;
 			
 			this.drawEdgeLine(nodeHeight, vNodeX, nodeWidth, hNodeY, top);
@@ -133,12 +141,18 @@
 			this.drawData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY);
 			
 		};
-		BrokenLine.prototype.drawData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY) {
+		Histogram.prototype.drawData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY) {
 			var values = this.data.values;
 			var nodes = [];
 			if(typeof(this.data.nodes) == "object"){
 				nodes = this.data.nodes;
 			}
+			var iWidth = this.itemWidth;
+			if(values.length * iWidth > nodeWidth){
+				iWidth = nodeWidth/values.length;
+			}
+			var offsetX = (values.length * iWidth)/2;
+			
 			for(var i = 0; i < values.length; i ++){
 				var value = values[i].value;
 				var arr = [];
@@ -160,13 +174,15 @@
 					}
 				}
 				if(node == null || typeof(node.color) != "string"){
-					this.drawArrayData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, arr, this.itemColor);
+					this.drawArrayData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, arr, this.itemColor,iWidth,offsetX);
 				}else{
-					this.drawArrayData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, arr, node.color);
+					this.drawArrayData(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, arr, node.color,iWidth,offsetX);
 				}
+				//更新offset
+				offsetX -= iWidth;
 			}
 		};
-		BrokenLine.prototype.drawArrayData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, data, color) {
+		Histogram.prototype.drawArrayData = function(vheight, nodeHeight, vNodeX, nodeWidth, hNodeY, data, color,iWidth,offsetX) {
 			if(typeof(this.data.max) != "number"){
 				return ;
 			}
@@ -181,26 +197,28 @@
 			
 			//横向刻度值
 			for (var i = 0; i < len; i++) {
-				var x = vNodeX + (i * nodeWidth);
+				var x = vNodeX + ((i+0.5) * nodeWidth);
 				var val = new Number(data[i].value);
 				if (val > this.data.max) {
 					val = this.data.max;
 				}
 				var y = hNodeY - ((vheight * val) / this.data.max);
 				
-				//小圆点
+				//柱条
 				this.ctx.beginPath();
-				this.ctx.arc(x, y, this.itemPointWeight, 0, Math.PI * 2);
+				this.ctx.fillRect(x-offsetX, y, iWidth, hNodeY - y);
 				this.ctx.closePath();
 				this.ctx.fill();
 				
 				//数据文本
 				this.ctx.beginPath();
-				this.ctx.fillText(data[i].key, x + this._txt_h_offset, y);
+				this.ctx.fillText(data[i].key, x-offsetX, y-this._txt_h_offset);
 				this.ctx.closePath();
 				this.ctx.stroke();
 			
-				if (i != 0) {
+				x -= offsetX-iWidth/2;
+			
+				if (this.showBrokenLine && i != 0) {
 					//连线
 					this.ctx.beginPath();
 					this.drawLinePx(sx, sy, x, y);
@@ -213,7 +231,7 @@
 			
 		};
 		
-		BrokenLine.prototype.drawEdgeLine = function(nodeHeight,vNodeX, nodeWidth, hNodeY, top) {
+		Histogram.prototype.drawEdgeLine = function(nodeHeight,vNodeX, nodeWidth, hNodeY, top) {
 			this.ctx.strokeStyle = this.edgeLineColor;
 			this.ctx.lineWidth = this.edgelineWidth; //设置线宽
 			this.ctx.beginPath();
@@ -236,14 +254,14 @@
 			}
 			this.drawLinePx(vNodeX - this._node_lenght, hNodeY, this.width - this.padding, hNodeY);
 			//横向刻度标
-			for (var i = 0; i < this.data.X.length; i++) {
+			for (var i = 0; i <= this.data.X.length; i++) {
 				var x = i * nodeWidth + vNodeX;
 				this.drawLinePx(x, hNodeY, x, hNodeY+this._node_lenght);
 			}
 			this.ctx.closePath();
 			this.ctx.stroke();
 		};
-		BrokenLine.prototype.drawEdgeText = function(nodeHeight, vNodeX, nodeWidth, hNodeY, top) {
+		Histogram.prototype.drawEdgeText = function(nodeHeight, vNodeX, nodeWidth, hNodeY, top) {
 			//竖向刻度值
 			this.ctx.fillStyle = this.edgeLineColor;
 			this.ctx.textBaseline = 'top';
@@ -254,13 +272,13 @@
 			}
 			//横向刻度值
 			for (var i = 0; i < this.data.X.length; i++) {
-				var x = i * nodeWidth + vNodeX;
-				this.ctx.textAlign = 'right';
+				var x = (i+0.5) * nodeWidth + vNodeX;
+				this.ctx.textAlign = 'center';
 				this.ctx.fillText(this.data.X[i].text, x, hNodeY+this._node_lenght);
 				this.ctx.textAlign = 'left';
 			}
 		};
-		BrokenLine.prototype.drawTitleText = function() {
+		Histogram.prototype.drawTitleText = function() {
 			if(typeof(this.data.nodes) == "undefined"){
 				return ;
 			}
@@ -295,12 +313,12 @@
 			}
 			
 		};
-		BrokenLine.prototype.drawLinePx = function(sx, sy, ex, ey) {
+		Histogram.prototype.drawLinePx = function(sx, sy, ex, ey) {
 			this.ctx.moveTo(sx, sy);
 			this.ctx.lineTo(ex, ey);
 		};
 		
-		BrokenLine.prototype.strLen = function(str){
+		Histogram.prototype.strLen = function(str){
 			var len = 0;
 			for(var i = 0; i < str.length; i ++){
 				if(this.filter.isChinese(str.charAt(i))){
