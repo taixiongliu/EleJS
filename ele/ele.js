@@ -1,5 +1,12 @@
 var Ele = window.Ele = Ele || {
+	models:["Layout","AjaxLoad","Img","Alert","Label",
+		"Button","TextBox","TextArea","CheckBox","DateBox",
+		"ListGrid","TreeNode","MenuList","PopWindow"
+	],
+	mUtils:["Ajax","WinInner","Filter"],
+	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
 	Charts : {},//目录对象申明
+	Utils : {},//目录对象申明
 	_loadCallback:{},
 	_loadModels:0,
 	_loadCount:0,
@@ -28,42 +35,74 @@ var Ele = window.Ele = Ele || {
 			throw "Ele load model must be a array.";
 			return;
 		}
-		this._loadUtil();
-		this._loadEchart();
+		
 		this._loadModels = models.length;
 		this._loadCount = 0;
-		for(var i = 0; i < models.length; i++) {
-			this._loadCSS(models[i]);
-			this._loadJS(models[i], this._loadHandler);
+		
+		//遍历加载
+		for(var i = 0; i < models.length; i++){
+			//布局加载项检查
+			var isView = false;
+			for(var x = 0; x < this.models.length; x ++){
+				if(this.models[x] == models[i]){
+					isView = true;
+					this._loadViews([models[i]]);
+					break;
+				}
+			}
+			if(isView){
+				continue;
+			}
+			//工具类加载项检查
+			var isUtil = false;
+			for(var y = 0; y < this.mUtils.length; y ++){
+				if(this.mUtils[y] == models[i]){
+					isUtil = true;
+					this._loadUtils([models[i]]);
+					break;
+				}
+			}
+			if(isUtil){
+				continue;
+			}
+			//统计图类加载项检查
+			var isChart = false;
+			for(var z = 0; z < this.mCharts.length; z ++){
+				if(this.mCharts[z] == models[i]){
+					isChart = true;
+					this._loadCharts([models[i]]);
+					break;
+				}
+			}
+			if(isChart){
+				continue;
+			}
+			
+			console.log("Ele load model '"+models[i]+"' not found.");
+			throw "Ele load model '"+models[i]+"' not found.";
 		}
 	},
 	
 	/**
-	 * 加载工具类 自动加载
+	 * 全局加载
 	 */
 	load:function(callback){
 		this._loadCallback = callback || function() {};
-		var models = [];
-		models.push("Layout");
-		models.push("AjaxLoad");
-		models.push("Img");
-		models.push("Alert");
-		models.push("Label");
-		models.push("Button");
-		models.push("TextBox");
-		models.push("TextArea");
-		models.push("CheckBox");
-		models.push("DateBox");
-		models.push("ListGrid");
-		models.push("TreeNode");
-		models.push("MenuList");
-		models.push("PopWindow");
-		//models.push("echarts/Radar");
 		
-		this._loadUtil();
-		this._loadEchart();
-		this._loadModels = models.length;
+		//JS加载总量
+		this._loadModels = this.models.length +this.mUtils.length + this.mCharts.length;
 		this._loadCount = 0;
+		
+		//全部加载
+		this._loadViews(this.models);
+		this._loadUtils(this.mUtils);
+		this._loadCharts(this.mCharts);
+	},
+	
+	/**
+	 * 加载布局类 
+	 */
+	_loadViews:function(models){
 		for(var i = 0; i < models.length; i++) {
 			this._loadCSS(models[i]);
 			this._loadJS(models[i], this._loadHandler);
@@ -73,20 +112,18 @@ var Ele = window.Ele = Ele || {
 	/**
 	 * 加载工具类 自动加载
 	 */
-	_loadUtil:function(){
-		this._loadJS("Ajax");
-		this._loadJS("WinInner");
-		this._loadJS("Filter");
+	_loadUtils:function(utils){
+		for(var i = 0; i < utils.length; i++) {
+			this._loadJS("Utils/"+utils[i], this._loadHandler);
+		}
 	},
 	/**
 	 * 加载图表类控件 自动加载
 	 */
-	_loadEchart:function(){
-		this._loadJS("Charts/Radar");
-		this._loadJS("Charts/BrokenLine");
-		this._loadJS("Charts/AreaLine");
-		this._loadJS("Charts/Sector");
-		this._loadJS("Charts/Histogram");
+	_loadCharts:function(charts){
+		for(var i = 0; i < charts.length; i++) {
+			this._loadJS("Charts/"+charts[i], this._loadHandler);
+		}
 	},
 	
 	/**

@@ -1,5 +1,5 @@
 (function(){
-	var Filter = Ele.Filter = function() {
+	var Filter = Ele.Utils.Filter = function() {
 		this.eleType = "util";
 		this.ele;
 		this._sqlkey = ["*", "/", "-", "'", "+"];

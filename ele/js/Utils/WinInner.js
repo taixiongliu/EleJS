@@ -1,5 +1,5 @@
 (function(){
-	var WinInner = Ele.WinInner = function() {
+	var WinInner = Ele.Utils.WinInner = function() {
 		this.eleType = "util";
 		this._width;
 		this._height;

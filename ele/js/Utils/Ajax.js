@@ -1,5 +1,5 @@
 (function(){
-	var Ajax = Ele.Ajax = function(){
+	var Ajax = Ele.Utils.Ajax = function(){
 		this.eleType = "util";
 		this.ele;
 		this._method = 'POST';

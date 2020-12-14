@@ -2,12 +2,46 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
-		<script src="ele/ele.js" type="text/javascript" charset="utf-8"></script>
-		<script src="index.js" type="text/javascript" charset="utf-8"></script>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta name="Description" content=""/>
+		<meta name="Keywords" content=""/>
+		<title>EleJS</title>
+		<script type="text/javascript" charset="utf-8" src="index.js"></script>
 		<link rel="stylesheet" type="text/css" href="index.css"/>
-		<link rel="stylesheet" type="text/css" href="ele/ele.css"/>
 	</head>
 	<body>
+		<div class="header" align="center">
+			<div class="header_panel" align="left">
+				<div class="header_left">
+					EleJS
+				</div>
+				<div class="header_right" align="right">
+					<div class="search_view" align="center">
+						<input type="text" placeholder="搜索" class="search_input">
+					</div>
+				</div>
+				<div class="cl"></div>
+			</div>
+		</div>
+		<div class="content" align="center">
+			<div class="content_panel" align="left">
+				<div class="menu_list">
+					<div class="menu_item_selected">首页</div>
+					<div class="menu_item" onclick="openPage('login/index.html')">登录模版</div>
+					<div class="menu_item" onclick="openPage('admin/index.html')">后台模版</div>
+					<div class="menu_title mt16">
+						组件
+					</div>
+					<div class="menu_item">
+						组件内容
+					</div>
+				</div>
+				<div class="content_view">
+					首页内容
+				</div>
+				<div class="cl"></div>
+			</div>
+		</div>
 	</body>
 </html>
