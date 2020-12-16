@@ -11,8 +11,6 @@
 			
 			if(typeof(styleName) == "string"){
 				this.ele.className = styleName;
-			}else{
-				this.ele.className = "ele_layout";
 			}
 		};
 		Layout.prototype.setSize = function(width, height){
@@ -163,6 +161,9 @@
 				}
 				if(args.align){
 					panel.ele.align = args.align;
+				}
+				if(args.padding){
+					panel.ele.style.padding = args.padding;
 				}
 			}
 			panel.add(obj);

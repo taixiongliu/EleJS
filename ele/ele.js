@@ -7,6 +7,7 @@ var Ele = window.Ele = Ele || {
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
 	Charts : {},//目录对象申明
 	Utils : {},//目录对象申明
+	imports:[],//导入内容申明
 	_loadCallback:{},
 	_loadModels:0,
 	_loadCount:0,
@@ -24,6 +25,13 @@ var Ele = window.Ele = Ele || {
 	},
 	
 	/**
+	 * @param {Object} name 导入js文件名
+	 */
+	importJS:function(name){
+		this.imports.push(name);
+	},
+	
+	/**
 	 * 初始化加载设置
 	 * @param {Object} models
 	 * @param {Object} callback
@@ -36,8 +44,11 @@ var Ele = window.Ele = Ele || {
 			return;
 		}
 		
-		this._loadModels = models.length;
+		this._loadModels = this.imports.length + models.length;
 		this._loadCount = 0;
+		
+		//加载类文件
+		this._loadImports();
 		
 		//遍历加载
 		for(var i = 0; i < models.length; i++){
@@ -90,13 +101,24 @@ var Ele = window.Ele = Ele || {
 		this._loadCallback = callback || function() {};
 		
 		//JS加载总量
-		this._loadModels = this.models.length +this.mUtils.length + this.mCharts.length;
+		this._loadModels = this.imports.length + this.models.length + this.mUtils.length + this.mCharts.length;
 		this._loadCount = 0;
 		
+		
 		//全部加载
+		this._loadImports();
 		this._loadViews(this.models);
 		this._loadUtils(this.mUtils);
 		this._loadCharts(this.mCharts);
+	},
+	
+	/**
+	 * 加载类文件
+	 */
+	_loadImports:function(){
+		for(var index = 0; index < this.imports.length; index ++){
+			this._importJS(this.imports[index], this._loadHandler);
+		}
 	},
 	
 	/**
@@ -165,6 +187,36 @@ var Ele = window.Ele = Ele || {
 			};
 		}
 		script.src = this._pathPrefix+"ele/js/"+model + ".js";
+		document.getElementsByTagName('head')[0].appendChild(script);
+	},
+	
+	/**
+	 * 自定位文件导入
+	 * @param {Object} fileName 导入文件名
+	 * @param {Object} callback
+	 */
+	_importJS: function(fileName, callback) {
+		var context = this;
+		var script = document.createElement('script'),
+			fn = callback || function() {};
+	
+		script.type = 'text/javascript';
+		//IE
+		if(script.readyState) {
+			script.onreadystatechange = function() {
+				console.log(script.readyState);
+				if(script.readyState == 'loaded' || script.readyState == 'complete') {
+					script.onreadystatechange = null;
+					fn(context,fileName);
+				}
+			};
+		} else {
+			//其他浏览器
+			script.onload = function() {
+				fn(context,fileName);
+			};
+		}
+		script.src = fileName;
 		document.getElementsByTagName('head')[0].appendChild(script);
 	},
 	

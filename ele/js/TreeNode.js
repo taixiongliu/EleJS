@@ -9,6 +9,7 @@
 		this.onItemClickHandler;
 		this.count = 0;
 		this.selected = 0;
+		this.iconStatus;
 		
 		TreeNode.prototype.add = function(args){
 			if(this.count == 0){
@@ -20,7 +21,7 @@
 			}
 			if(typeof(args.selected) != "undefined"){
 				if(args.selected){
-					cellStyle = " ele_treenode_selected";
+					cellStyle += " ele_treenode_selected";
 					this.selected = args.id;
 				}
 			}
@@ -28,7 +29,7 @@
 			item.setAlign("left");
 			var mgl = " ele_ml10";
 			if(typeof(args.icon) != "undefined"){
-				var icItem = new Ele.Img(args.icon,"ele_treenode_icon ele_ml10");
+				var icItem = new Ele.Img(args.icon,"ele_treenode_item_icon ele_ml10");
 				item.add(icItem);
 				mgl = " ele_ml5";
 			}
@@ -64,10 +65,12 @@
 		};
 		TreeNode.prototype.close = function(){
 			this.listView.ele.style.display="none";
+			this.iconStatus.ele.src = Ele._pathPrefix+"ele/icons/icon_list_right.png";
 			this.isExpend = false;
 		};
 		TreeNode.prototype.expend = function(){
 			this.listView.ele.style.display="block";
+			this.iconStatus.ele.src = Ele._pathPrefix+"ele/icons/icon_list_down.png";
 			this.isExpend = true;
 		};
 		TreeNode.prototype.clear = function(){
@@ -75,7 +78,7 @@
 			this.count = 0;
 		};
 		TreeNode.prototype._initListView = function(){
-			var empty = new Ele.Label("无数据","ele_label ele_llh30");
+			var empty = new Ele.Label("无数据","ele_treenode_empty_txt ele_llh30");
 			this.listView.add(empty);
 		};
 		TreeNode.prototype._init = function(){
@@ -83,6 +86,10 @@
 			this.view.setHeight("auto");
 			this.ele = this.view.ele;
 			var title = new Ele.Layout("ele_treenode_title_view");
+			//状态
+			this.iconStatus = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_list_right.png","ele_treenode_status_view");
+			title.add(this.iconStatus);
+			
 			var txtTitle = new Ele.Label("Root","ele_treenode_title_txt ele_ml5");
 			if(typeof(args) == "object"){
 				if(typeof(args.width) != "undefined"){
@@ -102,7 +109,9 @@
 					this.onItemClickHandler = args.onItemClick;
 				}
 			}
+			
 			title.add(txtTitle);
+			
 			var context = this;
 			//注册事件
 			title.ele.onclick = function(){

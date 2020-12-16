@@ -56,7 +56,10 @@
 			title.add(this.title);
 			title.add(imgRight);
 			
+			var position = new Ele.Layout("ele_menulist_title_position");
+			
 			this.view.add(title);
+			this.view.add(position);
 		};
 		this._init();
 	};
