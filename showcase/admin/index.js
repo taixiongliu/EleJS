@@ -17,6 +17,7 @@ function init(){
 		
 		var topView = new TopView();
 		
+		
 		leftView.initView().setContainerById("main");
 		topView.initView().setContainerById("main");
 	});

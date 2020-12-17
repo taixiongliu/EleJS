@@ -13,6 +13,19 @@
 	-ms-user-select: none;
 	cursor: pointer;
 }
+.ele_icon_label:hover{
+	padding: 4px 8px 4px 8px;
+	background-color: #F0F2FF;
+	border: 1px #D4D8F6 solid;
+	font-size: 0px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	cursor: pointer;
+}
 .ele_icon_label_focus{
 	padding: 4px 8px 4px 8px;
 	background-color: #F0F2FF;
@@ -33,4 +46,22 @@
 .ele_icon_label_txt{
 	line-height: 16px;
 	vertical-align: top;
+}
+
+/** menulabel **/
+.ele_menu_label{
+	width: 80px;
+	height: 64px;
+	line-height: 64px;
+	cursor: pointer;
+	font-size: 14px;
+	color: #F7F7F7;
+	transition:all 0.5s ease;
+	-moz-transition:all 0.5s ease;
+	-webkit-transition:all 0.5s ease;
+	-ms-transition:all 0.5s ease;
+	-o-transition:all 0.5s ease;
+}
+.ele_menu_label:hover{
+	color: #337ab7;
 }

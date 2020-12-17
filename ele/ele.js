@@ -5,8 +5,10 @@ var Ele = window.Ele = Ele || {
 	],
 	mUtils:["Ajax","WinInner","Filter"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
+	mViews :[],
 	Charts : {},//目录对象申明
 	Utils : {},//目录对象申明
+	Views : {},//目录对象申明
 	imports:[],//导入内容申明
 	_loadCallback:{},
 	_loadModels:0,
@@ -53,15 +55,15 @@ var Ele = window.Ele = Ele || {
 		//遍历加载
 		for(var i = 0; i < models.length; i++){
 			//布局加载项检查
-			var isView = false;
+			var isEle = false;
 			for(var x = 0; x < this.models.length; x ++){
 				if(this.models[x] == models[i]){
-					isView = true;
-					this._loadViews([models[i]]);
+					isEle = true;
+					this._loadEles([models[i]]);
 					break;
 				}
 			}
-			if(isView){
+			if(isEle){
 				continue;
 			}
 			//工具类加载项检查
@@ -89,6 +91,19 @@ var Ele = window.Ele = Ele || {
 				continue;
 			}
 			
+			//自定义布局加载项检查
+			var isView = false;
+			for(var v = 0; v < this.mViews.length; v ++){
+				if(this.mViews[v] == models[i]){
+					isView = true;
+					this._loadViews([models[i]]);
+					break;
+				}
+			}
+			if(isView){
+				continue;
+			}
+			
 			console.log("Ele load model '"+models[i]+"' not found.");
 			throw "Ele load model '"+models[i]+"' not found.";
 		}
@@ -101,15 +116,16 @@ var Ele = window.Ele = Ele || {
 		this._loadCallback = callback || function() {};
 		
 		//JS加载总量
-		this._loadModels = this.imports.length + this.models.length + this.mUtils.length + this.mCharts.length;
+		this._loadModels = this.imports.length + this.models.length + this.mUtils.length + this.mCharts.length+this.mViews.length;
 		this._loadCount = 0;
 		
 		
 		//全部加载
 		this._loadImports();
-		this._loadViews(this.models);
+		this._loadEles(this.models);
 		this._loadUtils(this.mUtils);
 		this._loadCharts(this.mCharts);
+		this._loadViews(this.mViews);
 	},
 	
 	/**
@@ -124,7 +140,7 @@ var Ele = window.Ele = Ele || {
 	/**
 	 * 加载布局类 
 	 */
-	_loadViews:function(models){
+	_loadEles:function(models){
 		for(var i = 0; i < models.length; i++) {
 			this._loadCSS(models[i]);
 			this._loadJS(models[i], this._loadHandler);
@@ -145,6 +161,16 @@ var Ele = window.Ele = Ele || {
 	_loadCharts:function(charts){
 		for(var i = 0; i < charts.length; i++) {
 			this._loadJS("Charts/"+charts[i], this._loadHandler);
+		}
+	},
+	
+	/**
+	 * 加载图表类控件 自动加载
+	 */
+	_loadViews:function(views){
+		for(var i = 0; i < views.length; i++) {
+			this._loadCSS("Views/"+views[i]);
+			this._loadJS("Views/"+views[i], this._loadHandler);
 		}
 	},
 	

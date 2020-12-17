@@ -75,4 +75,35 @@
 		};
 		this._init();
 	};
+	
+	var MenuLabel = Ele.MenuLabel = function(args){
+		this.eleType = "layout";
+		this.ele;
+		this.view;
+		
+		MenuLabel.prototype.setText = function(text){
+			this.ele.innerHTML = text;
+		};
+		
+		MenuLabel.prototype._init = function(){
+			this.view = new Ele.Layout("ele_menu_label");
+			this.ele = this.view.ele;
+			this.view.setAlign("center");
+			
+			if(typeof(args) == "object"){
+				if(typeof(args.style) != "undefined"){
+					this.ele.className = args.style;
+				}
+				if(typeof(args.text) != "undefined"){
+					this.ele.innerHTML = args.text;
+				}
+				if(typeof(args.onclick) == "function"){
+					this.ele.onclick = function(){
+						args.onclick();
+					};
+				}
+			}
+		};
+		this._init();
+	};
 })();

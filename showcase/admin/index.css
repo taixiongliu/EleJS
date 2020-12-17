@@ -44,3 +44,42 @@ html, body{
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
+.admin_top_bar_view{
+	width: 60px;
+	height: 36px;
+	background-color: #2b2a2a;
+	margin: 13px 0 0 -18px;
+	cursor: pointer;
+	border: 1px #444444 solid;
+	border-radius: 18px;
+	-moz-border-radius: 18px;
+	-webkit-border-radius: 18px;
+	float: left;
+}
+.admin_top_bar_icon{
+	width: 24px;
+	height: 24px;
+	margin: 6px 0 0 24px;
+}
+.admin_top_menu_view{
+	width: auto;
+	height: 64px;
+	float: left;
+	padding-left: 120px;
+}
+.admin_top_menu_item_view{
+	width: 120px;
+	height: 64px;
+	line-height: 64px;
+}
+.admin_top_menu_txt{
+	color: #337ab7;
+	transition:all 0.5s ease;
+	-moz-transition:all 0.5s ease;
+	-webkit-transition:all 0.5s ease;
+	-ms-transition:all 0.5s ease;
+	-o-transition:all 0.5s ease;
+}
+.admin_top_menu_txt:hover{
+	color: #337ab7;
+}
