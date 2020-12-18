@@ -40,24 +40,26 @@
 			item.add(txtItem);
 			
 			var context = this;
-			item.ele.data = args;
-			item.ele.cellStyle = cellStyle;
 			item.ele.onclick = function(){
 				if(context.onItemClickHandler != null){
-					context.onItemClickHandler(this.data);
+					if(typeof(args.data) != "undefined"){
+						context.onItemClickHandler(args.data);
+					}else{
+						context.onItemClickHandler();
+					}
 				}
 			};
 			item.ele.onmouseover = function(){
-				if(this.data.id == context.selected){
+				if(args.selected){
 					return ;
 				}
 				this.className = "ele_treenode_item_view ele_treenode_over";
 			};
 			item.ele.onmouseout = function(){
-				if(this.data.id == context.selected){
+				if(args.selected){
 					return ;
 				}
-				this.className = "ele_treenode_item_view"+this.cellStyle;
+				this.className = "ele_treenode_item_view"+cellStyle;
 			};
 			
 			this.listView.add(item);

@@ -8,6 +8,9 @@ function init(){
 	Ele.load(function(){
 		console.log("ele .load ...");
 		var wininner = new Ele.Utils.WinInner();
+		var masking = new Ele.Views.Masking();
+		masking.view.setContainerById("main");
+		
 		//创建一个面板
 		var leftView = new LeftView(wininner.getHeight());
 		
@@ -15,10 +18,11 @@ function init(){
 			leftView.onWindowResize(height);
 		});
 		
-		var topView = new TopView();
+		var topView = new TopView(masking);
 		
 		
 		leftView.initView().setContainerById("main");
 		topView.initView().setContainerById("main");
+		
 	});
 }

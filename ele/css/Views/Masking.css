@@ -1,0 +1,21 @@
+.ele_masking{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 100;
+	display: none;
+	top: 0px;
+	left: 0px;
+}
+.ele_masking_bg{
+	position: absolute;
+	z-index: 101;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+}
+.ele_masking_content{
+	position: absolute;
+	z-index: 102;
+}

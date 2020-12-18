@@ -5,7 +5,7 @@ var Ele = window.Ele = Ele || {
 	],
 	mUtils:["Ajax","WinInner","Filter"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
-	mViews :[],
+	mViews :["Masking"],
 	Charts : {},//目录对象申明
 	Utils : {},//目录对象申明
 	Views : {},//目录对象申明

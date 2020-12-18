@@ -13,19 +13,6 @@
 	-ms-user-select: none;
 	cursor: pointer;
 }
-.ele_icon_label:hover{
-	padding: 4px 8px 4px 8px;
-	background-color: #F0F2FF;
-	border: 1px #D4D8F6 solid;
-	font-size: 0px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	cursor: pointer;
-}
 .ele_icon_label_focus{
 	padding: 4px 8px 4px 8px;
 	background-color: #F0F2FF;
@@ -50,11 +37,16 @@
 
 /** menulabel **/
 .ele_menu_label{
-	width: 80px;
+	width: auto;
 	height: 64px;
-	line-height: 64px;
+}
+.ele_menu_label_view{
+	width: auto;
+	height: 64px;
+	padding: 20px 20px;
 	cursor: pointer;
 	font-size: 14px;
+	line-height: 24px;
 	color: #F7F7F7;
 	transition:all 0.5s ease;
 	-moz-transition:all 0.5s ease;
@@ -62,6 +54,46 @@
 	-ms-transition:all 0.5s ease;
 	-o-transition:all 0.5s ease;
 }
-.ele_menu_label:hover{
+.ele_menu_label_view:hover{
 	color: #337ab7;
+}
+.ele_menu_label_icon{
+	width: 24px;
+	height: 24px;
+}
+.ele_menu_label_txt{
+	vertical-align: top;
+}
+.ele_menu_label_children{
+	position: absolute;
+	width: 120px;
+	height: auto;
+	padding-top: 4px;
+	cursor: pointer;
+	background-color: #303030;
+}
+.ele_menu_label_children_item{
+	width: 120px;
+	height: 32px;
+	line-height: 32px;
+	color: #F7F7F7;
+	font-size: 12px;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	transition:all 0.5s ease;
+	-moz-transition:all 0.5s ease;
+	-webkit-transition:all 0.5s ease;
+	-ms-transition:all 0.5s ease;
+	-o-transition:all 0.5s ease;
+}
+.ele_menu_label_children_item:hover{
+	color: #337ab7;
+}
+.ele_menu_label_children_icon{
+	width: 16px;
+	height: 16px;
+	margin: 4px 0 0 4px;
 }
