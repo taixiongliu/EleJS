@@ -88,8 +88,8 @@
 		};
 		
 		MenuLabel.prototype.showChildren = function(){
-			var otop = this.view.ele.offsetTop;
-			var oleft = this.view.ele.offsetLeft;
+			var otop = this.view.ele.offsetTop+this.view.ele.offsetParent.offsetTop;
+			var oleft = this.view.ele.offsetLeft+this.view.ele.offsetParent.offsetLeft+20;
 			var cheight = this.view.ele.clientHeight;
 			this.childrenViews.ele.style.top = (otop + cheight)+"px";
 			this.childrenViews.ele.style.left = oleft+"px";
@@ -128,9 +128,8 @@
 		};
 		
 		MenuLabel.prototype._init = function(){
-			this.view = new Ele.Layout("ele_menu_label");
+			this.view = new Ele.HLayout("ele_menu_label");
 			this.ele = this.view.ele;
-			this.view.setAlign("center");
 			this.childrenViews = new Ele.Layout("ele_menu_label_children");
 			this.childrenViews.setAlign("center");
 			var context = this;
@@ -152,7 +151,7 @@
 					img = new Ele.Img(args.icon,"ele_menu_label_icon");
 				}
 				if(typeof(args.text) != "undefined"){
-					txt = new Label(args.text,"ele_menu_label_txt ele_ml2");
+					txt = new Label(args.text,"ele_ml4");
 				}
 				if(typeof(args.children) == "object"){
 					//判断是否是数组
@@ -176,18 +175,17 @@
 					}
 				};
 			}
-			var content = new Ele.Layout("ele_menu_label_view");
 			if(img != null){
-				content.add(img);
+				this.view.add(img);
 			}
 			if(txt != null){
-				content.add(txt);
+				this.view.add(txt);
 			}
 			if(hasChildren){
 				var childrenIcon = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_down_white.png","ele_menu_label_children_icon");
-				content.add(childrenIcon);
+				this.view.add(childrenIcon);
 			}
-			this.view.add(content);
+			//this.view.add(content);
 		};
 		this._init();
 	};

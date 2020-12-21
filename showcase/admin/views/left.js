@@ -1,10 +1,11 @@
 (function(){
 	var LeftView = window.LeftView = function(height){
-		this.menu;
+		var layout;
+		var menu;
 		
-		LeftView.prototype.initView = function(){
+		LeftView.prototype._initView = function(){
 			//主面板
-			var layout = new Ele.Layout("admin_left_view");
+			layout = new Ele.Layout("admin_left_view");
 			
 			//顶部布局
 			var top = new Ele.VLayout("admin_left_top");
@@ -17,10 +18,10 @@
 			layout.add(top);
 			
 			//菜单布局
-			this.menu = new Ele.MenuList({onItemClick:function(res){
+			menu = new Ele.MenuList({onItemClick:function(res){
 				console.log(res);
 			}});
-			this.menu.ele.style.height = (height - 180-16)+"px";
+			menu.ele.style.height = (height - 180-16)+"px";
 			var node1 = {icon:"img/gonggao.png",title:"主菜单1",expend:true, children:[
 				{icon:"img/gonggao.png",text:"二级菜单A",data:{id:1,name:"2-1"}},
 				{icon:"img/gonggao.png",text:"二级菜单B",data:{id:2,name:"2-2"}},
@@ -36,16 +37,21 @@
 				]};
 			var node3 = {icon:"img/shoucang.png",title:"主菜单3"};
 			
-			this.menu.add(node1);
-			this.menu.add(node2);
-			this.menu.add(node3);
-			layout.add(this.menu);
-			
-			return layout;
+			menu.add(node1);
+			menu.add(node2);
+			menu.add(node3);
+			layout.add(menu);
 		};
 		
 		LeftView.prototype.onWindowResize = function(height){
-			this.menu.ele.style.height = (height - 180-16)+"px";
+			menu.ele.style.height = (height - 180-16)+"px";
 		};
+		LeftView.prototype.getView = function(){
+			return layout;
+		};
+		LeftView.prototype.setLeft = function(left){
+			layout.ele.style.left = left+"px";
+		};
+		this._initView();
 	}
 })();

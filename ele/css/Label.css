@@ -39,14 +39,14 @@
 .ele_menu_label{
 	width: auto;
 	height: 64px;
-}
-.ele_menu_label_view{
-	width: auto;
-	height: 64px;
 	padding: 20px 20px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	cursor: pointer;
 	font-size: 14px;
 	line-height: 24px;
+	text-align: center;
 	color: #F7F7F7;
 	transition:all 0.5s ease;
 	-moz-transition:all 0.5s ease;
@@ -54,19 +54,15 @@
 	-ms-transition:all 0.5s ease;
 	-o-transition:all 0.5s ease;
 }
-.ele_menu_label_view:hover{
+.ele_menu_label:hover{
 	color: #337ab7;
 }
 .ele_menu_label_icon{
 	width: 24px;
 	height: 24px;
 }
-.ele_menu_label_txt{
-	vertical-align: top;
-}
 .ele_menu_label_children{
 	position: absolute;
-	width: 120px;
 	height: auto;
 	padding-top: 4px;
 	cursor: pointer;
