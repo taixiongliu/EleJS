@@ -1,0 +1,22 @@
+.ele_board{
+	width: 100%;
+	height: auto;
+	padding-right: 16px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.ele_edge_board{
+	width: 100%;
+	height: auto;
+	padding-left: 16px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.ele_edge_board_view{
+	width: 100%;
+	height: auto;
+	background-color: #393939;
+	margin-top: 16px;
+}

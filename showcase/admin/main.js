@@ -3,11 +3,21 @@
 		
 		MainView.prototype.viewCreate = function(root){
 			//主面板
-			var layout = new Ele.Layout("hello");
-			layout.setAlign("center");
-			layout.setHtml("hello word.");
+			var board = new Ele.Views.Board();
 			
-			root.add(layout);
+			var welcom = new Ele.Views.EdgeBoard();
+			var welTitle = new Ele.Layout("welcom_title");
+			welTitle.setHtml("欢迎访问xxxxxx平台");
+			var welLocation = new Ele.Layout("welcom_location");
+			welLocation.setHtml("首页 / 看板");
+			welcom.setLeft(welTitle);
+			welcom.setRight(welLocation);
+			
+			board.add(welcom);
+			
+			
+			
+			root.add(board);
 		};
 	}
 })();
