@@ -16,7 +16,7 @@
 			var bg = new Ele.Layout("ele_shade_bg");
 			
 			var content = new Ele.Layout("ele_confirm_panel");
-			var winInner = new Ele.WinInner();
+			var winInner = new Ele.Utils.WinInner();
 			var width = winInner.getWidth();
 			var height = winInner.getHeight();
 			content.ele.style.marginTop = (height/2 - 50)+"px";

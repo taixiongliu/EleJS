@@ -15,7 +15,33 @@
 			
 			board.add(welcom);
 			
+			var mergeBoard = new Ele.Views.MergeBoard();
+			var mlv = new Ele.Layout("welcom_title");
+			mlv.setHtml("left：30%");
+			var mcv = new Ele.Layout("welcom_title");
+			mcv.setHtml("center：40%");
+			var mrv = new Ele.Layout("welcom_title");
+			mrv.setHtml("right：30%");
+			mergeBoard.setLeft(mlv);
+			mergeBoard.setCenter(mcv);
+			mergeBoard.setRight(mrv);
 			
+			board.add(mergeBoard);
+			
+			var hlinBoard = new Ele.Views.HLineBoard();
+			var test = new Ele.Layout("welcom_title");
+			test.setHtml("test：view 1-->25%");
+			var test2 = new Ele.Layout("welcom_title");
+			test2.setHtml("test：view 2-->25%");
+			var test3 = new Ele.Layout("welcom_title");
+			test3.setHtml("test：view 3-->25%");
+			var test4 = new Ele.Layout("welcom_title");
+			test4.setHtml("test：view 4-->25%");
+			hlinBoard.add(test,25);
+			hlinBoard.add(test2,25);
+			hlinBoard.add(test3,25);
+			hlinBoard.add(test4,25);
+			board.add(hlinBoard);
 			
 			root.add(board);
 		};

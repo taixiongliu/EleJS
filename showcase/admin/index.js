@@ -20,6 +20,8 @@ function init(){
 		var wininner = new Ele.Utils.WinInner();
 		var masking = new Ele.Views.Masking();
 		masking.view.setContainerById("main");
+		// var at = new Ele.AjaxLoad();
+		// at.show();
 		
 		//创建一个面板
 		leftView = new LeftView(wininner.getHeight());

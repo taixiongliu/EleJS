@@ -6,7 +6,13 @@
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-.ele_edge_board{
+.ele_board_view{
+	width: 100%;
+	height: auto;
+	background-color: #393939;
+	margin-top: 16px;
+}
+.ele_empty_board{
 	width: 100%;
 	height: auto;
 	padding-left: 16px;
@@ -14,9 +20,47 @@
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-.ele_edge_board_view{
+.ele_merge_board{
 	width: 100%;
 	height: auto;
-	background-color: #393939;
-	margin-top: 16px;
+}
+.ele_merge_left_board{
+	width: 30%;
+	height: auto;
+	float: left;
+	padding-left: 16px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.ele_merge_center_board{
+	width: 40%;
+	height: auto;
+	float: left;
+	padding-left: 16px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.ele_merge_right_board{
+	width: 30%;
+	height: auto;
+	float: left;
+	padding-left: 16px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.ele_h_line_board{
+	width: 100%;
+	height: auto;
+}
+.ele_h_line_content_board{
+	width: auto;
+	height: auto;
+	float: left;
+	padding-left: 16px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
