@@ -111,19 +111,16 @@
 			if(typeof(child.text) == "string"){
 				item.setHtml(child.text);
 			}
-			if(typeof(child.onItemClick) == "function"){
-				if(typeof(child.data) != "undefined"){
-					item.ele.onclick = function(){
-						context.hideChildren();
+			item.ele.onclick = function(){
+				context.hideChildren();
+				if(typeof(child.onItemClick) == "function"){
+					if(typeof(child.data) != "undefined"){
 						child.onItemClick(child.data);
-					};
-				}else{
-					item.ele.onclick = function(){
-						context.hideChildren();
+					}else{
 						child.onItemClick();
-					};
+					}
 				}
-			}
+			};
 			this.childrenViews.add(item);
 		};
 		
