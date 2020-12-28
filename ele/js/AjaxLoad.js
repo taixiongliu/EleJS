@@ -19,7 +19,7 @@
 			content.ele.style.marginLeft = (width/2 - 90)+"px";
 			
 			var img_panel = new Ele.Layout("ele_ajaxload_content_img");
-			var img_item = new Ele.Img(Ele._pathPrefix+"ele/icons/load.gif");
+			var img_item = new Ele.Img(Ele._pathPrefix+"ele/icons/ajax-loader.gif");
 			img_panel.add(img_item);
 			this._msg = new Ele.Layout("ele_ajaxload_content_msg");
 			this._msg.setAlign("center");

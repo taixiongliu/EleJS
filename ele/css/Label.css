@@ -55,7 +55,7 @@
 	-o-transition:all 0.5s ease;
 }
 .ele_menu_label:hover{
-	color: #337ab7;
+	color: #009999;
 }
 .ele_menu_label_icon{
 	width: 24px;
@@ -86,7 +86,7 @@
 	-o-transition:all 0.5s ease;
 }
 .ele_menu_label_children_item:hover{
-	color: #337ab7;
+	color: #009999;
 }
 .ele_menu_label_children_icon{
 	width: 16px;
