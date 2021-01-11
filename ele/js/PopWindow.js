@@ -23,7 +23,7 @@
 			this.ele = this.view.ele;
 			this.view.setSize(width+"px", height+"px");
 			
-			var winInner = new Ele.WinInner();
+			var winInner = new Ele.Utils.WinInner();
 			var left = (winInner.getWidth() - width)/2;
 			var top = (winInner.getHeight() - height)/2;
 			this.ele.style.left = left + "px";

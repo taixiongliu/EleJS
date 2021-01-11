@@ -17,7 +17,7 @@
 	height: auto;
 	position: absolute;
 	z-index: 101;
-	background-color: #009999;
+	background-color: #303030;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -66,5 +66,5 @@
 	width: auto;
 	height: auto;
 	margin-left: 4px;
-	background-color: #FFFFFF;
+	background-color: #666666;
 }
