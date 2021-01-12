@@ -41,7 +41,7 @@ function init(){
 			menuExpand = !menuExpand;
 		});
 		
-		contentView = new Ele.Layout("admin_content_view");
+		contentView = new Ele.Layout("jweb_admin_content_view");
 		new MainView().viewCreate(contentView);
 		
 		bottomView = new BottomView();

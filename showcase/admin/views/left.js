@@ -5,16 +5,16 @@
 		
 		LeftView.prototype._initView = function(){
 			//主面板
-			layout = new Ele.Layout("admin_left_view");
+			layout = new Ele.Layout("jweb_admin_left_view");
 			
 			//顶部布局
-			var top = new Ele.VLayout("admin_left_top");
-			var logo = new Ele.Img("img/login_logo.png","admin_logo");
+			var top = new Ele.VLayout("jweb_admin_left_top");
+			var logo = new Ele.Img("img/login_logo.png","jweb_admin_logo");
 			top.add(logo,{align:"center"});
-			var name = new Ele.Label("张富贵","admin_name");
+			var name = new Ele.Label("张富贵","jweb_admin_name");
 			top.add(name,{align:"center",padding:"4px 0 0 0"});
-			var position = new Ele.Label("超级管理员","admin_position");
-			top.add(position,{align:"center"});
+			var role = new Ele.Label("超级管理员","jweb_admin_role");
+			top.add(role,{align:"center"});
 			layout.add(top);
 			
 			//菜单布局

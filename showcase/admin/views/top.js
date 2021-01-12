@@ -5,15 +5,15 @@
 		
 		TopView.prototype._initView = function(){
 			//主面板
-			layout = new Ele.Layout("admin_top_view");
+			layout = new Ele.Layout("jweb_admin_top_view");
 			
-			var bar = new Ele.Layout("admin_top_bar_view");
-			bimg = new Ele.Img("img/chevronsLeft.png","admin_top_bar_icon");
+			var bar = new Ele.Layout("jweb_admin_top_bar_view");
+			bimg = new Ele.Img("img/chevronsLeft.png","jweb_admin_top_bar_icon");
 			bar.add(bimg);
 			bar.ele.onclick = onMenuEvent;
 			layout.add(bar);
 			
-			var menu = new Ele.HLayout("admin_top_menu_view");
+			var menu = new Ele.HLayout("jweb_admin_top_menu_view");
 			var mn_home = new Ele.MenuLabel({text:"首页",icon:"img/shouye.png"});
 			var mn_about = new Ele.MenuLabel({text:"关于"});
 			var mn_case = new Ele.MenuLabel({text:"案例",children:[{text:"案例1",onItemClick:function(res){
@@ -30,8 +30,8 @@
 			menu.add(mn_conct);
 			layout.add(menu);
 			
-			var rMenu = new Ele.HLayout("admin_top_right_menu_view");
-			var mn_version = new Ele.MenuLabel({text:"版本：V1.0.1",style:"admin_top_right_menu_txt"});
+			var rMenu = new Ele.HLayout("jweb_admin_top_right_menu_view");
+			var mn_version = new Ele.MenuLabel({text:"版本：V1.0.1",style:"jweb_admin_top_right_menu_txt"});
 			var mn_account = new Ele.MenuLabel({icon:"img/icon_user.png",text:"admin",children:[
 				{text:"修改密码",onItemClick:function(res){console.log(res);}},
 				{text:"安全退出",onItemClick:function(res){console.log(res);}}
