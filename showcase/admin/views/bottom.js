@@ -4,7 +4,7 @@
 		
 		BottomView.prototype._initView = function(){
 			//主面板
-			layout = new Ele.Layout("jweb_admin_bottom_view");
+			layout = new Ele.Layout("admin_bottom_view");
 			layout.setAlign("center");
 			layout.setHtml("© www.xxxxxxxxx.com - xxxx科技有限公司");
 		};

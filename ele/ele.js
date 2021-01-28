@@ -3,7 +3,7 @@ var Ele = window.Ele = Ele || {
 		"Button","TextBox","TextArea","CheckBox","DateBox",
 		"ListGrid","TreeNode","MenuList","PopWindow"
 	],
-	mUtils:["Ajax","WinInner","Filter"],
+	mUtils:["Ajax","WinInner","Filter","Timer"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
 	mViews :["Masking","Board"],
 	Charts : {},//目录对象申明

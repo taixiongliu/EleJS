@@ -22,6 +22,16 @@ function init(){
 		masking.view.setContainerById("main");
 		// var at = new Ele.AjaxLoad();
 		// at.show();
+		var ii= 10;
+		var timer = new Ele.Utils.Timer(function(){
+			ii --;
+			if(ii < 0){
+				return false;
+			}
+			console.log("==>"+ii);
+			return true;
+		});
+		timer.execute();
 		
 		//创建一个面板
 		leftView = new LeftView(wininner.getHeight());
@@ -41,7 +51,7 @@ function init(){
 			menuExpand = !menuExpand;
 		});
 		
-		contentView = new Ele.Layout("jweb_admin_content_view");
+		contentView = new Ele.Layout("admin_content_view");
 		new MainView().viewCreate(contentView);
 		
 		bottomView = new BottomView();
