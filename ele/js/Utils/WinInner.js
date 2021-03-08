@@ -4,7 +4,6 @@
 		this._width;
 		this._height;
 		this._handlers = [];
-		var context = this;
 	
 		WinInner.prototype._init = function() {
 			if (typeof(window.innerWidth) != "undefined") {
@@ -19,6 +18,9 @@
 			}
 		};
 		WinInner.prototype._onResizeResponse = function(){
+			this._to_onResizeResponse(this);
+		};
+		WinInner.prototype._to_onResizeResponse = function(context){
 			context._init();
 			if(context._handlers.length > 0){
 				for(var i = 0; i < context._handlers.length; i ++){

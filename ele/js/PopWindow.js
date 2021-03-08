@@ -4,16 +4,16 @@
 		this.ele;
 		this.bgView;
 		this.view;
-		var width = 208;
-		var height = 128;
+		this.width = 208;
+		this.height = 128;
 		if(typeof(wid) == "number"){
-			width = wid + 8;
+			this.width = wid + 8;
 		}
 		if(typeof(hgt) == "number"){
-			height = hgt + 32;
+			this.height = hgt + 32;
 		}
 		this.title;
-		var contentView;
+		this.contentView;
 		
 		PopWindow.prototype.init = function(){
 			var context = this;
@@ -21,18 +21,18 @@
 			this.bgView = new Ele.Layout("ele_popwindow_bg_view");
 			this.view = new Ele.Layout("ele_popwindow_view");
 			this.ele = this.view.ele;
-			this.view.setSize(width+"px", height+"px");
+			this.view.setSize(this.width+"px", this.height+"px");
 			
 			var winInner = new Ele.Utils.WinInner();
-			var left = (winInner.getWidth() - width)/2;
-			var top = (winInner.getHeight() - height)/2;
+			var left = (winInner.getWidth() - this.width)/2;
+			var top = (winInner.getHeight() - this.height)/2;
 			this.ele.style.left = left + "px";
 			this.ele.style.top = top + "px";
 			
 			var titleView = new Ele.Layout("ele_popwindow_title_view");
-			titleView.setWidth((width - 8) +"px");
+			titleView.setWidth((this.width - 8) +"px");
 			var titleNameView = new Ele.Layout("ele_popwindow_title_name_view");
-			titleNameView.setWidth((width - 38)+"px");
+			titleNameView.setWidth((this.width - 38)+"px");
 			this.title = new Ele.Label("", "ele_popwindow_txt_title");
 			titleNameView.add(this.title);
 			
@@ -48,12 +48,12 @@
 			titleView.add(titleCloseView);
 			titleView.add(clearFloat);
 			
-			contentView = new Ele.Layout("ele_popwindow_content_view");
-			contentView.setSize((width - 8) +"px", (height - 32)+"px");
+			this.contentView = new Ele.Layout("ele_popwindow_content_view");
+			this.contentView.setSize((this.width - 8) +"px", (this.height - 32)+"px");
 			
 			console.log(titleView.ele);
 			this.view.add(titleView);
-			this.view.add(contentView);
+			this.view.add(this.contentView);
 			
 			body.appendChild(this.bgView.ele);
 			body.appendChild(this.view.ele);
@@ -73,7 +73,7 @@
 		};
 		
 		PopWindow.prototype.addView = function(ele){
-			contentView.add(ele);
+			this.contentView.add(ele);
 		};
 		
 		PopWindow.prototype.hide = function(){
