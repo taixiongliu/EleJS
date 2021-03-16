@@ -32,7 +32,7 @@
 			
 			var rMenu = new Ele.HLayout("admin_top_right_menu_view");
 			var mn_version = new Ele.MenuLabel({text:"版本：V1.0.1",style:"admin_top_right_menu_txt"});
-			var mn_account = new Ele.MenuLabel({icon:"img/icon_user.png",text:"admin",children:[
+			var mn_account = new Ele.MenuLabel({icon:"img/icon_min_user.png",text:"admin",children:[
 				{text:"修改密码",onItemClick:function(res){console.log(res);}},
 				{text:"安全退出",onItemClick:function(res){console.log(res);}}
 				],masking:masking});

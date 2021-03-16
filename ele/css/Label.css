@@ -1,11 +1,12 @@
 .ele_label{
 	font-family: "微软雅黑";
 	font-size: 12px;
-	color: #4C4C4C;
+	color: #FFFFFF;
 }
 
 /** iconlabel **/
 .ele_icon_label{
+	display: inline-flex;
 	padding: 5px 9px 5px 9px;
 	font-size: 0px;
 	-webkit-user-select: none;
@@ -14,9 +15,10 @@
 	cursor: pointer;
 }
 .ele_icon_label_focus{
+	display: inline-flex;
 	padding: 4px 8px 4px 8px;
-	background-color: #F0F2FF;
-	border: 1px #D4D8F6 solid;
+	background-color: #009999;
+	border: 1px #038985 solid;
 	font-size: 0px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;

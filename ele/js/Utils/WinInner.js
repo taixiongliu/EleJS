@@ -4,6 +4,7 @@
 		this._width;
 		this._height;
 		this._handlers = [];
+		var _ele_wininner_context = this;
 	
 		WinInner.prototype._init = function() {
 			if (typeof(window.innerWidth) != "undefined") {
@@ -18,13 +19,10 @@
 			}
 		};
 		WinInner.prototype._onResizeResponse = function(){
-			this._to_onResizeResponse(this);
-		};
-		WinInner.prototype._to_onResizeResponse = function(context){
-			context._init();
-			if(context._handlers.length > 0){
-				for(var i = 0; i < context._handlers.length; i ++){
-					context._handlers[i](context._width,context._height);
+			_ele_wininner_context._init();
+			if(_ele_wininner_context._handlers.length > 0){
+				for(var i = 0; i < _ele_wininner_context._handlers.length; i ++){
+					_ele_wininner_context._handlers[i](_ele_wininner_context._width,_ele_wininner_context._height);
 				}
 			}
 		};

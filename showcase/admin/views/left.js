@@ -9,7 +9,7 @@
 			
 			//顶部布局
 			var top = new Ele.VLayout("admin_left_top");
-			var logo = new Ele.Img("img/login_logo.png","admin_logo");
+			var logo = new Ele.Img("img/icon_user.png","admin_logo");
 			top.add(logo,{align:"center"});
 			var name = new Ele.Label("张富贵","admin_name");
 			top.add(name,{align:"center",padding:"4px 0 0 0"});

@@ -3,9 +3,11 @@
 	height: 32px;
 	padding: 0px;
 	margin: 0px;
-	background-color: #ffffff;
+	background-color: #e6fffe;
+	color: #009999;
 	border: 1px #009999 solid;
 	text-indent: 5px;
+	outline: none;
 	font-family:Arial,Helvetica,sans-serif;
 	font-size: 12px;
 	line-height:  32px;
@@ -14,8 +16,8 @@
 	-moz-border-radius: 4px;
 }
 .ele_edittext_style:focus{
-	border: 1px #fafafa solid;
-	box-shadow: 0px 0px 3px #009999;
-	-webkit-box-shadow: 0px 0px 3px #009999;
-	-moz-window-shadow: 0px 0px 3px #009999;
+	border: 1px #009999 solid;
+	box-shadow: 0px 0px 4px #83fffc;
+	-webkit-box-shadow: 0px 0px 4px #83fffc;
+	-moz-window-shadow: 0px 0px 4px #83fffc;
 }
