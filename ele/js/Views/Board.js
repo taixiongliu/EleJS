@@ -1,16 +1,20 @@
 (function(){
-	var Board = Ele.Views.Board = function() {
+	var Board = Ele.Views.Board = function(isFull) {
 		this.eleType = "layout";
 		this.ele;
 		this.view;
 		
 		Board.prototype._init = function(){
-			this.view = new Ele.Layout("ele_board");
+			if(typeof(isFull) == "boolean" && isFull){
+				this.view = new Ele.Layout("ele_board_full");
+			}else{
+				this.view = new Ele.Layout("ele_board");
+			}
 			this.ele = this.view.ele;
 		};
 		
-		Board.prototype.add = function(bview){
-			this.view.add(bview);
+		Board.prototype.addBoard = function(board){
+			this.view.add(board);
 		};
 		
 		this._init();
@@ -28,7 +32,26 @@
 			this.ele = this.view.ele;
 			this.view.add(this.board);
 		};
-		EmptyBoard.prototype.addBoard = function(bview){
+		EmptyBoard.prototype.addView = function(bview){
+			this.board.add(bview);
+		};
+		
+		this._init();
+	};
+	
+	var FullBoard = Ele.Views.FullBoard = function(){
+		this.eleType = "layout";
+		this.ele;
+		this.view;
+		this.board;
+		
+		FullBoard.prototype._init = function(){
+			this.view = new Ele.Layout("ele_full_board");
+			this.board = new Ele.Layout("ele_full_board_view");
+			this.ele = this.view.ele;
+			this.view.add(this.board);
+		};
+		FullBoard.prototype.addView = function(bview){
 			this.board.add(bview);
 		};
 		
@@ -53,9 +76,9 @@
 			this._rightView = new Ele.Layout("ele_fr");
 			var cl = new Ele.Layout("ele_cl");
 			
-			board.addBoard(this._leftView);
-			board.addBoard(this._rightView);
-			board.addBoard(cl);
+			board.addView(this._leftView);
+			board.addView(this._rightView);
+			board.addView(cl);
 		};
 		EdgeBoard.prototype.setLeft = function(leftView){
 			this._leftView.clear();
@@ -137,7 +160,7 @@
 			this._cl = new Ele.Layout("ele_cl");
 			this.view.add(this._cl);
 		};
-		HLineBoard.prototype.add = function(bview,percent){
+		HLineBoard.prototype.addView = function(bview,percent){
 			if(typeof(bview) != "object"){
 				throw "method parameter 'bview' of add can't be empty.";
 				return;

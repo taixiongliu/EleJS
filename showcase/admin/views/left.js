@@ -1,9 +1,12 @@
 (function(){
-	var LeftView = window.LeftView = function(height){
+	var LeftView = window.LeftView = function(height, mi){
 		var layout;
 		var menu;
 		
 		LeftView.prototype._initView = function(){
+			if(typeof(mi) != "number"){
+				mi = 0;
+			}
 			//主面板
 			layout = new Ele.Layout("admin_left_view");
 			
@@ -20,10 +23,13 @@
 			//菜单布局
 			menu = new Ele.MenuList({onItemClick:function(res){
 				console.log(res);
+				if(res.id > 0){
+					window.location.href = res.href;
+				}
 			}});
 			menu.ele.style.height = (height - 180-16)+"px";
-			var node1 = {icon:"img/gonggao.png",title:"主菜单1",expend:true, children:[
-				{icon:"img/gonggao.png",text:"二级菜单A",data:{id:1,name:"2-1"}},
+			var node1 = {icon:"img/gonggao.png",title:"看板组件",expend:true, children:[
+				{icon:"img/gonggao.png",text:"表格看板",selected:mi==1,data:{id:1,name:"2-1",href:"table.html"}},
 				{icon:"img/gonggao.png",text:"二级菜单B",data:{id:2,name:"2-2"}},
 				{icon:"img/gonggao.png",text:"二级菜单C"},
 				{icon:"img/gonggao.png",text:"二级菜单D",selected:true,data:{id:4,name:"2-4"}},

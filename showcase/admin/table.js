@@ -13,7 +13,7 @@ function init(){
 	Ele.importJS("views/left.js");
 	Ele.importJS("views/top.js");
 	Ele.importJS("views/bottom.js");
-	Ele.importJS("page/index.js");
+	Ele.importJS("page/table.js");
 	
 	Ele.load(function(){
 		console.log("ele .load ...");
@@ -34,7 +34,7 @@ function init(){
 		timer.execute();
 		
 		//创建一个面板
-		leftView = new LeftView(wininner.getHeight());
+		leftView = new LeftView(wininner.getHeight(), 1);
 		
 		wininner.addResizeHandler(function(width, height){
 			leftView.onWindowResize(height);
@@ -52,7 +52,7 @@ function init(){
 		});
 		
 		contentView = new Ele.Layout("admin_content_view");
-		new MainView().viewCreate(contentView);
+		new TableView().viewCreate(contentView);
 		
 		bottomView = new BottomView();
 		

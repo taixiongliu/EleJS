@@ -37,21 +37,21 @@
 			titleCenter.setAlign("center");
 			var titleRight = new Ele.Layout("ele_date_box_title_right_view");
 			titleRight.setAlign("center");
-			var iconLeft = new Ele.Img("icons/icon_left.png", "ele_date_box_title_icon ele_ml20");
+			var iconLeft = new Ele.Img("ele/icons/icon_left.png", "ele_date_box_title_icon ele_ml20");
 			iconLeft.ele.onclick = function(){
 				context.previousMonth();
 			};
-			var icon2Left = new Ele.Img("icons/icon_2_left.png", "ele_date_box_title_icon");
+			var icon2Left = new Ele.Img("ele/icons/icon_2_left.png", "ele_date_box_title_icon");
 			icon2Left.ele.onclick = function(){
 				context.previousYear();
 			};
 			this.dateText = new Ele.Label(this._year+"-"+this._month, "ele_date_box_date_txt");
-			var iconRight = new Ele.Img("icons/icon_right.png", "ele_date_box_title_icon");
+			var iconRight = new Ele.Img("ele/icons/icon_right.png", "ele_date_box_title_icon");
 			iconRight.ele.onclick = function(){
 				context.nextMonth();
 			};
 			
-			var icon2Right = new Ele.Img("icons/icon_2_right.png", "ele_date_box_title_icon ele_ml20");
+			var icon2Right = new Ele.Img("ele/icons/icon_2_right.png", "ele_date_box_title_icon ele_ml20");
 			icon2Right.ele.onclick = function(){
 				context.nextYear();
 			};

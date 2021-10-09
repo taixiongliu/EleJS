@@ -68,8 +68,10 @@ html,body{
 	height: auto;
 }
 .menu_list{
+	position: fixed;
+	height: 100%;
 	width: 241px;
-	float: left;
+	/* float: left; */
 	border: none;
 	/* border-left: 1px #E5E5E5 solid; */
 	border-right: 1px #E5E5E5 solid;
@@ -80,11 +82,12 @@ html,body{
 }
 .content_view{
 	width: 842px;
-	float: left;
+	height: auto;
+	margin-left: 241px;
 	padding: 16px 0px 16px 16px;
-	box-sizing: content-box;
-	-moz-box-sizing: content-box;
-	-webkit-box-sizing: content-box;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
 .menu_title{
 	width: 241px;

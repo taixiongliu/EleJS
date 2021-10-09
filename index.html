@@ -29,20 +29,26 @@
 		<div class="content" align="center">
 			<div class="content_panel" align="left">
 				<div class="menu_list">
-					<div class="menu_item_selected">首页</div>
+					<div id="menu_def" class="menu_item_selected">首页</div>
 					<div class="menu_item" onclick="openPage('login/index.html')">登录模版</div>
 					<div class="menu_item" onclick="openPage('admin/index.html')">后台模版</div>
 					<div class="menu_title mt16">
 						组件
 					</div>
-					<div class="menu_item" onclick="loadPage('views/layout.html')">
+					<div class="menu_item" onclick="loadPage(this,'views/layout.html')">
 						组件内容
+					</div>
+					<div class="menu_item" onclick="loadPage(this,'views/datebox.html')">
+						日期组件
+					</div>
+					<div class="menu_item" onclick="loadPage(this,'views/listgrid.html')">
+						表格组件
 					</div>
 				</div>
 				<div id="content_view" class="content_view">
 					首页内容
 				</div>
-				<div class="cl"></div>
+				<!-- <div class="cl"></div> -->
 			</div>
 		</div>
 	</body>

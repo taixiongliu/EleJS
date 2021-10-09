@@ -9,20 +9,40 @@
 		padding: 16px;
 	}
 	.layout{
-		width: 10px;
-		height: 10px;
+		width: 20px;
+		height: 20px;
 		background-color: #FFFFFF;
 	}
 </style>
-<div class="content_title">标题</div>
+<div class="content_title">layout样式</div>
 <div class="content_row content_code_view">
-	<div class="content_code_title_view">code - layout</div>
+	<div class="content_code_title_view">code - layout.css</div>
 	<div class="content_code_context_view">
-		<div class="content_code_context_item">var code = new Ele.Code();</div>
-		<div class="content_code_context_item content_code_px1">code.method();</div>
-		<div class="content_code_context_item content_code_px2">console.log('hello word.');</div>
+		<div class="content_code_context_item">.main{</div>
+		<div class="content_code_context_item content_code_px1">width: 100%;</div>
+		<div class="content_code_context_item content_code_px1">height: 300px;</div>
+		<div class="content_code_context_item content_code_px1">background-color: #666666;</div>
+		<div class="content_code_context_item content_code_px1">box-sizing: border-box;</div>
+		<div class="content_code_context_item content_code_px1">-moz-box-sizing: border-box;</div>
+		<div class="content_code_context_item content_code_px1">-webkit-box-sizing: border-box;</div>
+		<div class="content_code_context_item content_code_px1">padding: 16px;</div>
+		<div class="content_code_context_item">}</div>
+		<div class="content_code_context_item">.layout{</div>
+		<div class="content_code_context_item content_code_px1">width: 20px;</div>
+		<div class="content_code_context_item content_code_px1">height: 20px;</div>
+		<div class="content_code_context_item content_code_px1">background-color: #FFFFFF;</div>
+		<div class="content_code_context_item">}</div>
 	</div>
 </div>
+<div class="content_row content_title">layout脚本</div>
+<div class="content_row content_code_view">
+	<div class="content_code_title_view">code - layout.js</div>
+	<div class="content_code_context_view">
+		<div class="content_code_context_item">var layout = new Ele.Layout("layout");</div>
+		<div class="content_code_context_item">layout.setContainerById("main");</div>
+	</div>
+</div>
+<div class="content_row content_title">效果</div>
 <div class="content_row main" id="main">
 	
 </div>

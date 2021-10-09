@@ -13,7 +13,7 @@
 			welcom.setLeft(welTitle);
 			welcom.setRight(welLocation);
 			
-			board.add(welcom);
+			board.addBoard(welcom);
 			
 			var mergeBoard = new Ele.Views.MergeBoard();
 			var mlv = new Ele.Layout("welcom_title");
@@ -26,7 +26,7 @@
 			mergeBoard.setCenter(mcv);
 			mergeBoard.setRight(mrv);
 			
-			board.add(mergeBoard);
+			board.addBoard(mergeBoard);
 			
 			var hlinBoard = new Ele.Views.HLineBoard();
 			var test = new Ele.Layout("welcom_title");
@@ -37,11 +37,11 @@
 			test3.setHtml("test：view 3-->25%");
 			var test4 = new Ele.Layout("welcom_title");
 			test4.setHtml("test：view 4-->25%");
-			hlinBoard.add(test,25);
-			hlinBoard.add(test2,25);
-			hlinBoard.add(test3,25);
-			hlinBoard.add(test4,25);
-			board.add(hlinBoard);
+			hlinBoard.addView(test,25);
+			hlinBoard.addView(test2,25);
+			hlinBoard.addView(test3,25);
+			hlinBoard.addView(test4,25);
+			board.addBoard(hlinBoard);
 			
 			root.add(board);
 		};
