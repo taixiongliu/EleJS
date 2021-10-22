@@ -3,6 +3,19 @@
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	position: relative;
+}
+.ele_listgrid_list_panel{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding-top: 40px;
 }
 .ele_listgrid_list_view{
 	width: 100%;
@@ -12,7 +25,8 @@
 .ele_listgrid_title_view{
 	width: 100%;
 	height: 40px;
-	position: relative;
+	position: absolute;
+	z-index: 1;
 }
 .ele_listgrid_title_cb{
 	position: absolute;
@@ -21,10 +35,11 @@
 	font-family: "微软雅黑";
 	font-size: 14px;
 	color: #FFFFFF;
-	border-bottom: 1px #F2F2F2 solid;
-	border-top: 1px #F2F2F2 solid;
-	border-right: 1px #FFFFFF solid;
+	border-bottom: 1px #494949 solid;
+	border-right: 1px #494949 solid;
 	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 }
 
 .ele_listgrid_title_bar{
@@ -36,6 +51,8 @@
 	width: 100%;
 	height: 40px;
 	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 }
 .ele_listgrid_title{
 	background-color: #2b2a2a;
@@ -47,7 +64,7 @@
 .ele_listgrid_cb_title{
 	font-family: "微软雅黑";
 	font-size: 14px;
-	color: #4C4C4C;
+	color: #FFFFFF;
 	margin-left: 6px;
 }
 
@@ -58,6 +75,12 @@
 .ele_listgrid_line_view{
 	width: 100%;
 	position: relative;
+	color: #E1E1E1;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
 }
 .ele_listgrid_line_bar{
 	position: absolute;
@@ -65,28 +88,37 @@
 	right: 0px;
 	padding-top: 7px;
 }
+.ele_listgrid_bsbb{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
 .ele_listgrid_br{
 	border-right: 1px #494949 solid;
 	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 }
 .ele_listgrid_bg_single{
-	background-color: #F6F7F9;
+	background-color: #444444;
 }
 .ele_listgrid_bg_double{
-	background-color: #FFFFFF;
+	background-color: #3f3f3f;
 }
 .ele_listgrid_bg_selected{
-	background-color: #ECFBD4;
+	background-color: #393939;
+	color: #009999;
 }
 .ele_listgrid_item{
 	width: auto;
 	height: 100%;
 	font-family: "微软雅黑";
 	font-size: 12px;
-	color: #4C4C4C;
 	border-bottom: 1px #494949 solid;
 	border-right: 1px #494949 solid;
 	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 }
 .ele_listgrid_h_divider{
 	width: 100%;

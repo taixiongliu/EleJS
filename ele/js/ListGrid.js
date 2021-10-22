@@ -19,6 +19,9 @@
 		this.titleView;
 		this.listView;
 		
+		this.oprsWidth = 120;
+		this.selectOprWidth = 80;
+		
 		ListGrid.prototype.getSelect = function(){
 			var temp = [];
 			if(this.selectArray.length < 1){
@@ -71,14 +74,10 @@
 			line.ele.rowcss = "ele_listgrid_line_view "+rowCss;
 			
 			if(this.selectOpr != null){
-				var selitem = new Ele.Layout("ele_listgrid_cb");
+				var selitem = new Ele.Layout("ele_listgrid_cb ele_listgrid_br");
 				selitem.setHeight(this.itemHeight+"px");
 				selitem.setLineHeight(this.itemHeight+"px");
-				if(typeof(this.selectOpr.width) == "number"){
-					selitem.setWidth(this.selectOpr.width+"px");
-				}else{
-					selitem.setWidth(this.itemWidth+"px");
-				}
+				selitem.setWidth(this.selectOprWidth+"px");
 				selitem.setAlign("center");
 				var cbox = new Ele.ICheckBox();
 				cbox.ele.style.marginTop="10px";
@@ -90,13 +89,9 @@
 			
 			var bar = new Ele.HLayout("ele_listgrid_line_bar");
 			if(this.oprs != null){
-				var opitem = new Ele.HLayout("");
+				var opitem = new Ele.HLayout();
 				opitem.getView().setHeight(this.itemHeight+"px");
-				if(typeof(this.oprs.width) == "number"){
-					opitem.getView().setWidth(this.oprs.width+"px");
-				}else{
-					opitem.getView().setWidth(this.itemWidth+"px");
-				}
+				opitem.getView().setWidth(this.oprsWidth+"px");
 				opitem.getView().setAlign("center");
 				
 				if(typeof(this.oprs.menus) != "undefined" && this.oprs.menus.length > 0){
@@ -118,14 +113,18 @@
 			
 			var lineItemPanel = new Ele.HLayout("ele_listgrid_title_item_view");
 			lineItemPanel.setSize("100%", this.itemHeight+"px");
-			lineItemPanel.ele.style.padding = "0px "+(this.main_pr - 17)+"px 0px "+this.main_pl+"px";
+			lineItemPanel.ele.style.padding = "0px "+(this.main_pr - 8)+"px 0px "+this.main_pl+"px";
 			for(var f in this.fields){
 				var rowItem = new Ele.Layout("ele_listgrid_item");
 				rowItem.setHeight(this.itemHeight+"px");
 				rowItem.setLineHeight(this.itemHeight+"px");
-				var tempWidth = this.itemWidth;
+				var tempWidth = this.itemWidth+"px";
 				if(typeof(this.fields[f].fieldWidth) != "undefined"){
-					tempWidth = this.fields[f].fieldWidth;
+					tempWidth = this.fields[f].fieldWidth+"px";
+				}else{
+					if(this.width == null){
+						tempWidth = this.itemWidth+"%";
+					}
 				}
 				rowItem.setAlign("center");
 				rowItem.setHtml(row[this.fields[f].fieldName]);
@@ -179,22 +178,32 @@
 				}
 				if(typeof(args.operations) == "object"){
 					this.oprs = args.operations;
+					if(typeof(this.oprs.width) == "number"){
+						this.oprsWidth = this.oprs.width;
+					}
 				}
 				if(typeof(args.selectOpr) == "object"){
 					this.selectOpr = args.selectOpr;
+					if(typeof(this.selectOpr.width) == "number"){
+						this.selectOprWidth = this.selectOpr.width;
+					}
 				}
 			}
 			if(this.fields != null){
-				var len = Object.getOwnPropertyNames(this.fields).length;
+				//var len = Object.getOwnPropertyNames(this.fields).length;
+				var len = this.fields.length;
+				//滚动条8--自定义
+				var edge = 8;
 				if(this.oprs != null){
-					len ++;
+					edge += this.oprsWidth;
 				}
 				if(this.selectOpr != null){
-					len ++;
+					edge += this.selectOprWidth;
 				}
 				if(this.width != null){
-					//滚动条17
-					this.itemWidth = (this.width - 17)/len;
+					this.itemWidth = (this.width - edge)/len;
+				}else{
+					this.itemWidth = 100/len;
 				}
 				this.titleView = new Ele.Layout('ele_listgrid_title_view');
 				//padding left 数值
@@ -202,13 +211,8 @@
 					var selitem = new Ele.Layout("ele_listgrid_title_cb");
 					selitem.setHeight(this.itemHeight+"px");
 					selitem.setLineHeight(this.itemHeight+"px");
-					if(typeof(this.selectOpr.width) == "number"){
-						selitem.setWidth(this.selectOpr.width+"px");
-						this.main_pl = this.selectOpr.width;
-					}else{
-						selitem.setWidth(this.itemWidth+"px");
-						this.main_pl = this.itemWidth;
-					}
+					selitem.setWidth(this.selectOprWidth+"px");
+					this.main_pl += this.selectOprWidth;
 					selitem.setAlign("center");
 					var cbox = new Ele.ICheckBox();
 					cbox.addClickEvent(function(){
@@ -230,22 +234,17 @@
 					var opitem = new Ele.Layout("ele_listgrid_title ele_listgrid_br");
 					opitem.setHeight(this.itemHeight+"px");
 					opitem.setLineHeight(this.itemHeight+"px");
-					if(typeof(this.oprs.width) == "number"){
-						opitem.setWidth(this.oprs.width+px);
-						this.main_pr += this.oprs.width;
-					}else{
-						opitem.setWidth(this.itemWidth+"px");
-						this.main_pr += this.itemWidth;
-					}
+					opitem.setWidth(this.oprsWidth+"px");
+					this.main_pr += this.oprsWidth;
 					opitem.setAlign("center");
 					opitem.setHtml("操作");
 					bar.add(opitem);
 				}
 				
-				var rollItem = new Ele.Layout("ele_listgrid_title");
-				rollItem.setSize("17px",this.itemHeight+"px");
+				var rollItem = new Ele.Layout("ele_listgrid_title ele_listgrid_bsbb");
+				rollItem.setSize("8px",this.itemHeight+"px");
 				bar.add(rollItem);
-				this.main_pr += 17;
+				this.main_pr += 8;
 				this.titleView.add(bar);
 				
 				var titleItemPanel = new Ele.HLayout("ele_listgrid_title_item_view");
@@ -254,9 +253,13 @@
 					var titleItem = new Ele.Layout("ele_listgrid_title ele_listgrid_br");
 					titleItem.setHeight(this.itemHeight+"px");
 					titleItem.setLineHeight(this.itemHeight+"px");
-					var tempWidth = this.itemWidth;
+					var tempWidth = this.itemWidth+"px";
 					if(typeof(this.fields[f].fieldWidth) != "undefined"){
-						tempWidth = this.fields[f].fieldWidth;
+						tempWidth = this.fields[f].fieldWidth+"px";
+					}else{
+						if(this.width == null){
+							tempWidth = this.itemWidth+"%";
+						}
 					}
 					titleItem.setAlign("center");
 					titleItem.setHtml(this.fields[f].textName);
@@ -266,10 +269,12 @@
 				
 				this.view.add(this.titleView);
 			}
+			var pos = new Ele.Layout("ele_listgrid_list_panel");
 			
-			this.listView = new Ele.VLayout('ele_listgrid_list_view');
+			this.listView = new Ele.VLayout('ele_listgrid_list_view ele_scrollbar');
 			this.addEmpty();
-			this.view.add(this.listView);
+			pos.add(this.listView);
+			this.view.add(pos);
 		};
 		
 		this._init();

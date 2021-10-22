@@ -7,8 +7,26 @@
 			
 			var welcom = new Ele.Views.FullBoard();
 			
-			var tableView = new Ele.Layout("table_view");
-			tableView.setHtml("hello table view.");
+			var args = {selectOpr:{},fields:[{textName:"ID",fieldName:"id"},{textName:"姓名",fieldName:"name"},{textName:"班级",fieldName:"clazz"}],operations:{menus:[{text:"修改",icon:"img/shoucang.png"}]}};
+			var tableView = new Ele.Views.GridView(args);
+			tableView.addRow({id:1, name:"ltx", clazz:"三年二班ASAS ASXZHSIU	Dhisudhd"});
+			tableView.addRow({id:2, name:"Lucy", clazz:"三年二班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
+			tableView.addRow({id:3, name:"Eric", clazz:"三年四班"});
 			welcom.addView(tableView);
 			board.addBoard(welcom);
 			

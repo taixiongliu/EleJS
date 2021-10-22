@@ -14,7 +14,9 @@
 			layout.add(bar);
 			
 			var menu = new Ele.HLayout("admin_top_menu_view");
-			var mn_home = new Ele.MenuLabel({text:"首页",icon:"img/shouye.png"});
+			var mn_home = new Ele.MenuLabel({text:"首页",icon:"img/shouye.png",onItemClick:function (){
+				window.location.href = "index.html";
+			}});
 			var mn_about = new Ele.MenuLabel({text:"关于"});
 			var mn_case = new Ele.MenuLabel({text:"案例",children:[{text:"案例1",onItemClick:function(res){
 				console.log(res);
