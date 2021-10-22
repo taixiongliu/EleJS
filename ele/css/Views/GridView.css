@@ -1,7 +1,33 @@
 .ele_grid_view{
 	width: 100%;
 	height: 100%;
+	position: relative;
+}
+.ele_grid_view_content{
+	width: 100%;
+	height: 100%;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+}
+.ele_grid_tool_bar{
+	width: 100%;
+	height: 48px;
+	background: #2b2a2a;
+	position: absolute;
+	z-index: 1;
+	border-bottom: 1px #494949 solid;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.ele_grid_menu_view{
+	height: 48px;
+	line-height: 48px;
+}
+.ele_grid_page_bar{
+	width: 100%;
+	height: 48px;
+	background: #fff;
+	z-index: 1;
 }

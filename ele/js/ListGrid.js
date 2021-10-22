@@ -10,6 +10,7 @@
 		this.height;
 		this.itemWidth = 120;
 		this.itemHeight = 40;
+		this.titleHeight = 40;
 		this.oprs;
 		this.selectOpr = null;
 		this.selectArray = [];
@@ -80,7 +81,7 @@
 				selitem.setWidth(this.selectOprWidth+"px");
 				selitem.setAlign("center");
 				var cbox = new Ele.ICheckBox();
-				cbox.ele.style.marginTop="10px";
+				cbox.ele.style.marginTop= ((this.itemHeight - 20)/2)+"px";
 				cbox.data = row;
 				selitem.add(cbox);
 				line.add(selitem);
@@ -91,6 +92,7 @@
 			if(this.oprs != null){
 				var opitem = new Ele.HLayout();
 				opitem.getView().setHeight(this.itemHeight+"px");
+				opitem.getView().setLineHeight(this.itemHeight+"px");
 				opitem.getView().setWidth(this.oprsWidth+"px");
 				opitem.getView().setAlign("center");
 				
@@ -150,8 +152,8 @@
 			this.selectArray = [];
 		};
 		ListGrid.prototype.addEmpty = function(){
-			var empty = new Ele.Layout("ele_listgrid_item");
-			empty.setLineHeight("26px");
+			var empty = new Ele.Layout("ele_listgrid_item ele_listgrid_empty_txt");
+			empty.setLineHeight("40px");
 			empty.setHtml("无数据");
 			empty.setAlign("center");
 			this.listView.add(empty);
@@ -209,8 +211,8 @@
 				//padding left 数值
 				if(this.selectOpr != null){
 					var selitem = new Ele.Layout("ele_listgrid_title_cb");
-					selitem.setHeight(this.itemHeight+"px");
-					selitem.setLineHeight(this.itemHeight+"px");
+					selitem.setHeight(this.titleHeight+"px");
+					selitem.setLineHeight(this.titleHeight+"px");
 					selitem.setWidth(this.selectOprWidth+"px");
 					this.main_pl += this.selectOprWidth;
 					selitem.setAlign("center");
@@ -232,8 +234,8 @@
 				var bar = new Ele.HLayout("ele_listgrid_title_bar");
 				if(this.oprs != null){
 					var opitem = new Ele.Layout("ele_listgrid_title ele_listgrid_br");
-					opitem.setHeight(this.itemHeight+"px");
-					opitem.setLineHeight(this.itemHeight+"px");
+					opitem.setHeight(this.titleHeight+"px");
+					opitem.setLineHeight(this.titleHeight+"px");
 					opitem.setWidth(this.oprsWidth+"px");
 					this.main_pr += this.oprsWidth;
 					opitem.setAlign("center");
@@ -242,7 +244,7 @@
 				}
 				
 				var rollItem = new Ele.Layout("ele_listgrid_title ele_listgrid_bsbb");
-				rollItem.setSize("8px",this.itemHeight+"px");
+				rollItem.setSize("8px",this.titleHeight+"px");
 				bar.add(rollItem);
 				this.main_pr += 8;
 				this.titleView.add(bar);
@@ -251,8 +253,8 @@
 				titleItemPanel.ele.style.padding = "0px "+this.main_pr+"px 0px "+this.main_pl+"px";
 				for(var f in this.fields){
 					var titleItem = new Ele.Layout("ele_listgrid_title ele_listgrid_br");
-					titleItem.setHeight(this.itemHeight+"px");
-					titleItem.setLineHeight(this.itemHeight+"px");
+					titleItem.setHeight(this.titleHeight+"px");
+					titleItem.setLineHeight(this.titleHeight+"px");
 					var tempWidth = this.itemWidth+"px";
 					if(typeof(this.fields[f].fieldWidth) != "undefined"){
 						tempWidth = this.fields[f].fieldWidth+"px";
