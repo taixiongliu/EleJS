@@ -32,7 +32,7 @@
 		};
 		
 		GridView.prototype.addToolBarMenu = function(iconMenu){
-			this.menuView.add(iconMenu);
+			this.menuView.add(iconMenu,{padding:"0 0 0 16px"});
 		};
 		
 		GridView.prototype._init = function(){
@@ -41,13 +41,16 @@
 			
 			this.toolBar = new Ele.HLayout("ele_grid_tool_bar");
 			this.menuView = new Ele.HLayout("ele_grid_menu_view");
-			var iconMenu = new Ele.IconLabel({text:"add", icon:"img/shoucang.png"});
-			var iconMenu2 = new Ele.IconLabel({text:"upd", icon:"img/shoucang.png"});
-			var button = new Ele.Button({text:"add", icon:"img/shoucang.png", focusIcon:"img/huiyuan.png"});
-			this.menuView.add(iconMenu, {padding:"0 0 0 16px"});
-			this.menuView.add(iconMenu2, {padding:"0 0 0 16px"});
-			this.menuView.add(button, {padding:"0 0 0 16px"});
-			this.filterView = new Ele.HLayout();
+			var refresh = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/assets/64/icon_refresh.png"});
+			var set = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/assets/64/icon_set.png"});
+			var divider = new Ele.Layout("ele_grid_tool_divider");
+			this.menuView.add(refresh,{padding:"0px 0px 0px 16px"});
+			this.menuView.add(set,{padding:"0px 0px 0px 16px"});
+			this.menuView.add(divider,{padding:"0px 0px 0px 16px"});
+			
+			this.filterView = new Ele.HLayout("ele_grid_filter_view");
+			var search = new Ele.SearchBox({hint:"搜索关键字"});
+			this.filterView.add(search,{padding:"10px 16px 0px 0px"});
 			this.toolBar.add(this.menuView);
 			this.toolBar.add(this.filterView,{float:"right"});
 			

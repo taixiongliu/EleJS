@@ -1,7 +1,7 @@
 var Ele = window.Ele = Ele || {
 	models:["Layout","AjaxLoad","Img","Alert","Label",
 		"Button","TextBox","TextArea","CheckBox","DateBox",
-		"ListGrid","TreeNode","MenuList","PopWindow"
+		"ListGrid","TreeNode","MenuList","PopWindow","SearchBox"
 	],
 	mUtils:["Ajax","WinInner","Filter","Timer"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],

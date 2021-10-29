@@ -52,11 +52,16 @@
 			}
 			this.ele.onmouseover = function(){
 				context.ele.className = context._focusStyle;
-				context.img.ele.src = context._focusIcon;
+				if(context._focusIcon){
+					context.img.ele.src = context._focusIcon;
+				}
+				
 			};
 			this.ele.onmouseout = function(){
 				context.ele.className = context._style;
-				context.img.ele.src = context._icon;
+				if(context._focusIcon){
+					context.img.ele.src = context._icon;
+				}
 			};
 		};
 		this._init();
