@@ -64,6 +64,7 @@
 	padding-top: 4px;
 	cursor: pointer;
 	background-color: #303030;
+	border: 1px #444444 solid;
 }
 .ele_menu_label_children_item{
 	width: 120px;
@@ -84,6 +85,11 @@
 }
 .ele_menu_label_children_item:hover{
 	color: #009999;
+}
+.ele_menu_label_children_divider{
+	width: 80px;
+	height: 1px;
+	background-color: #444444;
 }
 .ele_menu_label_children_icon{
 	width: 16px;

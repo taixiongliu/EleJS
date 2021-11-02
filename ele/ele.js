@@ -14,6 +14,10 @@ var Ele = window.Ele = Ele || {
 	_loadModels:0,
 	_loadCount:0,
 	_pathPrefix:"/",
+	_eleLoad:false,
+	_rootId:"",
+	rootView:null,
+	masking:null,
 	
 	initPath:function(path){
 		if(typeof path === "string"){
@@ -23,7 +27,18 @@ var Ele = window.Ele = Ele || {
 				this._pathPrefix = "/"+path+"/";
 			}
 		}
-		
+	},
+	
+	/**
+	 * @param {Object} id 内容布局ID
+	 */
+	initView:function(id){
+		console.log(id);
+		if(typeof id === "string"){
+			this._rootId = id;
+			//加载Element
+			this._loadJS("Element", this._eleLoadHandler);
+		}
 	},
 	
 	/**
@@ -64,6 +79,11 @@ var Ele = window.Ele = Ele || {
 				}
 			}
 			if(isEle){
+				if(this._rootId == ""){
+					console.log("Ele load model '"+models[i]+"' must call 'initView' method.");
+					throw "Ele load model '"+models[i]+"' must call 'initView' method";
+					break;
+				}
 				continue;
 			}
 			//工具类加载项检查
@@ -101,6 +121,11 @@ var Ele = window.Ele = Ele || {
 				}
 			}
 			if(isView){
+				if(this._rootId == ""){
+					console.log("Ele load model '"+models[i]+"' must call 'initView' method.");
+					throw "Ele load model '"+models[i]+"' must call 'initView' method";
+					break;
+				}
 				continue;
 			}
 			
@@ -113,6 +138,12 @@ var Ele = window.Ele = Ele || {
 	 * 全局加载
 	 */
 	load:function(callback){
+		if(this._rootId == ""){
+			console.log("Ele load view model must call 'initView' method.");
+			throw "Ele load view model must call 'initView' method";
+			return;
+		}
+		
 		this._loadCallback = callback || function() {};
 		
 		//JS加载总量
@@ -179,10 +210,24 @@ var Ele = window.Ele = Ele || {
 	 * @param {Object} context
 	 * @param {Object} model
 	 */
+	_eleLoadHandler:function(context,model){
+		context._eleLoad = true;
+		context.rootView = new Ele.Element(context._rootId);
+	},
+	
+	/**
+	 * 脚本加载进度处理
+	 * @param {Object} context
+	 * @param {Object} model
+	 */
 	_loadHandler:function(context,model){
 		context._loadCount ++;
 		if(context._loadCount == context._loadModels){
-			context._loadCallback();
+			if(context._eleLoad){
+				context.masking = new Ele.Views.Masking();
+				context.masking.view.setContainerById(context._rootId);
+			}
+			context._loadCallback(context.rootView);
 		}
 	},
 	

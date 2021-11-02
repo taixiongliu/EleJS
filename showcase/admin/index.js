@@ -14,12 +14,12 @@ function init(){
 	Ele.importJS("views/top.js");
 	Ele.importJS("views/bottom.js");
 	Ele.importJS("page/index.js");
-	
-	Ele.load(function(){
+	Ele.initView("main");
+	Ele.load(function(rootView){
 		console.log("ele .load ...");
 		var wininner = new Ele.Utils.WinInner();
-		var masking = new Ele.Views.Masking();
-		masking.view.setContainerById("main");
+		// var masking = new Ele.Views.Masking();
+		// masking.view.setContainerById("main");
 		// var at = new Ele.AjaxLoad();
 		// at.show();
 		var ii= 10;
@@ -40,7 +40,7 @@ function init(){
 			leftView.onWindowResize(height);
 		});
 		
-		topView = new TopView(masking,function(){
+		topView = new TopView(function(){
 			if(menuExpand){
 				topView.showExpand();
 				close();
@@ -56,10 +56,10 @@ function init(){
 		
 		bottomView = new BottomView();
 		
-		leftView.getView().setContainerById("main");
-		topView.getView().setContainerById("main");
-		contentView.setContainerById("main");
-		bottomView.getView().setContainerById("main");
+		rootView.add(leftView.getView());
+		rootView.add(topView.getView());
+		rootView.add(contentView);
+		rootView.add(bottomView.getView());
 	});
 }
 

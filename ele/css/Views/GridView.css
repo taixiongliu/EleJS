@@ -41,3 +41,38 @@
 	background: #fff;
 	z-index: 1;
 }
+
+.ele_grid_set_view{
+	position: absolute;
+	z-index: 1000000;
+	height: auto;
+	padding-top: 4px;
+	cursor: pointer;
+	background-color: #303030;
+	border: 1px #444444 solid;
+}
+.ele_grid_set_view_item{
+	width: 120px;
+	height: 32px;
+	line-height: 32px;
+	color: #F7F7F7;
+	font-size: 12px;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	transition:all 0.5s ease;
+	-moz-transition:all 0.5s ease;
+	-webkit-transition:all 0.5s ease;
+	-ms-transition:all 0.5s ease;
+	-o-transition:all 0.5s ease;
+}
+.ele_grid_set_view_item:hover{
+	color: #009999;
+}
+.ele_grid_set_view_item_divider{
+	width: 80px;
+	height: 1px;
+	background-color: #444444;
+}

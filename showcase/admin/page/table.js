@@ -10,11 +10,15 @@
 			var args = {toolBar:true,
 			selectOpr:{},
 			itemHeightPx:60,
+			//barMenu:false,
 			fields:[{textName:"ID",fieldName:"id"},{textName:"姓名",fieldName:"name"},{textName:"班级",fieldName:"clazz"}],
 			operations:{menus:[{text:"修改",icon:"img/shoucang.png"}]}};
 			var tableView = new Ele.Views.GridView(args);
 			var button = new Ele.Button({text:"添加", icon:"img/shoucang.png"});
 			tableView.addToolBarMenu(button);
+			tableView.setOnSearch(function(key){
+				console.log(key+"...");
+			});
 			
 			tableView.addRow({id:1, name:"ltx", clazz:"三年二班ASAS ASXZHSIU	Dhisudhd"});
 			tableView.addRow({id:2, name:"Lucy", clazz:"三年二班"});

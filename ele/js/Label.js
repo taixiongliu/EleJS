@@ -135,12 +135,7 @@
 			var txt = null;
 			var hasChildren = false;
 			if(typeof(args) == "object"){
-				if(typeof(args.masking) == "object"){
-					this.masking = args.masking;
-				}else{
-					this.masking = new Ele.Views.Masking();
-					this.view.add(this.masking);
-				}
+				this.masking = Ele.masking;
 				if(typeof(args.style) != "undefined"){
 					this.ele.className = args.style;
 				}
@@ -155,6 +150,10 @@
 					if(Ele._isArray(args.children)){
 						for(var i = 0; i < args.children.length; i ++){
 							this.addChild(args.children[i]);
+							if(i < args.children.length - 1){
+								var divider = new Ele.Layout("ele_menu_label_children_divider");
+								this.childrenViews.add(divider);
+							}
 						}
 						hasChildren = true;
 					}

@@ -1,5 +1,5 @@
 (function(){
-	var TopView = window.TopView = function(masking,onMenuEvent){
+	var TopView = window.TopView = function(onMenuEvent){
 		var layout;
 		var bimg;
 		
@@ -22,7 +22,7 @@
 				console.log(res);
 			},data:{id:2,name:"child"}},{text:"案例2",onItemClick:function(res){
 				console.log(res);
-			},data:{id:3,name:"child"}},{text:"案例3"}],masking:masking,onItemClick:function(res){
+			},data:{id:3,name:"child"}},{text:"案例3"}],onItemClick:function(res){
 				console.log(res);
 			},data:{id:1,name:"root"}});
 			var mn_conct = new Ele.MenuLabel({text:"联系"});
@@ -35,9 +35,9 @@
 			var rMenu = new Ele.HLayout("admin_top_right_menu_view");
 			var mn_version = new Ele.MenuLabel({text:"版本：V1.0.1",style:"admin_top_right_menu_txt"});
 			var mn_account = new Ele.MenuLabel({icon:"img/icon_min_user.png",text:"admin",children:[
-				{text:"修改密码",onItemClick:function(res){console.log(res);}},
+				{text:"修改密码",data:"update",onItemClick:function(res){console.log(res);}},
 				{text:"安全退出",onItemClick:function(res){console.log(res);}}
-				],masking:masking});
+				]});
 			//var mn_account = new Ele.IconLabel({icon:"img/huiyuan.png",text:"admin", style:"admin_top_right_icon_menu", focusStyle:"admin_top_right_icon_menu"});
 			rMenu.add(mn_account);
 			rMenu.add(mn_version);
