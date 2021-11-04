@@ -1,7 +1,8 @@
 (function(){
-	var MainView = window.MainView = function(){
+	var IndexView = window.IndexView = function(rootView){
+		MainView.call(this,rootView);
 		
-		MainView.prototype.viewCreate = function(root){
+		IndexView.prototype.viewCreate = function(){
 			//主面板
 			var board = new Ele.Views.Board();
 			
@@ -43,7 +44,17 @@
 			hlinBoard.addView(test4,25);
 			board.addBoard(hlinBoard);
 			
-			root.add(board);
+			this.addContentView(board);
 		};
+		
+		this.viewCreate();
 	}
+	
+	var Super = function (){};
+	Super.prototype = MainView.prototype;
+	Super.constructor = IndexView;
+	var sp = new Super();
+	sp.constructor = IndexView;
+	IndexView.prototype = sp;
+	
 })();

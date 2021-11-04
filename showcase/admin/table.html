@@ -8,14 +8,34 @@
 		<meta name="Keywords" content=""/>
 		<title>管理后台</title>
 		<script src="../../ele/ele.js" type="text/javascript" charset="utf-8"></script>
-		<script src="table.js" type="text/javascript" charset="utf-8"></script>
+		<script src="main.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="../../ele/ele.css"/>
-		<link rel="stylesheet" type="text/css" href="index.css"/>
+		<link rel="stylesheet" type="text/css" href="main.css"/>
 		
 		<!-- 主布局样式导入 -->
 		<link rel="stylesheet" type="text/css" href="page/table.css"/>
+		<script src="page/table.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body id="main">
 		
 	</body>
 </html>
+<script type="text/javascript">
+	window.onload = init;
+	
+	function init(){
+		
+		Ele.initPath("EleJs");
+		//动态导入JS
+		Ele.importJS("views/left.js");
+		Ele.importJS("views/top.js");
+		Ele.importJS("views/bottom.js");
+		Ele.importJS("page/index.js");
+		Ele.initView("main");
+		
+		Ele.load(function(rootView){
+			console.log("ele .load ...");
+			new TableView(rootView);
+		});
+	}
+</script>

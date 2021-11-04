@@ -1,7 +1,8 @@
 (function(){
-	var TableView = window.TableView = function(){
+	var TableView = window.TableView = function(rootView){
+		MainView.call(this, rootView);
 		
-		TableView.prototype.viewCreate = function(root){
+		TableView.prototype.viewCreate = function(){
 			//主面板--full
 			var board = new Ele.Views.Board(true);
 			
@@ -41,7 +42,15 @@
 			welcom.addView(tableView);
 			board.addBoard(welcom);
 			
-			root.add(board);
+			this.addContentView(board);
 		};
+		this.viewCreate();
 	}
+	
+	var Super = function (){};
+	Super.prototype = MainView.prototype;
+	Super.constructor = TableView;
+	var sp = new Super();
+	sp.constructor = TableView;
+	TableView.prototype = sp;
 })();

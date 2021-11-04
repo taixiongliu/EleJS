@@ -33,7 +33,6 @@ var Ele = window.Ele = Ele || {
 	 * @param {Object} id 内容布局ID
 	 */
 	initView:function(id){
-		console.log(id);
 		if(typeof id === "string"){
 			this._rootId = id;
 			//加载Element
