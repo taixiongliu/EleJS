@@ -8,23 +8,22 @@
 		this.onItemClickHandler;
 		
 		MenuList.prototype.add = function(args){
-			var para = {};
-			if(typeof(args) != "object"){
-				para.width = (this.width - 20)+"px";
-				para.icon = Ele._pathPrefix+"ele/icons/icon_menuitem.png";
-			}else{
-				para = args;
-				para.width = (this.width - 20)+"px";
+			if(typeof(args.icon) == "undefined"){
+				args.icon = Ele._pathPrefix+"ele/assets/30/icon_menuroot.png";
 			}
-			para.onItemClick = this.onItemClickHandler;
-			var node = new Ele.TreeNode(para);
-			if(typeof(para.children) == "object"){
-				for(var i = 0; i < para.children.length; i ++){
-					node.add(para.children[i]);
+			args.width = (this.width - 20)+"px";
+			args.onItemClick = this.onItemClickHandler;
+			var node = new Ele.TreeNode(args);
+			if(typeof(args.children) == "object"){
+				for(var i = 0; i < args.children.length; i ++){
+					if(typeof(args.children[i].icon) == "undefined"){
+						args.children[i].icon = Ele._pathPrefix+"ele/assets/20/icon_menuitem.png";
+					}
+					node.add(args.children[i]);
 				}
 			}
-			if(typeof(para.expend) == "boolean"){
-				if(para.expend){
+			if(typeof(args.expend) == "boolean"){
+				if(args.expend){
 					node.expend();
 				}
 			}
@@ -49,9 +48,9 @@
 			}
 			var title = new Ele.Layout("ele_menulist_title_view");
 			title.setAlign("center");
-			var imgLeft = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_menu.png", "ele_menulist_title_img");
+			var imgLeft = new Ele.Img(Ele._pathPrefix+"ele/assets/20/icon_menu_left.png", "ele_menulist_title_img");
 			this.title = new Ele.Label("功能菜单", "ele_menulist_title_txt ele_ml5");
-			var imgRight = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_menu.png", "ele_menulist_title_img ele_ml5");
+			var imgRight = new Ele.Img(Ele._pathPrefix+"ele/assets/20/icon_menu_right.png", "ele_menulist_title_img ele_ml5");
 			title.add(imgLeft);
 			title.add(this.title);
 			title.add(imgRight);

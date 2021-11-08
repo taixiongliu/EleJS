@@ -10,7 +10,6 @@
 		Alert.prototype._init = function() {
 			var context = this;
 			
-			var body = document.getElementsByTagName('body')[0];
 			this.view = new Ele.Layout("ele_shade_pl");
 			this.ele = this.view.ele;
 			var bg = new Ele.Layout("ele_shade_bg");
@@ -69,7 +68,7 @@
 			this.view.add(bg);
 			this.view.add(content);
 			
-			this.view.setContainer(body);
+			Ele.rootView.add(this.view);
 		};
 		
 		Alert.prototype.setSureHandler = function(handler){

@@ -1,6 +1,6 @@
 (function(){
 	var TableView = window.TableView = function(rootView){
-		MainView.call(this, rootView);
+		MainView.call(this, rootView, 1);
 		
 		TableView.prototype.viewCreate = function(){
 			//主面板--full

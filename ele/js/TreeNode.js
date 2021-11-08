@@ -67,12 +67,12 @@
 		};
 		TreeNode.prototype.close = function(){
 			this.listView.ele.style.display="none";
-			this.iconStatus.ele.src = Ele._pathPrefix+"ele/icons/icon_list_right.png";
+			this.iconStatus.ele.src = Ele._pathPrefix+"ele/assets/64/icon_list_right.png";
 			this.isExpend = false;
 		};
 		TreeNode.prototype.expend = function(){
 			this.listView.ele.style.display="block";
-			this.iconStatus.ele.src = Ele._pathPrefix+"ele/icons/icon_list_down.png";
+			this.iconStatus.ele.src = Ele._pathPrefix+"ele/assets/64/icon_list_down.png";
 			this.isExpend = true;
 		};
 		TreeNode.prototype.clear = function(){
@@ -89,7 +89,7 @@
 			this.ele = this.view.ele;
 			var title = new Ele.Layout("ele_treenode_title_view");
 			//状态
-			this.iconStatus = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_list_right.png","ele_treenode_status_view");
+			this.iconStatus = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_list_right.png","ele_treenode_status_view");
 			title.add(this.iconStatus);
 			
 			var txtTitle = new Ele.Label("Root","ele_treenode_title_txt ele_ml5");

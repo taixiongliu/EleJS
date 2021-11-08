@@ -1,49 +1,51 @@
-var leftView;
-var topView;
-var contentView;
-var bottomView;
-var menuExpand = true;
-var left = 0;
-
-function close(){
-	if(left <= -240){
-		return;
-	}
-	left -= 24;
-	leftView.setLeft(left);
-	
-	var pleft = left + 240;
-	topView.setPaddingLeft(pleft);
-	bottomView.setPaddingLeft(pleft);
-	contentView.ele.style.paddingLeft = pleft+"px";
-	setTimeout(close, 20);
-}
-function expand(){
-	if(left >= 0){
-		return;
-	}
-	left += 24;
-	leftView.setLeft(left);
-	var pleft = left + 240;
-	topView.setPaddingLeft(pleft);
-	bottomView.setPaddingLeft(pleft);
-	contentView.ele.style.paddingLeft = pleft+"px";
-	setTimeout(expand, 20);
-}
-
 (function(){
-	var MainView = window.MainView = function(rootView){
+	var MainView = window.MainView = function(rootView, mi){
+		this.leftView;
+		this.topView;
+		this.contentView;
+		this.bottomView;
+		this.menuExpand = true;
+		this.left = 0;
+		
+		MainView.prototype.close = function(context){
+			if(context.left <= -240){
+				return false;
+			}
+			context.left -= 24;
+			context.leftView.setLeft(context.left);
+			
+			var pleft = context.left + 240;
+			context.topView.setPaddingLeft(pleft);
+			context.bottomView.setPaddingLeft(pleft);
+			context.contentView.ele.style.paddingLeft = pleft+"px";
+			return true;
+		};
+		MainView.prototype.expand = function(context){
+			if(context.left >= 0){
+				return false;
+			}
+			context.left += 24;
+			context.leftView.setLeft(context.left);
+			var pleft = context.left + 240;
+			context.topView.setPaddingLeft(pleft);
+			context.bottomView.setPaddingLeft(pleft);
+			context.contentView.ele.style.paddingLeft = pleft+"px";
+			return true;
+		};
 		
 		MainView.prototype._init = function(){
+			var context = this;
+			
 			var wininner = new Ele.Utils.WinInner();
 			// var masking = new Ele.Views.Masking();
 			// masking.view.setContainerById("main");
-			// var at = new Ele.AjaxLoad();
-			// at.show();
+			var at = new Ele.AjaxLoad();
+			at.show();
 			var ii= 10;
 			var timer = new Ele.Utils.Timer(function(){
 				ii --;
 				if(ii < 0){
+					at.close();
 					return false;
 				}
 				console.log("==>"+ii);
@@ -51,36 +53,51 @@ function expand(){
 			});
 			timer.execute();
 			
+			var ii2= 10;
+			var timer2 = new Ele.Utils.Timer(function(){
+				ii2 --;
+				if(ii2 < 0){
+					return false;
+				}
+				console.log("2==>"+ii2);
+				return true;
+			}, 100);
+			timer2.execute();
+			
+			var closeTimer = new Ele.Utils.Timer(context.close);
+			closeTimer.setData(context);
+			var expandTimer = new Ele.Utils.Timer(context.expand);
+			expandTimer.setData(context);
 			//创建一个面板
-			leftView = new LeftView(wininner.getHeight());
+			context.leftView = new LeftView(wininner.getHeight(), mi);
 			
 			wininner.addResizeHandler(function(width, height){
-				leftView.onWindowResize(height);
+				context.leftView.onWindowResize(height);
 			});
 			
-			topView = new TopView(function(){
-				if(menuExpand){
-					topView.showExpand();
-					close();
+			context.topView = new TopView(function(){
+				if(context.menuExpand){
+					context.topView.showExpand();
+					closeTimer.execute();
 				}else{
-					topView.showClose();
-					expand();
+					context.topView.showClose();
+					expandTimer.execute();
 				}
-				menuExpand = !menuExpand;
+				context.menuExpand = !context.menuExpand;
 			});
 			
-			contentView = new Ele.Layout("admin_content_view");
+			context.contentView = new Ele.Layout("admin_content_view");
 			
-			bottomView = new BottomView();
+			context.bottomView = new BottomView();
 			
-			rootView.add(leftView.getView());
-			rootView.add(topView.getView());
-			rootView.add(contentView);
-			rootView.add(bottomView.getView());
+			rootView.add(context.leftView.getView());
+			rootView.add(context.topView.getView());
+			rootView.add(context.contentView);
+			rootView.add(context.bottomView.getView());
 		};
 		
 		MainView.prototype.addContentView = function(view){
-			contentView.add(view);
+			this.contentView.add(view);
 		};
 		
 		this._init();

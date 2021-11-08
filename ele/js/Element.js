@@ -9,6 +9,9 @@
 		Element.prototype.add = function(view){
 			this.ele.appendChild(view.ele);
 		};
+		Element.prototype.remove = function(view){
+			this.ele.removeChild(view.ele);
+		};
 		this._init();
 	};
 })();

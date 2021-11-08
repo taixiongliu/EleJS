@@ -5,7 +5,6 @@
 		this.view;
 		this._msg;
 		AjaxLoad.prototype._init = function(){
-			var body = document.getElementsByTagName('body')[0];
 			this.view = new Ele.Layout("ele_shade_pl");
 			this.ele = this.view.ele;
 			
@@ -19,7 +18,7 @@
 			content.ele.style.marginLeft = (width/2 - 90)+"px";
 			
 			var img_panel = new Ele.Layout("ele_ajaxload_content_img");
-			var img_item = new Ele.Img(Ele._pathPrefix+"ele/icons/ajax-loader.gif");
+			var img_item = new Ele.Img(Ele._pathPrefix+"ele/assets/16/ajax-loader.gif");
 			img_panel.add(img_item);
 			this._msg = new Ele.Layout("ele_ajaxload_content_msg");
 			this._msg.setAlign("center");
@@ -31,7 +30,7 @@
 			this.view.add(bg);
 			this.view.add(content);
 			
-			this.view.setContainer(body);
+			Ele.rootView.add(this.view);
 		};
 		
 		AjaxLoad.prototype.setMsg = function(msg){
@@ -57,9 +56,9 @@
 		};
 		
 		AjaxLoad.prototype.close = function(){
-			var body = document.getElementsByTagName('body')[0];
-			if(this.ele != null){
-				body.removeChild(this.ele);
+			if(this.view != null){
+				Ele.rootView.remove(this.view);
+				this.view = null;
 				this.ele = null;
 			}
 		};

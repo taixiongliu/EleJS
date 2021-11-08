@@ -28,8 +28,8 @@
 				}
 			}});
 			menu.ele.style.height = (height - 180-16)+"px";
-			var node1 = {icon:"img/gonggao.png",title:"看板组件",expend:true, children:[
-				{icon:"img/gonggao.png",text:"表格看板",selected:mi==1,data:{id:1,name:"2-1",href:"table.html"}},
+			var node1 = {title:"看板组件",expend:true, children:[
+				{text:"表格看板",selected:mi==1,data:{id:1,name:"2-1",href:"table.html"}},
 				{icon:"img/gonggao.png",text:"二级菜单B",data:{id:2,name:"2-2"}},
 				{icon:"img/gonggao.png",text:"二级菜单C"},
 				{icon:"img/gonggao.png",text:"二级菜单D",selected:true,data:{id:4,name:"2-4"}},
