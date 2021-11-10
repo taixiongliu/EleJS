@@ -16,18 +16,16 @@
 		this.view;
 		
 		this._checked = false;
-		this._handler = null;
+		this._clickEvent = null;
 		
 		ICheckBox.prototype.click = function(){
 			if(this._checked){
-				this.ele.src = Ele._pathPrefix+"ele/assets/48/icon_cb_none.png";
-				this._checked = false;
+				this.unChecked();
 			}else{
-				this.ele.src = Ele._pathPrefix+"ele/assets/48/icon_cb_block.png";
-				this._checked = true;
+				this.checked();
 			}
-			if(this._handler != null){
-				this._handler();
+			if(this._clickEvent != null){
+				this._clickEvent();
 			}
 		};
 		ICheckBox.prototype.isChecked = function(){
@@ -41,8 +39,8 @@
 			this.ele.src = Ele._pathPrefix+"ele/assets/48/icon_cb_none.png";
 			this._checked = false;
 		};
-		ICheckBox.prototype.addClickEvent = function(handler){
-			this._handler = handler;
+		ICheckBox.prototype.addClickEvent = function(event){
+			this._clickEvent = event;
 		};
 		
 		ICheckBox.prototype._init = function(){

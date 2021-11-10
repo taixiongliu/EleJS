@@ -1,7 +1,6 @@
 (function(){
 	var Timer = Ele.Utils.Timer = function(funName, interval){
 		this.eleType = "util";
-		this.ele;
 		this._interval = 20;
 		this._funName=function(){};
 		this.data=null;

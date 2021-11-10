@@ -1,7 +1,6 @@
 (function(){
 	var Filter = Ele.Utils.Filter = function() {
 		this.eleType = "util";
-		this.ele;
 		this._sqlkey = ["*", "/", "-", "'", "+"];
 	
 		Filter.prototype.isStoreId = function(name) {

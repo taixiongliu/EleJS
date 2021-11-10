@@ -7,6 +7,10 @@
 			this.ele.innerHTML = text;
 		};
 		
+		Label.prototype.getText = function(){
+			return this.ele.innerHTML;
+		};
+		
 		Label.prototype._init = function(){
 			this.ele = document.createElement("span");
 			if(typeof(cName) == "string"){

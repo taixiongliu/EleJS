@@ -10,7 +10,7 @@ window.setTimeout = function(callback,timeout,param){
 
 var Ele = window.Ele = Ele || {
 	models:["Layout","AjaxLoad","Img","Alert","Label",
-		"Button","TextBox","TextArea","CheckBox","DateBox",
+		"Button","TextBox","TextArea","Radio","CheckBox","DateBox",
 		"ListGrid","TreeNode","MenuList","PopWindow","SearchBox"
 	],
 	mUtils:["Ajax","WinInner","Filter","Timer"],

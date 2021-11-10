@@ -1,7 +1,6 @@
 (function(){
 	var Ajax = Ele.Utils.Ajax = function(){
 		this.eleType = "util";
-		this.ele;
 		this._method = 'POST';
 		this._con = true;
 		this._parameter = null;

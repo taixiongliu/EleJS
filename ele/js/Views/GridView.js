@@ -31,6 +31,10 @@
 		this.setView;
 		this.masking;
 		this.args;
+		this.radio;
+		this.etRowHeight;
+		this.cboxArray = [];
+		this.rwidthArray = [];
 		
 		GridView.prototype.addRow = function(row){
 			this.listGrid.addRow(row);
@@ -45,36 +49,76 @@
 		};
 		
 		GridView.prototype._showMenuView = function(){
-			console.log(1);
 			var otop = this.view.ele.offsetTop+this.view.ele.offsetParent.offsetTop;
-			var oleft = this.view.ele.offsetLeft+this.view.ele.offsetParent.offsetLeft+20;
-			//var cheight = this.view.ele.clientHeight;
-			var cheight = 48;
-			this.setView.ele.style.top = (otop + cheight)+"px";
+			var oleft = this.view.ele.offsetLeft+this.view.ele.offsetParent.offsetLeft;
+			this.setView.ele.style.top = (otop + 48)+"px";
 			this.setView.ele.style.left = oleft+"px";
-			console.log(otop+"_"+oleft+"_"+cheight);
-			console.log(2);
-			var item = new Ele.Layout("ele_grid_set_view_item");
-			item.setHtml("text");
-			this.setView.add(item);
 			this.masking.setContent(this.setView);
 			this.masking.showMasking();
-			console.log(3);
+		};
+		
+		GridView.prototype._onReset = function(){
+			this.masking.hideMasking();
 		};
 		
 		GridView.prototype._initSetView = function(){
 			this.setView.clear();
+			var context = this;
+			var title = new Ele.HLayout("ele_grid_set_view_title_item");
+			var cbAll = new Ele.ICheckBox();
+			cbAll.ele.style.marginTop="6px";
+			var lbTitle = new Ele.Label("全选","");
+			title.add(cbAll);
+			title.add(lbTitle,{padding:"0 0 0 8px"});
+			
+			var imgColWidth = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_col_width.png", "ele_grid_set_view_title_icon");
+			title.add(imgColWidth,{padding:"0 0 0 24px"});
+			this.radio = new Ele.RadioBox({items:[{text:"%",value:1},{text:"px",value:2}]});
+			title.add(this.radio,{padding:"4px 0 0 0"});
+			
+			var imgRowHeight = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_row_height.png", "ele_grid_set_view_title_icon");
+			this.etRowHeight = new Ele.TextBox({style:"ele_grid_set_row_height_style"});
+			this.etRowHeight.ele.type = "number";
+			this.etRowHeight.ele.value = this.listGrid.itemHeight;
+			title.add(this.etRowHeight,{float:"right"});
+			title.add(imgRowHeight,{padding:"0 8px 0 0",float:"right"});
+			
+			this.setView.add(title);
+			var divider = new Ele.Layout("ele_grid_set_view_item_divider");
+			this.setView.add(divider);
 			if(Ele._isArray(args.fields)){
+				var wp = 100/args.fields.length;
 				for(var i = 0; i < args.fields.length; i ++){
-					var item = new Ele.Layout("ele_grid_set_view_item");
-					item.setHtml(args.fields[i].textName);
+					var item = new Ele.HLayout("ele_grid_set_view_item");
+					var cbox = new Ele.ICheckBox();
+					cbox.ele.style.marginTop= "8px";
+					cbox.data = args.fields[i];
+					//item.setHtml(args.fields[i].textName);
+					var textName = new Ele.Label(args.fields[i].textName);
+					var etColWidth = new Ele.TextBox({style:"ele_grid_set_row_height_style"});
+					etColWidth.ele.type = "number";
+					etColWidth.ele.value = wp;
+					item.add(cbox);
+					item.add(textName, {padding:"0 0 0 8px"});
+					item.add(etColWidth, {float:"right"});
+					var icw = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_col_width.png", "ele_grid_set_view_title_icon");
+					item.add(icw, {padding:"0 8px 0 0",float:"right"});
+					
 					this.setView.add(item);
-					if(i < args.fields.length - 1){
-						var divider = new Ele.Layout("ele_grid_set_view_item_divider");
-						this.setView.add(divider);
-					}
+					var divider = new Ele.Layout("ele_grid_set_view_item_divider");
+					this.setView.add(divider);
+					
+					this.cboxArray.push(cbox);
+					this.rwidthArray.push(etColWidth);
 				}
 			}
+			var bottom = new Ele.Layout("ele_grid_set_view_bottom_item");
+			bottom.setAlign("right");
+			var sure = new Ele.Button({text:"确定", icon:Ele._pathPrefix+"ele/assets/64/icon_sure.png", onclick:function(){
+				context._onReset();
+			}});
+			bottom.add(sure);
+			this.setView.add(bottom);
 		};
 		
 		GridView.prototype._init = function(){
@@ -84,7 +128,6 @@
 			this.setView = new Ele.HLayout("ele_grid_set_view");
 			this.args = args;
 			var context = this;
-			this._initSetView();
 			
 			this.toolBar = new Ele.HLayout("ele_grid_tool_bar");
 			this.menuView = new Ele.HLayout("ele_grid_menu_view");
@@ -129,6 +172,9 @@
 			this.content.ele.style.padding = top+"px 0 "+bottom+"px 0";
 			
 			this.view.add(this.content);
+			
+			//初始化设置布局
+			this._initSetView();
 		};
 		
 		this._init();
