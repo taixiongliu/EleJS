@@ -105,6 +105,19 @@
 		RadioBox.prototype.getSelectedIndex = function(){
 			return this._selectIndex;
 		};
+		RadioBox.prototype.getIndexByValue = function(value){
+			if(this._radios.length < 0){
+				return -1;
+			}
+			var index = -1;
+			for(var i = 0; i < this._radios.length; i ++){
+				if(this._radios[i].getValue() === value){
+					index = i;
+					break;
+				}
+			}
+			return index;
+		};
 		RadioBox.prototype.select = function(index){
 			//无需更新
 			if(index == this._selectIndex){
@@ -117,9 +130,16 @@
 			//更新选项
 			this._selectIndex = index;
 		};
+		RadioBox.prototype.selectByValue = function(value){
+			var index = this.getIndexByValue(value);
+			//没有找到
+			if(index == -1){
+				return ;
+			}
+			this.select(index);
+		};
 		
 		RadioBox.prototype.onItemClick = function(index){
-			console.log("radio click"+index);
 			//成员点击事件
 			if(this._clickEvent != null){
 				this._clickEvent(index);

@@ -122,7 +122,12 @@
 				rowItem.setLineHeight(this.itemHeight+"px");
 				var tempWidth = this.itemWidth+"px";
 				if(typeof(this.fields[f].fieldWidth) != "undefined"){
-					tempWidth = this.fields[f].fieldWidth+"px";
+					if(typeof(this.fields[f].fieldWidth) == "number"){
+						tempWidth = this.fields[f].fieldWidth+"px";
+					}
+					if(typeof(this.fields[f].fieldWidth) == "string"){
+						tempWidth = this.fields[f].fieldWidth;
+					}
 				}else{
 					if(this.width == null){
 						tempWidth = this.itemWidth+"%";
@@ -257,7 +262,12 @@
 					titleItem.setLineHeight(this.titleHeight+"px");
 					var tempWidth = this.itemWidth+"px";
 					if(typeof(this.fields[f].fieldWidth) != "undefined"){
-						tempWidth = this.fields[f].fieldWidth+"px";
+						if(typeof(this.fields[f].fieldWidth) == "number"){
+							tempWidth = this.fields[f].fieldWidth+"px";
+						}
+						if(typeof(this.fields[f].fieldWidth) == "string"){
+							tempWidth = this.fields[f].fieldWidth;
+						}
 					}else{
 						if(this.width == null){
 							tempWidth = this.itemWidth+"%";

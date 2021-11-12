@@ -321,5 +321,34 @@ var Ele = window.Ele = Ele || {
 			return Array._isArray(value);
 		}
 		return Object.prototype.toString.call(value) === "[object Array]";
+	},
+	_cloneObject: function(obj){
+		//1
+		var newJsonObj = {};
+		newJsonObj = JSON.parse(JSON.stringify(obj));
+		//2
+		if(this.__cloneFilter(newJsonObj, obj)){
+			newJsonObj = obj;
+		}
+		//3
+		var newObj = new obj.constructor;
+		for (items in newJsonObj) {
+			newObj[items] = newJsonObj[items]
+		}
+		return newObj;
+	},
+	__cloneFilter: function(newJsonObj, obj){
+		//object 包含数组类型
+		if(typeof(obj) == "object"){
+			for (items in obj) {
+				if(this.__cloneFilter(newJsonObj[items], obj[items])){
+					newJsonObj[items] = obj[items];
+				}
+			}
+		}
+		if (typeof obj == "function" || typeof obj == "undefined" || obj instanceof RegExp) {
+			return true;
+		}
+		return false;
 	}
 };

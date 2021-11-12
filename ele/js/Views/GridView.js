@@ -25,18 +25,22 @@
 		this.content;
 		this.pageBar;
 		this.listGrid;
+		this.gridData = [];
 		this.menuView;
 		this.filterView;
 		this.search;
 		this.setView;
 		this.masking;
 		this.args;
+		this.setArgs;
 		this.radio;
 		this.etRowHeight;
 		this.cboxArray = [];
 		this.rwidthArray = [];
+		this.lbMsg;
 		
 		GridView.prototype.addRow = function(row){
+			this.gridData.push(row);
 			this.listGrid.addRow(row);
 		};
 		
@@ -48,17 +52,104 @@
 			this.search.setOnSearch(onSearch);
 		};
 		
+		GridView.prototype._onReset = function(){
+			this._showTip("");
+			var fields = Ele._cloneObject(this.setArgs.fields);
+			var tempFields = [];
+			var updateData = [];
+			var tp = 0;
+			for(var i = 0; i < this.cboxArray.length; i ++){
+				if(this.cboxArray[i].isChecked()){
+					fields[i].hidden = false;
+					var value = this.rwidthArray[i].getValue();
+					if(value != ""){
+						var num = Number.parseInt(value);
+						tp += num;
+						if(this.radio.getSelectedValue() == 1){
+							fields[i].fieldWidth = num+"%";
+						}else{
+							fields[i].fieldWidth = num;
+						}
+						updateData.push(i);
+					}
+					tempFields.push(fields[i]);
+				}else{
+					fields[i].hidden = true;
+					this.rwidthArray[i].setValue("");
+					this.rwidthArray[i].setHint("");
+					this.rwidthArray[i].data = "";
+				}
+			}
+			if(this.radio.getSelectedValue() == 1 && tp > 100){
+				this._showTip("展示字段百分比总和大于100");
+				return;
+			}
+			this.radio.data = this.radio.getSelectedValue();
+			for(var index = 0; index < updateData.length; index ++){
+				this.rwidthArray[updateData[index]].data = this.rwidthArray[updateData[index]].getValue();
+			}
+			this.setArgs.fields = fields;
+			this.setArgs.itemHeightPx = Number.parseInt(this.etRowHeight.getValue());
+			
+			var tempArgs = Ele._cloneObject(this.setArgs);
+			tempArgs.fields = tempFields;
+			
+			this.masking.hideMasking();
+			this.content.remove(this.listGrid);
+			this.listGrid = new Ele.ListGrid(tempArgs);
+			this.content.add(this.listGrid);
+			for(var row in this.gridData){
+				this.listGrid.addRow(this.gridData[row]);
+			}
+		};
+		GridView.prototype._showTip = function(tip){
+			if(tip == ""){
+				this.lbMsg.setText("");
+				return ;
+			}
+			this.lbMsg.setText("Tip："+tip);
+		};
+		
 		GridView.prototype._showMenuView = function(){
 			var otop = this.view.ele.offsetTop+this.view.ele.offsetParent.offsetTop;
 			var oleft = this.view.ele.offsetLeft+this.view.ele.offsetParent.offsetLeft;
 			this.setView.ele.style.top = (otop + 48)+"px";
 			this.setView.ele.style.left = oleft+"px";
+			this._initSetValue();
 			this.masking.setContent(this.setView);
 			this.masking.showMasking();
 		};
 		
-		GridView.prototype._onReset = function(){
-			this.masking.hideMasking();
+		GridView.prototype._initSetValue = function(){
+			this._showTip("");
+			this.etRowHeight.ele.value = this.listGrid.itemHeight;
+			this.radio.selectByValue(this.radio.data);
+			if(Ele._isArray(this.setArgs.fields)){
+				var tempRwid = [];
+				for(var i = 0; i < this.setArgs.fields.length; i ++){
+					var field = this.setArgs.fields[i];
+					if(field.hidden){
+						this.cboxArray[i].unChecked();
+						this.rwidthArray[i].setValue("");
+						continue ;
+					}
+					this.cboxArray[i].checked();
+					tempRwid.push(this.rwidthArray[i]);
+				}
+				if(tempRwid.length > 0){
+					var wp = 100/tempRwid.length;
+					for(var j = 0; j < tempRwid.length; j ++){
+						if(tempRwid[j].data == ""){
+							tempRwid[j].setHint(wp);
+							tempRwid[j].setValue("");
+						}else{
+							tempRwid[j].setHint("");
+							tempRwid[j].setValue(tempRwid[j].data);
+						}
+					}
+				}
+				
+			}
 		};
 		
 		GridView.prototype._initSetView = function(){
@@ -74,30 +165,28 @@
 			var imgColWidth = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_col_width.png", "ele_grid_set_view_title_icon");
 			title.add(imgColWidth,{padding:"0 0 0 24px"});
 			this.radio = new Ele.RadioBox({items:[{text:"%",value:1},{text:"px",value:2}]});
+			this.radio.data = 1;
 			title.add(this.radio,{padding:"4px 0 0 0"});
 			
 			var imgRowHeight = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_row_height.png", "ele_grid_set_view_title_icon");
 			this.etRowHeight = new Ele.TextBox({style:"ele_grid_set_row_height_style"});
 			this.etRowHeight.ele.type = "number";
-			this.etRowHeight.ele.value = this.listGrid.itemHeight;
 			title.add(this.etRowHeight,{float:"right"});
 			title.add(imgRowHeight,{padding:"0 8px 0 0",float:"right"});
 			
 			this.setView.add(title);
 			var divider = new Ele.Layout("ele_grid_set_view_item_divider");
 			this.setView.add(divider);
-			if(Ele._isArray(args.fields)){
-				var wp = 100/args.fields.length;
-				for(var i = 0; i < args.fields.length; i ++){
+			if(Ele._isArray(this.setArgs.fields)){
+				for(var i = 0; i < this.setArgs.fields.length; i ++){
 					var item = new Ele.HLayout("ele_grid_set_view_item");
 					var cbox = new Ele.ICheckBox();
 					cbox.ele.style.marginTop= "8px";
-					cbox.data = args.fields[i];
-					//item.setHtml(args.fields[i].textName);
-					var textName = new Ele.Label(args.fields[i].textName);
+					cbox.data = this.setArgs.fields[i];
+					var textName = new Ele.Label(this.setArgs.fields[i].textName);
 					var etColWidth = new Ele.TextBox({style:"ele_grid_set_row_height_style"});
 					etColWidth.ele.type = "number";
-					etColWidth.ele.value = wp;
+					etColWidth.data = "";
 					item.add(cbox);
 					item.add(textName, {padding:"0 0 0 8px"});
 					item.add(etColWidth, {float:"right"});
@@ -112,12 +201,13 @@
 					this.rwidthArray.push(etColWidth);
 				}
 			}
-			var bottom = new Ele.Layout("ele_grid_set_view_bottom_item");
-			bottom.setAlign("right");
+			var bottom = new Ele.HLayout("ele_grid_set_view_bottom_item");
 			var sure = new Ele.Button({text:"确定", icon:Ele._pathPrefix+"ele/assets/64/icon_sure.png", onclick:function(){
 				context._onReset();
 			}});
-			bottom.add(sure);
+			this.lbMsg = new Ele.Label("", "ele_grid_set_view_bottom_hint");
+			bottom.add(this.lbMsg);
+			bottom.add(sure, {float:"right"});
 			this.setView.add(bottom);
 		};
 		
@@ -127,6 +217,7 @@
 			this.masking = Ele.masking;
 			this.setView = new Ele.HLayout("ele_grid_set_view");
 			this.args = args;
+			this.setArgs = Ele._cloneObject(args);
 			var context = this;
 			
 			this.toolBar = new Ele.HLayout("ele_grid_tool_bar");

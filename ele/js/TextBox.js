@@ -3,6 +3,18 @@
 		this.eleType = "input";
 		this.ele;
 		
+		TextBox.prototype.setHint = function(hint){
+			return this.ele.placeholder = hint;
+		};
+		
+		TextBox.prototype.setValue = function(value){
+			return this.ele.value = value;
+		};
+		
+		TextBox.prototype.getValue = function(){
+			return this.ele.value;
+		};
+		
 		TextBox.prototype._init = function(){
 			this.ele = document.createElement("input");
 			this.ele.type = "text";
