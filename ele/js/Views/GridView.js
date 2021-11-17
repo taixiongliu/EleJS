@@ -38,6 +38,7 @@
 		this.cboxArray = [];
 		this.rwidthArray = [];
 		this.lbMsg;
+		this.pageController;
 		
 		GridView.prototype.addRow = function(row){
 			this.gridData.push(row);
@@ -53,6 +54,16 @@
 		};
 		
 		GridView.prototype._onReset = function(){
+			this.setArgs = Ele._cloneObject(this.args);
+			this.content.remove(this.listGrid);
+			this.listGrid = new Ele.ListGrid(this.setArgs);
+			this.content.add(this.listGrid);
+			for(var row in this.gridData){
+				this.listGrid.addRow(this.gridData[row]);
+			}
+		};
+		
+		GridView.prototype._onSet = function(){
 			this._showTip("");
 			var fields = Ele._cloneObject(this.setArgs.fields);
 			var tempFields = [];
@@ -203,7 +214,7 @@
 			}
 			var bottom = new Ele.HLayout("ele_grid_set_view_bottom_item");
 			var sure = new Ele.Button({text:"确定", icon:Ele._pathPrefix+"ele/assets/64/icon_sure.png", onclick:function(){
-				context._onReset();
+				context._onSet();
 			}});
 			this.lbMsg = new Ele.Label("", "ele_grid_set_view_bottom_hint");
 			bottom.add(this.lbMsg);
@@ -228,7 +239,9 @@
 				barMenu = this.args.barMenu;
 			}
 			if(barMenu){
-				var refresh = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/assets/64/icon_refresh.png"});
+				var refresh = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/assets/64/icon_refresh.png",onclick:function(){
+					context._onReset();
+				}});
 				var set = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/assets/64/icon_set.png",onclick:function(){
 					context._showMenuView();
 				}});
@@ -249,6 +262,8 @@
 			this.listGrid = new Ele.ListGrid(this.args);
 			this.content.add(this.listGrid);
 			this.pageBar = new Ele.Layout("ele_grid_page_bar");
+			this.pageController = new Ele.Views.PageControllerView();
+			this.pageBar.add(this.pageController);
 			
 			var top = 0;
 			var bottom = 0;
@@ -260,9 +275,8 @@
 				this.view.add(this.pageBar);
 				bottom += 48;
 			}
-			this.content.ele.style.padding = top+"px 0 "+bottom+"px 0";
-			
 			this.view.add(this.content);
+			this.content.ele.style.padding = top+"px 0 "+bottom+"px 0";
 			
 			//初始化设置布局
 			this._initSetView();

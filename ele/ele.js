@@ -15,7 +15,7 @@ var Ele = window.Ele = Ele || {
 	],
 	mUtils:["Ajax","WinInner","Filter","Timer"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
-	mViews :["Masking","Board","GridView"],
+	mViews :["Masking","Board","GridView","PageControllerView"],
 	Charts : {},//目录对象申明
 	Utils : {},//目录对象申明
 	Views : {},//目录对象申明

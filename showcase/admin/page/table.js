@@ -9,6 +9,7 @@
 			var welcom = new Ele.Views.FullBoard();
 			
 			var args = {toolBar:true,
+			pageBar:true,
 			selectOpr:{},
 			itemHeightPx:60,
 			//barMenu:false,

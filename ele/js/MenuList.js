@@ -11,7 +11,7 @@
 			if(typeof(args.icon) == "undefined"){
 				args.icon = Ele._pathPrefix+"ele/assets/30/icon_menuroot.png";
 			}
-			args.width = (this.width - 20)+"px";
+			args.width = (this.width - 8)+"px";
 			args.onItemClick = this.onItemClickHandler;
 			var node = new Ele.TreeNode(args);
 			if(typeof(args.children) == "object"){
@@ -36,7 +36,7 @@
 			}
 		};
 		MenuList.prototype._init = function(){
-			this.view = new Ele.Layout();
+			this.view = new Ele.Layout("ele_scrollbar");
 			this.view.setWidth(this.width+"px");
 			this.view.setOverflowX("hidden");
 			this.view.setOverflowY("auto");

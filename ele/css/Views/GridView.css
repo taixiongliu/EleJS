@@ -36,10 +36,16 @@
 	line-height: 48px;
 }
 .ele_grid_page_bar{
+	position: absolute;
 	width: 100%;
 	height: 48px;
-	background: #fff;
+	background: #2b2a2a;
 	z-index: 1;
+	bottom: 0px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	padding: 0px 32px;
 }
 
 .ele_grid_set_view{

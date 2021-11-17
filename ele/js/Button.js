@@ -17,7 +17,15 @@
 			this.ele = this.view.ele;
 			var txt = null;
 			var context = this;
+			var iconRight = false;
 			if(typeof(args) == "object"){
+				var isSuffix = "";
+				var tsSuffix = " ele_ml2";
+				if(args.iconRight){
+					iconRight = true;
+					isSuffix = " ele_ml2";
+					tsSuffix = "";
+				}
 				if(typeof(args.style) != "undefined"){
 					this.ele.className = args.style;
 					this._style = args.style;
@@ -26,17 +34,17 @@
 					this._focusStyle = args.focusStyle;
 				}
 				if(typeof(args.icon) != "undefined"){
-					this.img = new Ele.Img(args.icon,"ele_button_icon");
+					this.img = new Ele.Img(args.icon,"ele_button_icon"+isSuffix);
 					this._icon = args.icon;
 				}
 				if(typeof(args.focusIcon) != "undefined"){
 					this._focusIcon = args.focusIcon;
 				}
 				if(typeof(args.text) != "undefined"){
-					txt = new Ele.Label(args.text,"ele_label ele_button_txt ele_ml2");
+					txt = new Ele.Label(args.text,"ele_label ele_button_txt"+tsSuffix);
 				}
 				if(txt != null && typeof(args.textStyle) != "undefined"){
-					txt.ele.className = args.textStyle+" ele_button_txt ele_ml2";
+					txt.ele.className = args.textStyle+" ele_button_txt"+tsSuffix;
 				}
 				if(typeof(args.onclick) == "function"){
 					this.ele.onclick = function(){
@@ -44,12 +52,22 @@
 					};
 				}
 			}
-			if(this.img != null){
-				this.view.add(this.img);
+			if(iconRight){
+				if(txt != null){
+					this.view.add(txt);
+				}
+				if(this.img != null){
+					this.view.add(this.img);
+				}
+			}else{
+				if(this.img != null){
+					this.view.add(this.img);
+				}
+				if(txt != null){
+					this.view.add(txt);
+				}
 			}
-			if(txt != null){
-				this.view.add(txt);
-			}
+			
 			this.ele.onmouseover = function(){
 				context.ele.className = context._focusStyle;
 				if(context._focusIcon){
