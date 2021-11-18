@@ -38,7 +38,7 @@
 		this.cboxArray = [];
 		this.rwidthArray = [];
 		this.lbMsg;
-		this.pageController;
+		this.pageBarView;
 		
 		GridView.prototype.addRow = function(row){
 			this.gridData.push(row);
@@ -51,6 +51,31 @@
 		
 		GridView.prototype.setOnSearch = function(onSearch){
 			this.search.setOnSearch(onSearch);
+		};
+		
+		GridView.prototype.setDataFormat = function(formatHandler){
+			this.pageBarView.setFormat(formatHandler);
+		};
+		
+		//加载数据源
+		GridView.prototype.loadDataSources = function(dataSources){
+			if(!Ele._isArray(dataSources)){
+				return ;
+			}
+			this.listGrid.clear();
+			this.gridData = [];
+			for(var i = 0; i < dataSources.length; i ++){
+				this.addRow(dataSources[i]);
+			}
+		};
+		GridView.prototype._onDataResponse = function(dataSources){
+			this.loadDataSources(dataSources);
+		};
+		GridView.prototype.loadDataSourcesUrl = function(url){
+			var context = this;
+			this.pageBarView.loadData(url, function(dataSources){
+				context._onDataResponse(dataSources);
+			});
 		};
 		
 		GridView.prototype._onReset = function(){
@@ -262,8 +287,8 @@
 			this.listGrid = new Ele.ListGrid(this.args);
 			this.content.add(this.listGrid);
 			this.pageBar = new Ele.Layout("ele_grid_page_bar");
-			this.pageController = new Ele.Views.PageControllerView();
-			this.pageBar.add(this.pageController);
+			this.pageBarView = new Ele.Views.PageBarView();
+			this.pageBar.add(this.pageBarView);
 			
 			var top = 0;
 			var bottom = 0;

@@ -15,10 +15,12 @@ var Ele = window.Ele = Ele || {
 	],
 	mUtils:["Ajax","WinInner","Filter","Timer"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
-	mViews :["Masking","Board","GridView","PageControllerView"],
+	mViews :["Masking","Board","GridView","PageBarView"],
+	mControllers:["PageController"],
 	Charts : {},//目录对象申明
 	Utils : {},//目录对象申明
 	Views : {},//目录对象申明
+	Controllers : {},//目录对象申明
 	imports:[],//导入内容申明
 	_loadCallback:{},
 	_loadModels:0,
@@ -107,6 +109,18 @@ var Ele = window.Ele = Ele || {
 			if(isUtil){
 				continue;
 			}
+			//控制器类加载项检查
+			var isController = false;
+			for(var c = 0; c < this.mControllers.length; c ++){
+				if(this.mControllers[c] == models[i]){
+					isController = true;
+					this._loadControllers([models[i]]);
+					break;
+				}
+			}
+			if(isController){
+				continue;
+			}
 			//统计图类加载项检查
 			var isChart = false;
 			for(var z = 0; z < this.mCharts.length; z ++){
@@ -156,7 +170,7 @@ var Ele = window.Ele = Ele || {
 		this._loadCallback = callback || function() {};
 		
 		//JS加载总量
-		this._loadModels = this.imports.length + this.models.length + this.mUtils.length + this.mCharts.length+this.mViews.length;
+		this._loadModels = this.imports.length + this.models.length + this.mUtils.length + this.mControllers.length + this.mCharts.length+this.mViews.length;
 		this._loadCount = 0;
 		
 		
@@ -166,6 +180,7 @@ var Ele = window.Ele = Ele || {
 		this._loadUtils(this.mUtils);
 		this._loadCharts(this.mCharts);
 		this._loadViews(this.mViews);
+		this._loadControllers(this.mControllers);
 	},
 	
 	/**
@@ -193,6 +208,14 @@ var Ele = window.Ele = Ele || {
 	_loadUtils:function(utils){
 		for(var i = 0; i < utils.length; i++) {
 			this._loadJS("Utils/"+utils[i], this._loadHandler);
+		}
+	},
+	/**
+	 * 加载控制器类 自动加载
+	 */
+	_loadControllers:function(controllers){
+		for(var i = 0; i < controllers.length; i++) {
+			this._loadJS("Controllers/"+controllers[i], this._loadHandler);
 		}
 	},
 	/**

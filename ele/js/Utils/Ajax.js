@@ -42,6 +42,7 @@
 			if (typeof(url) == 'undefined' || url == '') {
 				return;
 			}
+			var context = this;
 			var xmlhttp = this._createXmlHttp();
 	
 			xmlhttp.onreadystatechange = function() {
