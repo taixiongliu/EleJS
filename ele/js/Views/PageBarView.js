@@ -3,17 +3,20 @@
 		this.eleType = "layout";
 		this.ele;
 		this.view;
-		this.alert;
 		this.pageItem;
 		this.lbInfo;
 		this.etJump;
 		this.pageController;
 		this._onDataResponse = null;
+		this._onErrorResponse = null;
 		
-		PageBarView.prototype.loadData = function(url, funName){
+		PageBarView.prototype.loadData = function(url, funName, funError){
 			//加载page数据
 			if(typeof(funName) == "function"){
 				this._onDataResponse = funName;
+			}
+			if(typeof(funError) == "function"){
+				this._onErrorResponse = funError;
 			}
 			this.pageController.loadData(url);
 		};
@@ -93,7 +96,6 @@
 			this.view = new Ele.HLayout("ele_page_bar");
 			this.ele = this.view.ele;
 			
-			this.alert = new Ele.Alert();
 			var context = this;
 			this.pageController = new Ele.Controllers.PageController({
 				loadHandler:function(data){
@@ -103,8 +105,9 @@
 					}
 				},
 				errorHandler:function(error){
-					context.alert.setMsg(error.resMsg);
-					context.alert.show();
+					if(context._onErrorResponse != null){
+						context._onErrorResponse(error);
+					}
 				}
 			});
 			

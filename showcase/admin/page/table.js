@@ -9,7 +9,7 @@
 			
 			var welcom = new Ele.Views.FullBoard();
 			
-			var alert = new Ele.Alert();
+			var context = this;
 			
 			var args = {toolBar:true,
 			pageBar:true,
@@ -41,8 +41,7 @@
 				for(var i in sarr){
 					msg += sarr[i].id+",";
 				}
-				alert.setMsg(msg);
-				alert.show();
+				context.alertMsg(msg);
 			}});
 			tableView.addToolBarMenu(button);
 			tableView.setOnSearch(function(key){
@@ -60,7 +59,9 @@
 			// 	{id:2, name:"Lucy", clazz:"三年二班"},
 			// ];
 			// tableView.loadDataSources(ds);
-			tableView.loadDataSourcesUrl("datasources/table.json");
+			tableView.loadDataSourcesUrl("datasources/table.json", function(error){
+				context.alertMsg(error.resMsg);
+			});
 			
 			
 			welcom.addView(tableView);

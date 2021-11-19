@@ -11,12 +11,12 @@ window.setTimeout = function(callback,timeout,param){
 var Ele = window.Ele = Ele || {
 	models:["Layout","AjaxLoad","Img","Alert","Label",
 		"Button","TextBox","TextArea","Radio","CheckBox","DateBox",
-		"ListGrid","TreeNode","MenuList","PopWindow","SearchBox"
+		"ListGrid","TreeNode","PopWindow","SearchBox"
 	],
 	mUtils:["Ajax","WinInner","Filter","Timer"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
-	mViews :["Masking","Board","GridView","PageBarView"],
-	mControllers:["PageController"],
+	mViews :["Masking","Board","GridView","PageBarView","TreeMenuView"],
+	mControllers:["BaseController","PageController"],
 	Charts : {},//目录对象申明
 	Utils : {},//目录对象申明
 	Views : {},//目录对象申明

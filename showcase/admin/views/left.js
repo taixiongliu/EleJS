@@ -21,36 +21,57 @@
 			layout.add(top);
 			
 			//菜单布局
-			menu = new Ele.MenuList({onItemClick:function(res){
-				console.log(res);
-				if(res.id > 0){
-					window.location.href = res.href;
+			//menu.ele.style.height = (height - 180-16)+"px";
+			menu = new Ele.Views.TreeMenuView({heightPx:height-196,
+				onItemClick:function(res){
+					console.log(res);
+					if(res.id > 0){
+						window.location.href = res.href;
+					}
+				},
+				expendFormat:function(root){
+					if(root.id == "03"){
+						return false;
+					}
+					return true;
+				},
+				selectFormat:function(child){
+					if(child.id == mi){
+						return true;
+					}
+					return false;
 				}
-			}});
-			menu.ele.style.height = (height - 180-16)+"px";
-			var node1 = {title:"看板组件",expend:true, children:[
-				{text:"表格看板",selected:mi==1,data:{id:1,name:"2-1",href:"table.html"}},
-				{icon:"img/gonggao.png",text:"二级菜单B",data:{id:2,name:"2-2"}},
-				{icon:"img/gonggao.png",text:"二级菜单C"},
-				{icon:"img/gonggao.png",text:"二级菜单D",selected:true,data:{id:4,name:"2-4"}},
-				{icon:"img/gonggao.png",text:"二级菜单E"},
-				]};
-			var node2 = {icon:"img/huiyuan.png",title:"主菜单2", children:[
-				{icon:"img/gonggao.png",text:"二级菜单A"},
-				{icon:"img/gonggao.png",text:"二级菜单B"},
-				{icon:"img/gonggao.png",text:"二级菜单C"},
-				{icon:"img/gonggao.png",text:"二级菜单D"},
-				]};
-			var node3 = {icon:"img/shoucang.png",title:"主菜单3"};
+				});
+			menu.setTitle("系统菜单");
+			// var node1 = {title:"看板组件",expend:true, children:[
+			// 	{text:"表格看板",selected:mi==1,data:{id:1,name:"2-1",href:"table.html"}},
+			// 	{icon:"img/gonggao.png",text:"二级菜单B",data:{id:2,name:"2-2"}},
+			// 	{icon:"img/gonggao.png",text:"二级菜单C"},
+			// 	{icon:"img/gonggao.png",text:"二级菜单D",selected:true,data:{id:4,name:"2-4"}},
+			// 	{icon:"img/gonggao.png",text:"二级菜单E"},
+			// 	]};
+			// var node2 = {icon:"img/huiyuan.png",title:"主菜单2", children:[
+			// 	{icon:"img/gonggao.png",text:"二级菜单A"},
+			// 	{icon:"img/gonggao.png",text:"二级菜单B"},
+			// 	{icon:"img/gonggao.png",text:"二级菜单C"},
+			// 	{icon:"img/gonggao.png",text:"二级菜单D"},
+			// 	]};
+			// var node3 = {icon:"img/shoucang.png",title:"主菜单3"};
 			
-			menu.add(node1);
-			menu.add(node2);
-			menu.add(node3);
+			// menu.add(node1);
+			// menu.add(node2);
+			// menu.add(node3);
+			//menu.loadDataSources([node1,node2,node3]);
+			
+			menu.loadDataSourcesUrl("datasources/menu.json");
+			
+			
 			layout.add(menu);
 		};
 		
 		LeftView.prototype.onWindowResize = function(height){
-			menu.ele.style.height = (height - 180-16)+"px";
+			//menu.ele.style.height = (height - 180-16)+"px";
+			menu.fillHeight(height-196);
 		};
 		LeftView.prototype.getView = function(){
 			return layout;

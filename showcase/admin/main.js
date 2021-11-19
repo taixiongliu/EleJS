@@ -6,6 +6,7 @@
 		this.bottomView;
 		this.menuExpand = true;
 		this.left = 0;
+		this.alert;
 		
 		MainView.prototype.close = function(context){
 			if(context.left <= -240){
@@ -32,11 +33,16 @@
 			context.contentView.ele.style.paddingLeft = pleft+"px";
 			return true;
 		};
+		MainView.prototype.alertMsg = function(msg){
+			this.alert.setMsg(msg);
+			this.alert.show();
+		};
 		
 		MainView.prototype._init = function(){
 			var context = this;
 			
 			var wininner = new Ele.Utils.WinInner();
+			this.alert = new Ele.Alert();
 			// var masking = new Ele.Views.Masking();
 			// masking.view.setContainerById("main");
 			var at = new Ele.AjaxLoad();
