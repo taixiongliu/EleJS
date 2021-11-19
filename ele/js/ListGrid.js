@@ -134,7 +134,21 @@
 					}
 				}
 				rowItem.setAlign("center");
-				rowItem.setHtml(row[this.fields[f].fieldName]);
+				if(typeof(this.fields[f].format) == "function"){
+					var element = this.fields[f].format(row);
+					if(Ele._isElement(element)){
+						rowItem.setHtml(element.outerHTML);
+					}else{
+						if(element && typeof(element.eleType) == "string"){
+							rowItem.add(element);
+						}else{
+							rowItem.setHtml(element);
+						}
+					}
+					
+				}else{
+					rowItem.setHtml(row[this.fields[f].fieldName]);
+				}
 				lineItemPanel.add(rowItem,{width:tempWidth});
 			}
 			line.add(lineItemPanel);

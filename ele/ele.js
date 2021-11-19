@@ -373,5 +373,10 @@ var Ele = window.Ele = Ele || {
 			return true;
 		}
 		return false;
+	},
+	_isElement:function(obj){
+		return (typeof HTMLElement === 'object') 
+		?(obj instanceof HTMLElement)
+		:!!(obj && typeof obj === 'object' && (obj.nodeType === 1 || obj.nodeType === 9) && typeof obj.nodeName === 'string');
 	}
 };

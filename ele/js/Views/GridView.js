@@ -57,6 +57,19 @@
 			this.pageBarView.setFormat(formatHandler);
 		};
 		
+		GridView.prototype.getSelected = function(){
+			return this.listGrid.getSelect();
+		};
+		GridView.prototype.clear = function(){
+			this.listGrid.clear();
+		};
+		GridView.prototype.selectAll = function(){
+			this.listGrid.selectAll();
+		};
+		GridView.prototype.unSelectAll = function(){
+			this.listGrid.unSelectAll();
+		};
+		
 		//加载数据源
 		GridView.prototype.loadDataSources = function(dataSources){
 			if(!Ele._isArray(dataSources)){

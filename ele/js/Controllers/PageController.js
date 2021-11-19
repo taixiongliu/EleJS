@@ -67,12 +67,9 @@
 			var context = this;
 			var ajax = new Ele.Utils.Ajax();
 			ajax.setParameter("startRow="+this.startRow+"&pageSize="+this.pageSize);
-			ajax.request("datasources/table"+this.page+".json", function(result){
+			ajax.request(this.url, function(result){
 				context._onResponse(result);
 			});
-			// ajax.request(this.url, function(result){
-			// 	context._onResponse(result);
-			// });
 		};
 		
 		PageController.prototype._onResponse = function(result){
