@@ -25,7 +25,7 @@
 			menu = new Ele.Views.TreeMenuView({heightPx:height-196,
 				onItemClick:function(res){
 					console.log(res);
-					if(res.id > 0){
+					if(res.id > 0 && res.id != mi){
 						window.location.href = res.href;
 					}
 				},

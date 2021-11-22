@@ -11,7 +11,7 @@ window.setTimeout = function(callback,timeout,param){
 var Ele = window.Ele = Ele || {
 	models:["Layout","AjaxLoad","Img","Alert","Label",
 		"Button","TextBox","TextArea","Radio","CheckBox","DateBox",
-		"ListGrid","TreeNode","PopWindow","SearchBox"
+		"ListGrid","TreeNode","PopWindow","SearchBox","Audio","Video"
 	],
 	mUtils:["Ajax","WinInner","Filter","Timer"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
