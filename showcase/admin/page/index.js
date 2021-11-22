@@ -1,8 +1,8 @@
 (function(){
-	var IndexView = window.IndexView = function(rootView){
+	var Index = window.Index = function(rootView){
 		MainView.call(this,rootView);
 		
-		IndexView.prototype.viewCreate = function(){
+		Index.prototype.viewCreate = function(){
 			//主面板
 			var board = new Ele.Views.Board();
 			
@@ -52,9 +52,9 @@
 	
 	var Super = function (){};
 	Super.prototype = MainView.prototype;
-	Super.constructor = IndexView;
+	Super.constructor = Index;
 	var sp = new Super();
-	sp.constructor = IndexView;
-	IndexView.prototype = sp;
+	sp.constructor = Index;
+	Index.prototype = sp;
 	
 })();

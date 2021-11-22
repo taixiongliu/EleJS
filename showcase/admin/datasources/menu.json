@@ -1,9 +1,9 @@
 {
 	"resCode":1000,
 	"data":[
-		{"title":"看板组件","expend":true,"data":{"id":"01"}, "children":[
-			{"text":"表格看板","data":{"id":1,"href":"table.html"}},
-			{"icon":"img/gonggao.png","text":"二级菜单B","data":{"id":2,"href":"table.html"}},
+		{"title":"组件","expend":true,"data":{"id":"01"}, "children":[
+			{"text":"表格","data":{"id":1,"href":"table.html"}},
+			{"icon":"img/gonggao.png","text":"轮播","data":{"id":2,"href":"switch.html"}},
 			{"icon":"img/gonggao.png","text":"二级菜单C","data":{"id":3,"href":"table.html"}},
 			{"icon":"img/gonggao.png","text":"二级菜单D","data":{"id":4,"href":"table.html"}},
 			{"icon":"img/gonggao.png","text":"二级菜单E","data":{"id":5,"href":"table.html"}}

@@ -31,7 +31,7 @@
 	line-height:  22px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
-	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 .ele_page_bar_jump_style:focus{
 	border: 1px #009999 solid;

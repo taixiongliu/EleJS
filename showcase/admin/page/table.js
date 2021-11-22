@@ -1,13 +1,13 @@
 (function(){
-	var TableView = window.TableView = function(rootView){
+	var Table = window.Table = function(rootView){
 		MainView.call(this, rootView, 1);
 		
-		TableView.prototype.viewCreate = function(){
+		Table.prototype.viewCreate = function(){
 			
 			//主面板--full
 			var board = new Ele.Views.Board(true);
 			
-			var welcom = new Ele.Views.FullBoard();
+			var content = new Ele.Views.FullBoard();
 			
 			var context = this;
 			
@@ -64,8 +64,8 @@
 			});
 			
 			
-			welcom.addView(tableView);
-			board.addBoard(welcom);
+			content.addView(tableView);
+			board.addBoard(content);
 			
 			this.addContentView(board);
 		};
@@ -74,8 +74,8 @@
 	
 	var Super = function (){};
 	Super.prototype = MainView.prototype;
-	Super.constructor = TableView;
+	Super.constructor = Table;
 	var sp = new Super();
-	sp.constructor = TableView;
-	TableView.prototype = sp;
+	sp.constructor = Table;
+	Table.prototype = sp;
 })();

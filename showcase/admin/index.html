@@ -30,12 +30,11 @@
 		Ele.importJS("views/left.js");
 		Ele.importJS("views/top.js");
 		Ele.importJS("views/bottom.js");
-		Ele.importJS("page/index.js");
 		Ele.initView("main");
 		
 		Ele.load(function(rootView){
 			console.log("ele .load ...");
-			new IndexView(rootView);
+			new Index(rootView);
 		});
 	}
 </script>
