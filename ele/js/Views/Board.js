@@ -47,7 +47,7 @@
 		
 		FullBoard.prototype._init = function(){
 			this.view = new Ele.Layout("ele_full_board");
-			this.board = new Ele.Layout("ele_full_board_view");
+			this.board = new Ele.Layout("ele_full_board_view ele_scrollbar");
 			this.ele = this.view.ele;
 			this.view.add(this.board);
 		};

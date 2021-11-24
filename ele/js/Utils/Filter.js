@@ -1,12 +1,7 @@
 (function(){
 	var Filter = Ele.Utils.Filter = function() {
 		this.eleType = "util";
-		this._sqlkey = ["*", "/", "-", "'", "+"];
-	
-		Filter.prototype.isStoreId = function(name) {
-			var reg = /^[a-zA-Z]{4}[0-9]{4,5}$/;
-			return reg.test(name);
-		};
+		this._injectionKey = ["&", "/", "\\", "\"", "'", "<",">"];
 	
 		Filter.prototype.isAccount = function(name) {
 			var reg = /^[a-zA-Z][a-zA-Z0-9_]{3,14}$/;
@@ -19,7 +14,7 @@
 		};
 		
 		Filter.prototype.isPhoneNumber = function(phoneNumber) {
-			var reg = /^[1][34578][0-9]{9}$/;
+			var reg = /^[1][3456789][0-9]{9}$/;
 			return reg.test(phoneNumber);
 		};
 		
@@ -40,10 +35,10 @@
 			return reg.test(str);
 		};
 	
-		Filter.prototype.isSqlKey = function(name) {
+		Filter.prototype.injectionKey = function(name) {
 			var res = false;
-			for (var i = 0, len = this._sqlkey.length; i < len; i++) {
-				if (name.indexOf(this._sqlkey[i]) != -1) {
+			for (var i = 0, len = this._injectionKey.length; i < len; i++) {
+				if (name.indexOf(this._injectionKey[i]) != -1) {
 					res = true;
 					break;
 				}

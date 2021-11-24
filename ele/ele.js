@@ -9,13 +9,15 @@ window.setTimeout = function(callback,timeout,param){
 }
 
 var Ele = window.Ele = Ele || {
-	models:["Layout","AjaxLoad","Img","Alert","Label",
-		"Button","TextBox","TextArea","Radio","CheckBox","DateBox",
-		"ListGrid","TreeNode","PopWindow","SearchBox","Audio","Video"
+	models:["Layout","AjaxLoad","Alert","Label","Button",
+		"TextBox","TextArea","Radio","CheckBox","DateBox",
+		"ListGrid","TreeNode","PopWindow","SearchBox","Media"
 	],
-	mUtils:["Ajax","WinInner","Filter","Timer"],
+	mUtils:["Ajax","WinInner","Filter","Timer","Validate"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
-	mViews :["Masking","Board","GridView","PageBarView","TreeMenuView","SwitchView"],
+	mViews :["Masking","Board","GridView","PageBarView","TreeMenuView",
+		"SwitchView","FormView","FormItemView"
+	],
 	mControllers:["BaseController","PageController"],
 	Charts : {},//目录对象申明
 	Utils : {},//目录对象申明

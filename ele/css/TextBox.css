@@ -3,9 +3,9 @@
 	height: 32px;
 	padding: 0px;
 	margin: 0px;
-	background-color: #e6fffe;
+	background-color: #FFFFFF;
 	color: #009999;
-	border: 1px #009999 solid;
+	border: 1px #DDDDDD solid;
 	text-indent: 5px;
 	outline: none;
 	font-family:Arial,Helvetica,sans-serif;
@@ -16,8 +16,30 @@
 	-moz-border-radius: 4px;
 }
 .ele_edittext_style:focus{
+	background-color: #E6FFFE;
 	border: 1px #009999 solid;
 	box-shadow: 0px 0px 4px #83fffc;
 	-webkit-box-shadow: 0px 0px 4px #83fffc;
 	-moz-window-shadow: 0px 0px 4px #83fffc;
+}
+
+.ele_edittext_style_error{
+	width: 200px;
+	height: 32px;
+	padding: 0px;
+	margin: 0px;
+	color: #009999;
+	text-indent: 5px;
+	outline: none;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	line-height:  32px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+	background-color: #FFF8FC;
+	border: 1px #FF61BB solid;
+	box-shadow: 0px 0px 4px #FFCCE7;
+	-webkit-box-shadow: 0px 0px 4px #FFCCE7;
+	-moz-window-shadow: 0px 0px 4px #FFCCE7;
 }

@@ -15,6 +15,13 @@
 			return this.ele.value;
 		};
 		
+		TextBox.prototype.showErrorStyle = function(){
+			this.ele.className = "ele_edittext_style_error";
+		};
+		TextBox.prototype.clearErrorStyle = function(){
+			this.ele.className = "ele_edittext_style";
+		};
+		
 		TextBox.prototype._init = function(){
 			this.ele = document.createElement("input");
 			this.ele.type = "text";

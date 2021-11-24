@@ -14,4 +14,36 @@
 		};
 		this._init();
 	};
+	
+	// tag form
+	var Form = Ele.Form = function(action){
+		this.eleType = "form";
+		this.ele;
+		
+		Form.prototype.add = function(eleView){
+			this.ele.appendChild(eleView.ele);
+		};
+		
+		Form.prototype._init = function(){
+			this.ele = document.createElement("form");
+			this.ele.action = action;
+			this.ele.enctype="multipart/form-data";
+		};
+		this._init();
+	};
+	
+	// tag img
+	var Img = Ele.Img = function(url,cName){
+		this.eleType = "img";
+		this.ele;
+		
+		Img.prototype._init = function(){
+			this.ele = document.createElement("img");
+			this.ele.src = url;
+			if(typeof(cName) == "string"){
+				this.ele.className = cName;
+			}
+		};
+		this._init();
+	};
 })();

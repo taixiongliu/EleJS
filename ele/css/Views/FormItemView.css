@@ -1,0 +1,32 @@
+.ele_form_item_view{
+	width: auto;
+	height: 34px;
+}
+.ele_form_item_text{
+	height: 34px;
+	line-height: 34px;
+	font-size: 14px;
+	color: #EDEDED;
+}
+.ele_form_item_tip{
+	width: 224px;
+	height: 34px;
+	display: none;
+}
+.ele_form_item_tip_icon{
+	width: 16px;
+	height: 16px;
+	margin-top: 8px;
+}
+.ele_form_item_tip_text{
+	width: 200px;
+	height: 34px;
+	line-height: 34px;
+	font-size: 12px;
+	color: #FF0086;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+}
