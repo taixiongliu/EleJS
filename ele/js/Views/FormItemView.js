@@ -7,7 +7,7 @@
 		this.width;
 		this.tip;
 		this.tipText;
-		this.validate;
+		this._validate;
 		
 		FormItemView.prototype.showMessage = function(msg){
 			this.tipText.setText(msg);
@@ -18,14 +18,32 @@
 			this.tipText.setText("");
 			this.tip.ele.style.display = "none";
 		};
+		FormItemView.prototype.validateNotEmpty = function(){
+			this._validate.addNotEmpty();
+		};
 		FormItemView.prototype.validateLimit = function(start, end){
-			this.validate.addLimit(start, end);
+			this._validate.addLimit(start, end);
+		};
+		FormItemView.prototype.validateReg = function(reg, errorMsg){
+			this._validate.addReg(reg, errorMsg);
+		};
+		FormItemView.prototype.validateStartWithLetter = function(){
+			this._validate.addStartWithLetter();
+		};
+		FormItemView.prototype.validateNoChinese = function(){
+			this._validate.addNoChinese();
+		};
+		FormItemView.prototype.validateAllChinese = function(){
+			this._validate.addAllChinese();
+		};
+		FormItemView.prototype.validateInjectionKey = function(){
+			this._validate.addInjectionKey();
 		};
 		
-		FormItemView.prototype.initView = function(lableText, view){
+		FormItemView.prototype.initView = function(lableText, view, height){
 			this.view = new Ele.HLayout("ele_form_item_view");
 			this.ele = this.view.ele;
-			this.validate = new Ele.Utils.Validate();
+			this._validate = new Ele.Utils.Validate();
 			
 			var text = "Label:";
 			if(typeof(lableText) == "string"){
@@ -41,7 +59,72 @@
 			this.view.add(this.label,{width:"100px", align:"right"});
 			this.view.add(view,{width:"240px", align:"center"});
 			this.view.add(this.tip,{width:"224px"});
+			if(typeof(height) == "number" && height > 34){
+				this.view.setSize("auto", height+"px");
+				this.label.ele.style.height = height+"px";
+				this.label.ele.style.lineHeight = height+"px";
+				this.tip.ele.style.paddingTop = ((height - 34)/2)+"px";
+			}
 		};
+	};
+	
+	var TextAreaItem = Ele.Views.TextAreaItem = function(args) {
+		FormItemView.call(this);
+		
+		this.item;
+		this.name;
+		
+		TextAreaItem.prototype.validate = function(){
+			var res = this._validate.validate(this.item.getValue());
+			if(res){
+				this.clearMessage();
+				this.item.clearErrorStyle();
+			}else{
+				this.showMessage(this._validate.error);
+				this.item.showErrorStyle();
+			}
+			return res;
+		};
+		
+		TextAreaItem.prototype.formString = function(){
+			if(this._validate.isEmpty(this.name)){
+				return null;
+			}
+			return this.name+"="+this.getValue();
+		};
+		
+		TextAreaItem.prototype.setValue = function(value){
+			this.item.setValue(value);
+		};
+		
+		TextAreaItem.prototype.reset = function(){
+			this.setValue("");
+		};
+		
+		TextAreaItem.prototype.getValue = function(){
+			return this.item.getValue();
+		};
+		
+		TextAreaItem.prototype._init = function(){
+			//初始化布局组件
+			this.item = new Ele.TextArea();
+			var text = "";
+			if(typeof(args) != "undefined"){
+				if(typeof(args.name) == "string"){
+					this.name = args.name;
+					this.item.ele.name = args.name;
+				}
+				if(typeof(args.text) == "string"){
+					text = args.text;
+				}
+				if(typeof(args.hint) == "string"){
+					this.item.setHint(args.hint);
+				}
+			}
+			this.initView(text, this.item, 48);
+		};
+		
+		this._init();
 	};
 	
 	/**
@@ -52,13 +135,37 @@
 		FormItemView.call(this);
 		
 		this.item;
+		this.name;
 		
-		TextBoxItem.prototype.validateValue = function(){
-			var res = this.validate.validate(this.item.getValue());
-			if(!res){
-				this.showMessage(this.validate.error);
+		TextBoxItem.prototype.validate = function(){
+			var res = this._validate.validate(this.item.getValue());
+			if(res){
+				this.clearMessage();
+				this.item.clearErrorStyle();
+			}else{
+				this.showMessage(this._validate.error);
+				this.item.showErrorStyle();
 			}
 			return res;
+		};
+		
+		TextBoxItem.prototype.formString = function(){
+			if(this._validate.isEmpty(this.name)){
+				return null;
+			}
+			return this.name+"="+this.getValue();
+		};
+		
+		TextBoxItem.prototype.setValue = function(value){
+			this.item.setValue(value);
+		};
+		
+		TextBoxItem.prototype.reset = function(){
+			this.setValue("");
+		};
+		
+		TextBoxItem.prototype.getValue = function(){
+			return this.item.getValue();
 		};
 		
 		TextBoxItem.prototype._init = function(){
@@ -66,6 +173,10 @@
 			this.item = new Ele.TextBox();
 			var text = "";
 			if(typeof(args) != "undefined"){
+				if(typeof(args.name) == "string"){
+					this.name = args.name;
+					this.item.ele.name = args.name;
+				}
 				if(typeof(args.text) == "string"){
 					text = args.text;
 				}
@@ -74,9 +185,6 @@
 				}
 			}
 			this.initView(text, this.item);
-			
-			//this.showMessage("用户姓名不能为空");
-			//this.item.showErrorStyle();
 		};
 		
 		this._init();
@@ -88,4 +196,12 @@
 	var textBoxSuper = new TextBoxSuper();
 	textBoxSuper.constructor = TextBoxItem;
 	TextBoxItem.prototype = textBoxSuper;
+	
+	var TextAreaSuper = function (){};
+	TextAreaSuper.prototype = FormItemView.prototype;
+	TextAreaSuper.constructor = TextAreaItem;
+	var textAreaSuper = new TextAreaSuper();
+	textAreaSuper.constructor = TextAreaItem;
+	TextAreaItem.prototype = textAreaSuper;
+	
 })();

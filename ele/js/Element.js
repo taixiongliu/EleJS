@@ -27,7 +27,6 @@
 		Form.prototype._init = function(){
 			this.ele = document.createElement("form");
 			this.ele.action = action;
-			this.ele.enctype="multipart/form-data";
 		};
 		this._init();
 	};

@@ -2,11 +2,6 @@
 	var Filter = Ele.Utils.Filter = function() {
 		this.eleType = "util";
 		this._injectionKey = ["&", "/", "\\", "\"", "'", "<",">"];
-	
-		Filter.prototype.isAccount = function(name) {
-			var reg = /^[a-zA-Z][a-zA-Z0-9_]{3,14}$/;
-			return reg.test(name);
-		};
 		
 		Filter.prototype.isNumber = function(number) {
 			var reg = /^(0|[1-9][0-9]*)$/;
@@ -24,6 +19,10 @@
 		};
 		Filter.prototype.isChinese = function(str) {
 			var reg = /^[\u4E00-\u9FA5]$/;
+			return reg.test(str);
+		};
+		Filter.prototype.isLetter = function(str) {
+			var reg = /^[a-zA-Z]$/;
 			return reg.test(str);
 		};
 		Filter.prototype.isUpper = function(str) {

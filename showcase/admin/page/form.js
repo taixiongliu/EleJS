@@ -18,20 +18,56 @@
 			formPanel.add(formTitle);
 			
 			var form = new Ele.Layout("form_content");
-			var formView = new Ele.Views.FormView();
+			var formView = new Ele.Views.FormView("test.html");
+			// formView.setMethod("get");
+			
+			var textBoxItem = new Ele.Views.TextBoxItem({
+				name:"input",
+				text:"文本框",
+				hint:"请输入",
+			});
+			textBoxItem.validateNotEmpty();
+			//textBoxItem.validateLimit(4,10);
+			//var reg = /^[a-zA-Z][a-zA-Z0-9_]{3,14}$/;
+			//textBoxItem.validateReg(reg,"账号格式错误");
+			//textBoxItem.validateStartWithLetter();
+			//textBoxItem.validateNoChinese();
+			//textBoxItem.validateAllChinese();
+			//textBoxItem.validateInjectionKey();
+			
+			
+			var textAreaItem = new Ele.Views.TextAreaItem({
+				name:"textarea",
+				text:"区域文本",
+				hint:"请输入",
+			});
+			textAreaItem.validateNotEmpty();
+			
+			formView.addItem(textBoxItem);
+			formView.addItem(textAreaItem);
+			
 			form.add(formView);
+			var btnPanel = new Ele.HLayout("ele_form_button_panel");
+			var reset = new Ele.Button({
+				text:"重置",
+				icon:Ele._pathPrefix+"ele/assets/64/icon_reset.png"
+			});
+			var submit = new Ele.Button({
+				text:"提交",
+				icon:Ele._pathPrefix+"ele/assets/64/icon_submit.png",
+				onclick:function(){
+					if(!formView.validate()){
+						return ;
+					}
+					console.log("form data:"+formView.formData());
+					formView.submit();
+				}
+			});
+			btnPanel.add(reset, {padding:"0 0 0 16px"});
+			btnPanel.add(submit, {padding:"0 0 0 16px"});
+			form.add(btnPanel);
+			
 			formPanel.add(form);
-			
-			// var form = new Ele.Form("a.php");
-			// var tb = new Ele.TextBox();
-			// tb.ele.name = "name";
-			// var btn = new Ele.Button({text:"go", onclick:function(){
-			// 	console.log(form.ele.elements);
-			// }});
-			
-			// form.add(tb);
-			// form.add(btn);
-			// formPanel.add(form);
 			
 			content.addView(formPanel);
 			
