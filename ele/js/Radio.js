@@ -99,6 +99,9 @@
 		RadioBox.prototype.getSelectedValue = function(){
 			return this._radios[this._selectIndex].getValue();
 		};
+		RadioBox.prototype.getIndexValue = function(index){
+			return this._radios[index].getValue();
+		};
 		RadioBox.prototype.getSelectedText = function(){
 			return this._radios[this._selectIndex].getText();
 		};
@@ -129,6 +132,9 @@
 			this._radios[index].checked();
 			//更新选项
 			this._selectIndex = index;
+			if(this._updateEvent != null){
+				this._updateEvent(index);
+			}
 		};
 		RadioBox.prototype.selectByValue = function(value){
 			var index = this.getIndexByValue(value);

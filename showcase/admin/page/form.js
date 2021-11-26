@@ -43,8 +43,22 @@
 			});
 			textAreaItem.validateNotEmpty();
 			
+			var radioBoxItem = new Ele.Views.RadioBoxItem({
+				name:"radiobox",
+				text:"单选组件",
+				items:[{
+					text:"A类型",
+					value:1
+				},
+				{
+					text:"B类型",
+					value:2
+				}]
+			});
+			
 			formView.addItem(textBoxItem);
 			formView.addItem(textAreaItem);
+			formView.addItem(radioBoxItem);
 			
 			form.add(formView);
 			var btnPanel = new Ele.HLayout("ele_form_button_panel");
@@ -52,6 +66,9 @@
 				text:"重置",
 				icon:Ele._pathPrefix+"ele/assets/64/icon_reset.png"
 			});
+			//自定义追加form数据
+			//多次添加
+			formView.appendFormData("cust", "auto");
 			var submit = new Ele.Button({
 				text:"提交",
 				icon:Ele._pathPrefix+"ele/assets/64/icon_submit.png",
@@ -59,8 +76,12 @@
 					if(!formView.validate()){
 						return ;
 					}
+					
 					console.log("form data:"+formView.formData());
-					formView.submit();
+					// formView.submit();
+					formView.submitAjax(function(res){
+						console.log(res);
+					});
 				}
 			});
 			btnPanel.add(reset, {padding:"0 0 0 16px"});

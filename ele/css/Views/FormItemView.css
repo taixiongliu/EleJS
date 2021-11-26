@@ -30,3 +30,7 @@
 	overflow : hidden;
 	text-overflow: ellipsis;
 }
+.ele_form_radio{
+	width: 202px;
+	height: 34px;
+}

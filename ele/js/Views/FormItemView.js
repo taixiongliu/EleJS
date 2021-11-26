@@ -68,6 +68,77 @@
 		};
 	};
 	
+	var RadioBoxItem = Ele.Views.RadioBoxItem = function(args) {
+		FormItemView.call(this);
+		
+		this.item;
+		this.name;
+		this.hditem;
+		this.radioBox;
+		
+		RadioBoxItem.prototype.validate = function(){
+			return true;
+		};
+		
+		RadioBoxItem.prototype.formString = function(){
+			if(this._validate.isEmpty(this.name)){
+				return null;
+			}
+			return this.name+"="+this.getValue();
+		};
+		
+		RadioBoxItem.prototype.setValue = function(value){
+			this.radioBox.selectByValue(value);
+			this.hditem.setValue(value);
+		};
+		
+		RadioBoxItem.prototype.reset = function(){
+			this.radioBox.select(0);
+			this.hditem.setValue(this.getValue());
+		};
+		
+		RadioBoxItem.prototype.getValue = function(){
+			return this.radioBox.getSelectedValue();
+		};
+		
+		RadioBoxItem.prototype._updateValue = function(index){
+			this.hditem.setValue(this.radioBox.getIndexValue(index));
+		};
+		
+		RadioBoxItem.prototype._init = function(){
+			//初始化布局组件
+			this.item = new Ele.Layout("ele_form_radio");
+			this.hditem = new Ele.TextBox();
+			this.hditem.ele.type = "hidden";
+			
+			var context = this;
+			var text = "";
+			if(typeof(args) != "undefined"){
+				if(typeof(args.name) == "string"){
+					this.name = args.name;
+					this.hditem.ele.name = this.name;
+				}
+				if(typeof(args.text) == "string"){
+					text = args.text;
+				}
+				var opts = {
+					selectChange:function(index){
+						context._updateValue(index);
+					},
+					items:args.items
+				};
+				this.radioBox = new Ele.RadioBox(opts);
+				this._updateValue(0);
+			}
+			this.item.add(this.hditem);
+			this.item.add(this.radioBox);
+			
+			this.initView(text, this.item);
+		};
+		
+		this._init();
+	};
+	
 	var TextAreaItem = Ele.Views.TextAreaItem = function(args) {
 		FormItemView.call(this);
 		
@@ -203,5 +274,12 @@
 	var textAreaSuper = new TextAreaSuper();
 	textAreaSuper.constructor = TextAreaItem;
 	TextAreaItem.prototype = textAreaSuper;
+	
+	var RadioBoxSuper = function (){};
+	RadioBoxSuper.prototype = FormItemView.prototype;
+	RadioBoxSuper.constructor = RadioBoxItem;
+	var radioBoxSuper = new RadioBoxSuper();
+	radioBoxSuper.constructor = RadioBoxItem;
+	RadioBoxItem.prototype = radioBoxSuper;
 	
 })();
