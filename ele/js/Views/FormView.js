@@ -12,6 +12,9 @@
 		FormView.prototype.validate = function(){
 			var res = true;
 			for(var i in this.items){
+				if(typeof(this.items[i].validate) != "function"){
+					continue;
+				}
 				if(!this.items[i].validate()){
 					res = false;
 					break;
@@ -19,6 +22,15 @@
 			}
 			
 			return res;
+		};
+		
+		FormView.prototype.reset = function(){
+			for(var i in this.items){
+				if(typeof(this.items[i].reset) != "function"){
+					continue;
+				}
+				this.items[i].reset();
+			}
 		};
 		
 		FormView.prototype.formData = function(){
@@ -33,7 +45,7 @@
 				data += this.appendData[a];
 			}
 			for(var i in this.items){
-				if(this.items[i].formString() != null){
+				if(typeof(this.items[i].formString) == "function"){
 					if(first){
 						first = false;
 					}else{
@@ -46,6 +58,31 @@
 		};
 		FormView.prototype.submit = function(){
 			this.form.ele.submit();
+		};
+		FormView.prototype.submitFormAjax = function(funName){
+			var formData = new FormData();
+			for(var a in this.appendData){
+				var arr = this.appendData[a].split("=");
+				formData.append(arr[0], arr[1]);
+			}
+			for(var i in this.items){
+				if(typeof(this.items[i].appendToFormData) == "function"){
+					//默认表单数据优先
+					this.items[i].appendToFormData(formData);
+					continue;
+				}
+				if(typeof(this.items[i].formString) == "function"){
+					var arr = this.items[i].formString().split("=");
+					formData.append(arr[0], arr[1]);
+				}
+			}
+			var ajax = new Ele.Utils.Ajax();
+			var uri = this.url;
+			if(this.method.toLowerCase() == "get"){
+				ajax.setMethod("GET");
+			}
+			ajax.setParameter(formData);
+			ajax.request(uri, funName);
 		};
 		FormView.prototype.submitAjax = function(funName){
 			var ajax = new Ele.Utils.Ajax();

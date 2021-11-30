@@ -53,22 +53,42 @@
 				{
 					text:"B类型",
 					value:2
+				},
+				{
+					text:"C类型",
+					value:3
+				},
+				{
+					text:"D类型",
+					value:4
 				}]
 			});
+			
+			var fileItem = new Ele.Views.FileItem({
+				name:"file",
+				text:"文件组件",
+			});
+			//fileItem.validateNotEmpty();
+			// fileItem.acceptImage();
 			
 			formView.addItem(textBoxItem);
 			formView.addItem(textAreaItem);
 			formView.addItem(radioBoxItem);
+			formView.addItem(fileItem);
 			
 			form.add(formView);
 			var btnPanel = new Ele.HLayout("ele_form_button_panel");
 			var reset = new Ele.Button({
 				text:"重置",
-				icon:Ele._pathPrefix+"ele/assets/64/icon_reset.png"
+				icon:Ele._pathPrefix+"ele/assets/64/icon_reset.png",
+				onclick:function(){
+					formView.reset();
+				}
 			});
 			//自定义追加form数据
 			//多次添加
 			formView.appendFormData("cust", "auto");
+			// formView.setEnctypeMfd();
 			var submit = new Ele.Button({
 				text:"提交",
 				icon:Ele._pathPrefix+"ele/assets/64/icon_submit.png",
@@ -78,7 +98,10 @@
 					}
 					
 					console.log("form data:"+formView.formData());
-					// formView.submit();
+					//formView.submit();
+					// formView.submitFormAjax(function(res){
+					// 	console.log(res);
+					// });
 					formView.submitAjax(function(res){
 						console.log(res);
 					});

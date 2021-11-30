@@ -28,7 +28,6 @@ var Ele = window.Ele = Ele || {
 	_loadModels:0,
 	_loadCount:0,
 	_pathPrefix:"/",
-	_eleLoad:false,
 	_rootId:"",
 	rootView:null,
 	masking:null,
@@ -49,8 +48,6 @@ var Ele = window.Ele = Ele || {
 	initView:function(id){
 		if(typeof id === "string"){
 			this._rootId = id;
-			//加载Element
-			this._loadJS("Element", this._eleLoadHandler);
 		}
 	},
 	
@@ -74,11 +71,14 @@ var Ele = window.Ele = Ele || {
 			return;
 		}
 		
-		this._loadModels = this.imports.length + models.length;
+		this._loadModels = this.imports.length + models.length + 1;
 		this._loadCount = 0;
 		
 		//加载类文件
 		this._loadImports();
+		
+		//加载Element
+		this._loadJS("Element", this._loadHandler);
 		
 		//遍历加载
 		for(var i = 0; i < models.length; i++){
@@ -172,12 +172,13 @@ var Ele = window.Ele = Ele || {
 		this._loadCallback = callback || function() {};
 		
 		//JS加载总量
-		this._loadModels = this.imports.length + this.models.length + this.mUtils.length + this.mControllers.length + this.mCharts.length+this.mViews.length;
+		this._loadModels = this.imports.length + this.models.length + this.mUtils.length + this.mControllers.length + this.mCharts.length+this.mViews.length + 1;
 		this._loadCount = 0;
-		
 		
 		//全部加载
 		this._loadImports();
+		//加载Element
+		this._loadJS("Element", this._loadHandler);
 		this._loadEles(this.models);
 		this._loadUtils(this.mUtils);
 		this._loadCharts(this.mCharts);
@@ -244,20 +245,11 @@ var Ele = window.Ele = Ele || {
 	 * @param {Object} context
 	 * @param {Object} model
 	 */
-	_eleLoadHandler:function(context,model){
-		context._eleLoad = true;
-		context.rootView = new Ele.Element(context._rootId);
-	},
-	
-	/**
-	 * 脚本加载进度处理
-	 * @param {Object} context
-	 * @param {Object} model
-	 */
 	_loadHandler:function(context,model){
 		context._loadCount ++;
 		if(context._loadCount == context._loadModels){
-			if(context._eleLoad){
+			if(typeof(context._rootId) == "string" && context._rootId.trim() != ""){
+				context.rootView = new Ele.Element(context._rootId);
 				context.masking = new Ele.Views.Masking();
 				context.masking.view.setContainerById(context._rootId);
 			}
