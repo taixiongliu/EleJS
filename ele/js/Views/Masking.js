@@ -5,6 +5,8 @@
 		this.view;
 		this.bg;
 		this.content;
+		this.maxZIndex = 102;
+		this._hiddenEvent = null;
 		
 		Masking.prototype._init = function(){
 			this.view = new Ele.Layout("ele_masking");
@@ -16,15 +18,42 @@
 			//点击主布局外隐藏窗口
 			this.bg.ele.onclick = function(e){
 				context.hideMasking();
+				if(context._hiddenEvent != null && typeof(context._hiddenEvent) == "function"){
+					context._hiddenEvent();
+				}
 			};
 			
 			this.view.add(this.bg);
 			this.view.add(this.content);
 		};
+		Masking.prototype.setHiddenHandler = function(event){
+			this._hiddenEvent = event;
+		};
 		
-		Masking.prototype.setContent = function(view){
+		Masking.prototype.setContent = function(view, position){
+			if(position instanceof Ele.Utils.Position){
+				if(position.positionType == "top-left"){
+					view.ele.style.left = position.left+"px";
+					view.ele.style.bottom = position.bottom+"px";
+				}
+				if(position.positionType == "top-right"){
+					view.ele.style.right = position.right+"px";
+					view.ele.style.bottom = position.bottom+"px";
+				}
+				if(position.positionType == "bottom-left"){
+					view.ele.style.left = position.left+"px";
+					view.ele.style.top = position.top+"px";
+				}
+				if(position.positionType == "top-left"){
+					view.ele.style.right = position.right+"px";
+					view.ele.style.top = position.top+"px";
+				}
+			}
 			this.content.clear();
 			this.content.add(view);
+		};
+		Masking.prototype.setContentNone = function(){
+			this.content.clear();
 		};
 		Masking.prototype.showMasking = function(){
 			this.ele.style.display = "block";

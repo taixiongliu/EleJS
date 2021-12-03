@@ -4,16 +4,16 @@
 	height: 110px;
 	position: absolute;
 	z-index: 10005;
-	background-color: #393939;
-	box-shadow: 3px 2px 5px #CCCCCC;
-	-moz-window-shadow: 3px 2px 5px #CCCCCC;
-	-webkit-box-shadow: 3px 2px 5px #CCCCCC;
+	background-color: #666666;
+	box-shadow: 0px 0px 8px #999999;
+	-webkit-box-shadow: 0px 0px 8px #999999;
+	-moz-window-shadow: 0px 0px 8px #999999;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	top: 0px;
 	left: 0px;
-	border: 1px #CCCCCC solid;
+	border: 1px #555555 solid;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -68,7 +68,7 @@
 	border-bottom-right-radius: 10px;
 	-moz-border-radius-bottomright: 10px;
 	-webkit-border-bottom-right-radius: 10px;
-	background-color: #303030;
+	background-color: #555555;
 	color: #FFFFFF;
 	float: left;
 	cursor: pointer;
@@ -92,7 +92,7 @@
 	border-bottom-left-radius: 10px;
 	-moz-border-radius-bottomleft: 10px;
 	-webkit-border-bottom-left-radius: 10px;
-	background-color: #303030;
+	background-color: #555555;
 	color: #FFFFFF;
 	float: left;
 	cursor: pointer;
@@ -128,7 +128,7 @@
 	-moz-border-radius-bottomleft: 10px;
 	-webkit-border-bottom-left-radius: 10px;
 	color: #FFFFFF;
-	background-color: #303030;
+	background-color: #555555;
 	float: left;
 	cursor: pointer;
 }

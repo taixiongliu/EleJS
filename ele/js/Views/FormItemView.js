@@ -69,6 +69,79 @@
 		};
 	};
 	
+	/**
+	 * @param {Object} args
+	 * 选择框组件
+	 */
+	var SelectBoxItem = Ele.Views.SelectBoxItem = function(args) {
+		FormItem.call(this);
+		
+		this.item;
+		this.name;
+		this.hditem;
+		this.valueView;
+		this.fileView;
+		this.deleteView;
+		this.value;
+		
+		SelectBoxItem.prototype.validate = function(){
+			var res = this._validate.validate(this.getValue());
+			if(res){
+				this.clearMessage();
+			}else{
+				this.showMessage(this._validate.error);
+			}
+			return res;
+		};
+		
+		SelectBoxItem.prototype.formString = function(){
+			if(this._validate.isEmpty(this.name)){
+				return null;
+			}
+			return this.name+"="+this.getValue();
+		};
+		
+		SelectBoxItem.prototype.setValue = function(value){
+			this.value = value;
+		};
+		
+		SelectBoxItem.prototype.reset = function(){
+			this.clearMessage();
+			
+		};
+		
+		SelectBoxItem.prototype.getValue = function(){
+			return this.value;
+		};
+		
+		SelectBoxItem.prototype._init = function(){
+			//初始化布局组件
+			var context = this;
+			
+			this.item = new Ele.SelectBox("ele_form_file");
+			var text = "";
+			if(typeof(args) != "undefined"){
+				if(typeof(args.name) == "string"){
+					this.name = args.name;
+					this.item.ele.name = args.name;
+				}
+				if(typeof(args.text) == "string"){
+					text = args.text;
+				}
+				if(typeof(args.hint) == "string"){
+					this.item.setHint(args.hint);
+				}
+			}
+			this.initView(text, this.item);
+		};
+		
+		this._init();
+	};
+	
+	/**
+	 * @param {Object} args
+	 * 文件选择组件
+	 */
 	var FileItem = Ele.Views.FileItem = function(args) {
 		FormItem.call(this);
 		
@@ -110,8 +183,32 @@
 			return this.name+"="+this.getValue();
 		};
 		
-		FileItem.prototype.setValue = function(value){
+		FileItem.prototype.setValueUrl = function(url){
+			if(typeof(url) != "string"){
+				return ;
+			}
+			var suffix = "";
+			if(url.indexOf(".") != -1){
+				var arr = path.split(".");
+				suffix = arr[arr.length - 1].toLowerCase();
+			}
 			this.value = value;
+			this.valueView.setHtml(value);
+			this.deleteView.ele.style.display = "block";
+			//图片类型文件处理
+			if(suffix == "png" || suffix == "jpg" || suffix == "jpeg" || suffix == "gif"){
+				var img = new Ele.Img(value, "ele_form_file_icon");
+				this.fileView.clear();
+				this.fileView.add(img);
+				return ;
+			}
+			
+			//非图片类型文件处理
+			var txt = new Ele.Layout("ele_form_file_text");
+			txt.setHtml(suffix);
+			txt.setAlign("center");
+			this.fileView.clear();
+			this.fileView.add(txt);
 		};
 		
 		FileItem.prototype.reset = function(){
@@ -478,5 +575,12 @@
 	var fileSuper = new FileSuper();
 	fileSuper.constructor = FileItem;
 	FileItem.prototype = fileSuper;
+	
+	var SelectSuper = function (){};
+	SelectSuper.prototype = FormItem.prototype;
+	SelectSuper.constructor = SelectBoxItem;
+	var selectSuper = new SelectSuper();
+	selectSuper.constructor = SelectBoxItem;
+	SelectBoxItem.prototype = selectSuper;
 	
 })();

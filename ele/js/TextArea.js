@@ -4,10 +4,10 @@
 		this.ele;
 		
 		TextArea.prototype.setHint = function(hint){
-			return this.ele.placeholder = hint;
+			this.ele.placeholder = hint;
 		};
 		TextArea.prototype.setValue = function(value){
-			return this.ele.value = value;
+			this.ele.value = value;
 		};
 		
 		TextArea.prototype.getValue = function(){

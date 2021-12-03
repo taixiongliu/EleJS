@@ -86,19 +86,23 @@
 		this.view;
 		this.childrenViews;
 		this.masking;
+		this.position;
+		this.offset;
 		
 		MenuLabel.prototype.setText = function(text){
 			this.ele.innerHTML = text;
 		};
 		
+		MenuLabel.prototype.setChildOffset = function(size){
+			this.offset = size;
+		};
+		
 		MenuLabel.prototype.showChildren = function(){
-			var otop = this.view.ele.offsetTop+this.view.ele.offsetParent.offsetTop;
-			var oleft = this.view.ele.offsetLeft+this.view.ele.offsetParent.offsetLeft+20;
-			var cheight = this.view.ele.clientHeight;
-			this.childrenViews.ele.style.top = (otop + cheight)+"px";
-			this.childrenViews.ele.style.left = oleft+"px";
-			
-			this.masking.setContent(this.childrenViews);
+			this.position.inBottomLeft(this.view.ele);
+			if(this.offset != null && this.offset instanceof Ele.Utils.Size){
+				this.position.setOffset(this.offset);
+			}
+			this.masking.setContent(this.childrenViews, this.position);
 			this.masking.showMasking();
 		};
 		
@@ -134,12 +138,15 @@
 			this.childrenViews = new Ele.Layout("ele_menu_label_children");
 			this.childrenViews.setAlign("center");
 			var context = this;
+			this.masking = Ele.masking;
+			this.position = new Ele.Utils.Position();
+			this.offset = new Ele.Utils.Size(20, 0);
 			
 			var img = null;
 			var txt = null;
 			var hasChildren = false;
 			if(typeof(args) == "object"){
-				this.masking = Ele.masking;
+				
 				if(typeof(args.style) != "undefined"){
 					this.ele.className = args.style;
 				}
@@ -185,7 +192,6 @@
 				var childrenIcon = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_down_white.png","ele_menu_label_children_icon");
 				this.view.add(childrenIcon);
 			}
-			//this.view.add(content);
 		};
 		this._init();
 	};

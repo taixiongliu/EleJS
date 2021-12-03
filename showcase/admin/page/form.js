@@ -71,10 +71,16 @@
 			//fileItem.validateNotEmpty();
 			// fileItem.acceptImage();
 			
+			var selectBoxItem = new Ele.Views.SelectBoxItem({
+				name:"select",
+				text:"下拉选择组件",
+			});
+			
 			formView.addItem(textBoxItem);
 			formView.addItem(textAreaItem);
 			formView.addItem(radioBoxItem);
 			formView.addItem(fileItem);
+			formView.addItem(selectBoxItem);
 			
 			form.add(formView);
 			var btnPanel = new Ele.HLayout("ele_form_button_panel");

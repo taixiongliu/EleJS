@@ -43,6 +43,7 @@
 			
 			var wininner = new Ele.Utils.WinInner();
 			this.alert = new Ele.Alert();
+			
 			// var masking = new Ele.Views.Masking();
 			// masking.view.setContainerById("main");
 			var at = new Ele.AjaxLoad();

@@ -4,11 +4,11 @@
 		this.ele;
 		
 		TextBox.prototype.setHint = function(hint){
-			return this.ele.placeholder = hint;
+			this.ele.placeholder = hint;
 		};
 		
 		TextBox.prototype.setValue = function(value){
-			return this.ele.value = value;
+			this.ele.value = value;
 		};
 		
 		TextBox.prototype.getValue = function(){

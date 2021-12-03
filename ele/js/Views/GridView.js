@@ -31,6 +31,8 @@
 		this.search;
 		this.setView;
 		this.masking;
+		this.position;
+		this.offset;
 		this.args;
 		this.setArgs;
 		this.radio;
@@ -47,6 +49,9 @@
 		
 		GridView.prototype.addToolBarMenu = function(button){
 			this.menuView.add(button,{padding:"0 0 0 16px"});
+		};
+		GridView.prototype.setBarMenuOffset = function(size){
+			this.offset = size;
 		};
 		
 		GridView.prototype.setOnSearch = function(onSearch){
@@ -144,6 +149,8 @@
 			tempArgs.fields = tempFields;
 			
 			this.masking.hideMasking();
+			this.setView.ele.style.display = "none";
+			
 			this.content.remove(this.listGrid);
 			this.listGrid = new Ele.ListGrid(tempArgs);
 			this.content.add(this.listGrid);
@@ -159,14 +166,21 @@
 			this.lbMsg.setText("Tip："+tip);
 		};
 		
+		GridView.prototype._onBlur = function(){
+			this.setView.ele.style.display = "none";
+		};
+		
 		GridView.prototype._showMenuView = function(){
-			var otop = this.view.ele.offsetTop+this.view.ele.offsetParent.offsetTop;
-			var oleft = this.view.ele.offsetLeft+this.view.ele.offsetParent.offsetLeft;
-			this.setView.ele.style.top = (otop + 48)+"px";
-			this.setView.ele.style.left = oleft+"px";
-			this._initSetValue();
-			this.masking.setContent(this.setView);
+			this.masking.setContentNone();
 			this.masking.showMasking();
+			var context = this;
+			this.masking.setHiddenHandler(function(){
+				context._onBlur();
+			});
+			this.setView.ele.style.display = "block";
+			
+			
+			this._initSetValue();
 		};
 		
 		GridView.prototype._initSetValue = function(){
@@ -264,10 +278,15 @@
 			this.view = new Ele.Layout("ele_grid_view");
 			this.ele = this.view.ele;
 			this.masking = Ele.masking;
+			this.position = new Ele.Utils.Position();
+			this.offset = new Ele.Utils.Size(20, 0);
+			
 			this.setView = new Ele.HLayout("ele_grid_set_view");
 			this.args = args;
 			this.setArgs = Ele._cloneObject(args);
 			var context = this;
+			this.setView.ele.style.zIndex = this.masking.maxZIndex + 1;
+			this.view.add(this.setView);
 			
 			this.toolBar = new Ele.HLayout("ele_grid_tool_bar");
 			this.menuView = new Ele.HLayout("ele_grid_menu_view");
