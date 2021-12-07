@@ -14,6 +14,7 @@
 		this.ele;
 		this.view;
 		
+		this._able;
 		this._img;
 		this._text;
 		this._value;
@@ -22,7 +23,9 @@
 		this._data = null;
 		
 		IRadio.prototype.click = function(){
-			this.update();
+			if(this._able){
+				this.update();
+			}
 			if(this._clickEvent != null){
 				this._clickEvent();
 			}
@@ -38,6 +41,11 @@
 		};
 		IRadio.prototype.getValue = function(){
 			return this._value;
+		};
+		IRadio.prototype.able = function(able){
+			if(typeof(able) == "boolean"){
+				this._able = able;
+			}
 		};
 		IRadio.prototype.getText = function(){
 			return this._text.getText();
@@ -57,6 +65,7 @@
 		IRadio.prototype._init = function(){
 			var text = "";
 			var value = "";
+			this._able = true;
 			if(typeof(args) != "undefined"){
 				if(typeof(args.text) == "string"){
 					text = args.text;
@@ -95,6 +104,7 @@
 		this._updateEvent = null;
 		this._radios = [];
 		this._selectIndex;
+		this._disable;
 		
 		RadioBox.prototype.getSelectedValue = function(){
 			return this._radios[this._selectIndex].getValue();
@@ -107,6 +117,18 @@
 		};
 		RadioBox.prototype.getSelectedIndex = function(){
 			return this._selectIndex;
+		};
+		RadioBox.prototype.disable = function(disable){
+			if(typeof(disable) != "boolean"){
+				return ;
+			}
+			if(this._disable == disable){
+				return ;
+			}
+			for(var i in this._radios){
+				this._radios[i].able(!disable);
+			}
+			this._disable = disable;
 		};
 		RadioBox.prototype.getIndexByValue = function(value){
 			if(this._radios.length < 0){
@@ -150,7 +172,9 @@
 			if(this._clickEvent != null){
 				this._clickEvent(index);
 			}
-			this.select(index);
+			if(!this._disable){
+				this.select(index);
+			}
 		};
 		RadioBox.prototype.setItemClickEvent = function(event){
 			this._clickEvent = event;
@@ -161,6 +185,7 @@
 		
 		RadioBox.prototype._init = function(){
 			this._checked = false;
+			this._disable = false;
 			var items = [];
 			if(typeof(args) != "undefined"){
 				if(typeof(args.itemClick) == "function"){
@@ -171,6 +196,9 @@
 				}
 				if(typeof(args.orientation) != "undefined" && args.orientation == "portrait"){
 					this._orientation = "portrait";
+				}
+				if(typeof(args.disable) == "boolean" && args.disable){
+					this._disable = args.disable;
 				}
 				if(Ele._isArray(args.items)){
 					items = args.items;
@@ -186,6 +214,9 @@
 			if(items.length > 0){
 				for(var i = 0; i < items.length; i ++){
 					var iradio = new IRadio(items[i]);
+					if(this._disable){
+						iradio.able(false);
+					}
 					iradio.eleId = i;
 					iradio.addClickEvent(function(){
 						context.onItemClick(this.eleId);

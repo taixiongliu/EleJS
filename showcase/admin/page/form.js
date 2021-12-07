@@ -25,6 +25,8 @@
 				name:"input",
 				text:"文本框",
 				hint:"请输入",
+				readOnly:true,
+				value: "不可修改文本"
 			});
 			textBoxItem.validateNotEmpty();
 			//textBoxItem.validateLimit(4,10);
@@ -42,6 +44,7 @@
 				hint:"请输入",
 			});
 			textAreaItem.validateNotEmpty();
+			textAreaItem.validateNoChinese();
 			
 			var radioBoxItem = new Ele.Views.RadioBoxItem({
 				name:"radiobox",
@@ -68,12 +71,51 @@
 				name:"file",
 				text:"文件组件",
 			});
+			//fileItem.readOnly(true);
+			//fileItem.setValueUrl("http://127.0.0.1/EleJS/showcase/admin/img/shoucang.png");
 			//fileItem.validateNotEmpty();
 			// fileItem.acceptImage();
 			
 			var selectBoxItem = new Ele.Views.SelectBoxItem({
 				name:"select",
 				text:"下拉选择组件",
+				items:[
+					{text:"选项1", value:1},
+					{text:"选项2", value:2},
+					{text:"选项3", value:3},
+					{text:"选项4", value:4}
+				]
+			});
+			//selectBoxItem.readOnly(true);
+			selectBoxItem.validateNotEmpty();
+			selectBoxItem.setOnFilterSearch(function(value){
+				if(value == ""){
+					selectBoxItem.setFilterData([]);
+				}else{
+					var filter1 = new Ele.OptionFilter();
+					filter1.appendNormal("p");
+					filter1.appendFilter(value);
+					filter1.appendNormal("s");
+					
+					
+					var filter2 = new Ele.OptionFilter();
+					filter2.appendNormal("p2");
+					filter2.appendFilter(value);
+					filter2.appendNormal("s2");
+					
+					var filter3 = new Ele.OptionFilter();
+					filter3.appendNormal("p3");
+					filter3.appendFilter(value);
+					filter3.appendNormal("s3");
+					
+					var fitems = [
+						{text:"智推1", value:1,filterView:filter1},
+						{text:"智推2", value:2,filterView:filter2},
+						{text:"智推3", value:3,filterView:filter3}
+					];
+					//更新智推数据
+					selectBoxItem.setFilterData(fitems);
+				}
 			});
 			
 			formView.addItem(textBoxItem);
@@ -83,7 +125,7 @@
 			formView.addItem(selectBoxItem);
 			
 			form.add(formView);
-			var btnPanel = new Ele.HLayout("ele_form_button_panel");
+			var btnPanel = new Ele.HLayout("form_button_panel");
 			var reset = new Ele.Button({
 				text:"重置",
 				icon:Ele._pathPrefix+"ele/assets/64/icon_reset.png",
@@ -92,7 +134,7 @@
 				}
 			});
 			//自定义追加form数据
-			//多次添加
+			//勿在提交时处理，防止多次提交多次多次添加
 			formView.appendFormData("cust", "auto");
 			// formView.setEnctypeMfd();
 			var submit = new Ele.Button({
@@ -104,7 +146,7 @@
 					}
 					
 					console.log("form data:"+formView.formData());
-					//formView.submit();
+					// formView.submit();
 					// formView.submitFormAjax(function(res){
 					// 	console.log(res);
 					// });

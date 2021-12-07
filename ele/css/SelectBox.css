@@ -29,11 +29,32 @@
 	cursor: pointer;
 	font-size: 0px;
 }
+.ele_selectbox_panle{
+	width: 200px;
+	height: 32px;
+}
+.ele_selectbox_disable_focus{
+	width: 200px;
+	height: 32px;
+	padding: 0px;
+	margin: 0px;
+	background-color: #FFF8FC;
+	border: 1px #999999 solid;
+	line-height:  32px;
+	box-shadow: 0px 0px 4px #CCCCCC;
+	-webkit-box-shadow: 0px 0px 4px #CCCCCC;
+	-moz-window-shadow: 0px 0px 4px #CCCCCC;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+	cursor: pointer;
+	font-size: 0px;
+}
 .ele_selectbox_list_view{
 	position: absolute;
 	z-index: 1;
 	width: 200px;
-	height: 120px;
+	height: 164px;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -48,8 +69,89 @@
 	overflow-y: auto;
 	display: none;
 }
+.ele_selectbox_filter{
+	width: 100%;
+	height: auto;
+	padding-bottom: 4px;
+}
+.ele_selectbox_filter_empty{
+	width: 100%;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	text-align: center;
+	color: #4F4F4F;
+}
+.ele_selectbox_filter_item{
+	width: 100%;
+	height: 24px;
+}
+.ele_selectbox_filter_left{
+	width: 100%;
+	height: 24px;
+	line-height: 24px;
+	font-size: 10px;
+	color: #C4C4C4;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+}
+.ele_selectbox_filter_right{
+	width: 100%;
+	height: 24px;
+	line-height: 24px;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+}
+.ele_selectbox_filter_txt_filter{
+	font-size: 10px;
+	color: #009999;
+}
+.ele_selectbox_filter_txt_normal{
+	font-size: 10px;
+	color: #C4C4C4;
+}
+.ele_selectbox_option{
+	width: 100%;
+	height: auto;
+	padding-top: 4px;
+}
+.ele_selectbox_option_item{
+	width: 100%;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	color: #FFFFFF;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+}
+.ele_selectbox_option_item_selected{
+	background-color: #444444;
+	color: #009999;
+}
+.ele_selectbox_divider{
+	width: 100%;
+	height: 0px;
+	border-bottom: 1px dotted #999999;
+}
+.ele_selectbox_option_divider{
+	width: 100%;
+	height: 1px;
+	border: none;
+	margin: 4px 0px;
+	padding: 0;
+	background-color: #3F3F3F;
+}
 .ele_selectbox_select_view{
-	width: 54px;
+	width: 42px;
 	height: 32px;
 	line-height:  32px;
 	font-size: 12px;
@@ -66,7 +168,7 @@
 }
 
 .ele_selectbox_intut_style{
-	width: 102px;
+	width: 114px;
 	height: 32px;
 	padding: 0px;
 	margin: 0px;
@@ -102,18 +204,15 @@
 	height: 32px;
 	padding: 0px;
 	margin: 0px;
-	color: #009999;
-	text-indent: 5px;
-	outline: none;
-	font-family:Arial,Helvetica,sans-serif;
-	font-size: 12px;
-	line-height:  32px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-moz-border-radius: 4px;
 	background-color: #FFF8FC;
 	border: 1px #FF61BB solid;
+	line-height:  32px;
 	box-shadow: 0px 0px 4px #FFCCE7;
 	-webkit-box-shadow: 0px 0px 4px #FFCCE7;
 	-moz-window-shadow: 0px 0px 4px #FFCCE7;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+	cursor: pointer;
+	font-size: 0px;
 }

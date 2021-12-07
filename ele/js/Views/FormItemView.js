@@ -79,17 +79,24 @@
 		this.item;
 		this.name;
 		this.hditem;
-		this.valueView;
-		this.fileView;
-		this.deleteView;
-		this.value;
+		this.selectBox;
+		
+		SelectBoxItem.prototype.setOnFilterSearch = function(event){
+			this.selectBox.setOnFilterSearch(event);
+		};
+		
+		SelectBoxItem.prototype.setFilterData = function (data){
+			this.selectBox.setFilterData(data);
+		};
 		
 		SelectBoxItem.prototype.validate = function(){
-			var res = this._validate.validate(this.getValue());
+			var res = this._validate.validate(this.getValue()+"");
 			if(res){
 				this.clearMessage();
+				this.selectBox.clearErrorStyle();
 			}else{
 				this.showMessage(this._validate.error);
+				this.selectBox.showErrorStyle();
 			}
 			return res;
 		};
@@ -102,36 +109,66 @@
 		};
 		
 		SelectBoxItem.prototype.setValue = function(value){
-			this.value = value;
+			this.selectBox.setValue(value);
 		};
 		
 		SelectBoxItem.prototype.reset = function(){
 			this.clearMessage();
-			
+			this.selectBox.reset();
+		};
+		SelectBoxItem.prototype.readOnly = function(readOnly){
+			this.selectBox.setDisable(readOnly);
 		};
 		
 		SelectBoxItem.prototype.getValue = function(){
-			return this.value;
+			return this.selectBox.getValue();
+		};
+		SelectBoxItem.prototype._updateValue = function(index){
+			this.hditem.setValue(this.selectBox.getValue());
 		};
 		
 		SelectBoxItem.prototype._init = function(){
 			//初始化布局组件
 			var context = this;
+			this.item = new Ele.Layout();
 			
-			this.item = new Ele.SelectBox("ele_form_file");
 			var text = "";
+			var opts = {
+				selectChange:function(index){
+					context._updateValue(index);
+				}
+			};
+			
+			this.hditem = new Ele.TextBox();
+			this.hditem.ele.type = "hidden";
+			var value = "";
 			if(typeof(args) != "undefined"){
 				if(typeof(args.name) == "string"){
 					this.name = args.name;
-					this.item.ele.name = args.name;
+					this.hditem.ele.name = args.name;
 				}
 				if(typeof(args.text) == "string"){
 					text = args.text;
 				}
-				if(typeof(args.hint) == "string"){
-					this.item.setHint(args.hint);
+				if(typeof(args.readOnly) == "boolean"){
+					opts.disable = args.readOnly;
+				}
+				if(typeof(args.value) != "undefined"){
+					value = args.value;
+				}
+				if(typeof(args.items) != "undefined"){
+					opts.items = args.items;
+				}
+				if(typeof(args.filterSearch) == "function"){
+					opts.filterSearch = args.filterSearch;
 				}
 			}
+			this.selectBox = new Ele.SelectBox(opts);
+			if(value != ""){
+				this.setValue(value);
+			}
+			this.item.add(this.hditem);
+			this.item.add(this.selectBox);
 			this.initView(text, this.item);
 		};
 		
@@ -152,6 +189,7 @@
 		this.fileView;
 		this.deleteView;
 		this.value;
+		this._readOnly;
 		
 		FileItem.prototype.validate = function(){
 			var res = this._validate.validate(this.getValue());
@@ -182,6 +220,11 @@
 			}
 			return this.name+"="+this.getValue();
 		};
+		FileItem.prototype.readOnly = function(readOnly){
+			if(typeof(readOnly) == "boolean"){
+				this._readOnly = readOnly;
+			}
+		};
 		
 		FileItem.prototype.setValueUrl = function(url){
 			if(typeof(url) != "string"){
@@ -189,15 +232,15 @@
 			}
 			var suffix = "";
 			if(url.indexOf(".") != -1){
-				var arr = path.split(".");
+				var arr = url.split(".");
 				suffix = arr[arr.length - 1].toLowerCase();
 			}
-			this.value = value;
-			this.valueView.setHtml(value);
+			this.value = url;
+			this.valueView.setHtml(url);
 			this.deleteView.ele.style.display = "block";
 			//图片类型文件处理
 			if(suffix == "png" || suffix == "jpg" || suffix == "jpeg" || suffix == "gif"){
-				var img = new Ele.Img(value, "ele_form_file_icon");
+				var img = new Ele.Img(url, "ele_form_file_icon");
 				this.fileView.clear();
 				this.fileView.add(img);
 				return ;
@@ -253,6 +296,9 @@
 			this.value = value;
 		};
 		FileItem.prototype._onDelete = function(){
+			if(this._readOnly){
+				return;
+			}
 			this.reset();
 		};
 		FileItem.prototype._onChange = function(){
@@ -284,6 +330,9 @@
 			}
 		};
 		FileItem.prototype._onFile = function(){
+			if(this._readOnly){
+				return;
+			}
 			this.hditem.ele.click();
 		};
 		
@@ -307,10 +356,14 @@
 				if(typeof(args.text) == "string"){
 					text = args.text;
 				}
+				if(typeof(args.readOnly) == "boolean"){
+					this._readOnly = args.readOnly;
+				}
 			}
 			this.item.add(this.hditem);
 			this.valueView = new Ele.Layout("ele_form_file_value");
 			this.valueView.setHtml("请选择文件...");
+			this.value = "";
 			this.fileView = new Ele.Layout("ele_form_file_view");
 			var icon = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_file_add.png", "ele_form_file_icon");
 			this.fileView.add(icon);
@@ -368,6 +421,10 @@
 			return this.radioBox.getSelectedValue();
 		};
 		
+		RadioBoxItem.prototype.readOnly = function(readOnly){
+			this.radioBox.disable(readOnly);
+		};
+		
 		RadioBoxItem.prototype._updateValue = function(index){
 			this.hditem.setValue(this.radioBox.getIndexValue(index));
 		};
@@ -383,6 +440,7 @@
 			
 			var context = this;
 			var text = "";
+			var disable = false;
 			if(typeof(args) != "undefined"){
 				if(typeof(args.name) == "string"){
 					this.name = args.name;
@@ -391,10 +449,14 @@
 				if(typeof(args.text) == "string"){
 					text = args.text;
 				}
+				if(typeof(args.readOnly) == "boolean" && args.readOnly){
+					disable = true;
+				}
 				var opts = {
 					selectChange:function(index){
 						context._updateValue(index);
 					},
+					disable:disable,
 					items:args.items
 				};
 				this.radioBox = new Ele.RadioBox(opts);
@@ -454,6 +516,9 @@
 		TextAreaItem.prototype.getValue = function(){
 			return this.item.getValue();
 		};
+		TextAreaItem.prototype.readOnly = function(readOnly){
+			this.item.readOnly(readOnly);
+		};
 		
 		TextAreaItem.prototype._init = function(){
 			//初始化布局组件
@@ -469,6 +534,12 @@
 				}
 				if(typeof(args.hint) == "string"){
 					this.item.setHint(args.hint);
+				}
+				if(typeof(args.readOnly) == "boolean"){
+					this.item.readOnly(args.readOnly);
+				}
+				if(typeof(args.value) == "string"){
+					this.item.setValue(args.value);
 				}
 			}
 			this.initView(text, this.item, 48);
@@ -518,6 +589,9 @@
 		TextBoxItem.prototype.getValue = function(){
 			return this.item.getValue();
 		};
+		TextBoxItem.prototype.readOnly = function(readOnly){
+			this.item.readOnly(readOnly);
+		};
 		
 		TextBoxItem.prototype._init = function(){
 			//初始化布局组件
@@ -533,6 +607,12 @@
 				}
 				if(typeof(args.hint) == "string"){
 					this.item.setHint(args.hint);
+				}
+				if(typeof(args.readOnly) == "boolean"){
+					this.item.readOnly(args.readOnly);
+				}
+				if(typeof(args.value) == "string"){
+					this.item.setValue(args.value);
 				}
 			}
 			this.initView(text, this.item);
@@ -576,11 +656,11 @@
 	fileSuper.constructor = FileItem;
 	FileItem.prototype = fileSuper;
 	
-	var SelectSuper = function (){};
-	SelectSuper.prototype = FormItem.prototype;
-	SelectSuper.constructor = SelectBoxItem;
-	var selectSuper = new SelectSuper();
-	selectSuper.constructor = SelectBoxItem;
-	SelectBoxItem.prototype = selectSuper;
+	var SelectBoxSuper = function (){};
+	SelectBoxSuper.prototype = FormItem.prototype;
+	SelectBoxSuper.constructor = SelectBoxItem;
+	var selectBoxSuper = new SelectBoxSuper();
+	selectBoxSuper.constructor = SelectBoxItem;
+	SelectBoxItem.prototype = selectBoxSuper;
 	
 })();
