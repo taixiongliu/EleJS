@@ -64,6 +64,20 @@
 	margin-left: 2px;
 	display: none;
 }
+.ele_grid_set_view_wt{
+	position: absolute;
+	width: 290px;
+	z-index: 1;
+	height: auto;
+	padding-top: 4px;
+	background-color: #303030;
+	border: 1px #444444 solid;
+	box-shadow: 0px 0px 4px #999999;
+	-webkit-box-shadow: 0px 0px 4px #999999;
+	-moz-window-shadow: 0px 0px 4px #999999;
+	padding: 0 16px;
+	margin-left: 2px;
+}
 .ele_grid_set_view_title_item{
 	width: 290px;
 	height: 32px;

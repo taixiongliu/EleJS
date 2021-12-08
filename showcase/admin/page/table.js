@@ -1,6 +1,6 @@
 (function(){
 	var Table = window.Table = function(rootView){
-		MainView.call(this, rootView, 1);
+		MainView.call(this, rootView, 2);
 		
 		Table.prototype.viewCreate = function(){
 			
@@ -16,6 +16,7 @@
 			selectOpr:{},
 			// itemHeightPx:60,
 			//barMenu:false,
+			// windowType:true,
 			fields:[{textName:"ID",fieldName:"id"},{textName:"姓名",fieldName:"name", format:function(data){
 				var img = new Ele.Img(data.name);
 				img.ele.style.height = "40px";

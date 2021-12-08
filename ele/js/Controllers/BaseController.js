@@ -5,6 +5,7 @@
 		this._errorEvent=null;
 		this._formatEvent = null;
 		this.url;
+		this.parameter;
 		
 		BaseController.prototype.loadData = function(url){
 			if(typeof(url) == "string"){
@@ -19,9 +20,16 @@
 			}
 		};
 		
+		BaseController.prototype.setParameter = function(parameter) {
+			this.parameter = parameter;
+		};
+		
 		BaseController.prototype._loadData = function(){
 			var context = this;
 			var ajax = new Ele.Utils.Ajax();
+			if(typeof(this.parameter) != "undefined" && this.parameter != null){
+				ajax.setParameter(this.parameter);
+			}
 			ajax.request(this.url, function(result){
 				context._onResponse(result);
 			});

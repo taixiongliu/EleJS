@@ -81,6 +81,10 @@
 		this.hditem;
 		this.selectBox;
 		
+		SelectBoxItem.prototype.setWindowOffset = function(size){
+			this.selectBox.setWindowOffset(size);
+		};
+		
 		SelectBoxItem.prototype.setOnFilterSearch = function(event){
 			this.selectBox.setOnFilterSearch(event);
 		};
@@ -106,6 +110,13 @@
 				return null;
 			}
 			return this.name+"="+this.getValue();
+		};
+		
+		SelectBoxItem.prototype.loadDataSourcesUrl = function(url, funError){
+			this.selectBox.loadDataSourcesUrl(url, funError);
+		};
+		SelectBoxItem.prototype.loadFilterDataSourcesUrl = function(url, keyValue,funError){
+			this.selectBox.loadFilterDataSourcesUrl(url, keyValue, funError);
 		};
 		
 		SelectBoxItem.prototype.setValue = function(value){
@@ -149,6 +160,9 @@
 				}
 				if(typeof(args.text) == "string"){
 					text = args.text;
+				}
+				if(typeof(args.windowType) == "boolean"){
+					opts.windowType = args.windowType;
 				}
 				if(typeof(args.readOnly) == "boolean"){
 					opts.disable = args.readOnly;

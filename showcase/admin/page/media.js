@@ -1,6 +1,6 @@
 (function(){
 	var Media = window.Media = function(rootView){
-		MainView.call(this, rootView, 3);
+		MainView.call(this, rootView, 4);
 		
 		Media.prototype.viewCreate = function(){
 			

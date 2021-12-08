@@ -85,28 +85,50 @@
 		this.ele;
 		this.view;
 		this.childrenViews;
+		this.windowType;
 		this.masking;
 		this.position;
 		this.offset;
+		
+		this._itemClickEvent = null;
+		this._rootData;
+		
+		MenuLabel.prototype.setWindowOffset = function(size){
+			if(this.windowType){
+				this.offset = size;
+			}
+		};
 		
 		MenuLabel.prototype.setText = function(text){
 			this.ele.innerHTML = text;
 		};
 		
-		MenuLabel.prototype.setChildOffset = function(size){
-			this.offset = size;
-		};
-		
 		MenuLabel.prototype.showChildren = function(){
-			this.position.inBottomLeft(this.view.ele);
-			if(this.offset != null && this.offset instanceof Ele.Utils.Size){
-				this.position.setOffset(this.offset);
+			if(this.windowType){
+				this.position.inBottomLeft(this.view.ele);
+				if(this.offset != null && this.offset instanceof Ele.Utils.Size){
+					this.position.setOffset(this.offset);
+				}
+				this.masking.setContent(this.childrenViews, this.position);
+				this.masking.showMasking();
+				return ;
 			}
-			this.masking.setContent(this.childrenViews, this.position);
+			
+			this.masking.setContentNone();
 			this.masking.showMasking();
+			var context = this;
+			this.masking.setHiddenHandler(function(){
+				context.hideChildren();
+			});
+			this.childrenViews.ele.style.display = "block";
 		};
 		
 		MenuLabel.prototype.hideChildren = function (){
+			if(this.windowType){
+				this.masking.hideMasking();
+				return ;
+			}
+			this.childrenViews.ele.style.display = "none";
 			this.masking.hideMasking();
 		};
 		
@@ -119,34 +141,38 @@
 			if(typeof(child.text) == "string"){
 				item.setHtml(child.text);
 			}
+			if(typeof(child.data) != "undefined"){
+				//动态赋值数据
+				item.ele.eledata = child.data;
+			}
+			
 			item.ele.onclick = function(){
 				context.hideChildren();
-				if(typeof(child.onItemClick) == "function"){
-					if(typeof(child.data) != "undefined"){
-						child.onItemClick(child.data);
-					}else{
-						child.onItemClick();
-					}
-				}
+				context._onItemClick(false, this.eledata);
 			};
 			this.childrenViews.add(item);
 		};
 		
+		MenuLabel.prototype._onItemClick = function(isRoot, data){
+			if(this._itemClickEvent != null){
+				if(typeof(data) != "undefined"){
+					this._itemClickEvent(isRoot, data);
+				}else{
+					this._itemClickEvent(isRoot);
+				}
+			}
+		};
+		
 		MenuLabel.prototype._init = function(){
-			this.view = new Ele.HLayout("ele_menu_label");
+			this.view = new Ele.Layout("ele_menu_label");
 			this.ele = this.view.ele;
-			this.childrenViews = new Ele.Layout("ele_menu_label_children");
-			this.childrenViews.setAlign("center");
 			var context = this;
 			this.masking = Ele.masking;
-			this.position = new Ele.Utils.Position();
-			this.offset = new Ele.Utils.Size(20, 0);
 			
 			var img = null;
 			var txt = null;
 			var hasChildren = false;
 			if(typeof(args) == "object"){
-				
 				if(typeof(args.style) != "undefined"){
 					this.ele.className = args.style;
 				}
@@ -156,42 +182,62 @@
 				if(typeof(args.text) != "undefined"){
 					txt = new Label(args.text,"ele_ml4");
 				}
+				if(typeof(args.onItemClick) == "function"){
+					this._itemClickEvent = args.onItemClick;
+				}
+				if(typeof(args.data) != "undefined"){
+					this._rootData = args.data;
+				}
 				if(typeof(args.children) == "object"){
 					//判断是否是数组
 					if(Ele._isArray(args.children)){
-						for(var i = 0; i < args.children.length; i ++){
-							this.addChild(args.children[i]);
-							if(i < args.children.length - 1){
-								var divider = new Ele.Layout("ele_menu_label_children_divider");
-								this.childrenViews.add(divider);
-							}
-						}
 						hasChildren = true;
 					}
 				}
-				this.ele.onclick = function(){
-					if(hasChildren){
-						context.showChildren();
-					}
-					if(typeof(args.onItemClick) == "function"){
-						if(typeof(args.data) != "undefined"){
-							args.onItemClick(args.data);
-						}else{
-							args.onItemClick();
-						}
-					}
-				};
+				if(typeof(args.windowType) == "boolean" && args.windowType){
+					this.windowType = true;
+				}
 			}
+			var contentView = new Ele.HLayout("ele_menu_label_panel");
+			if(this.windowType){
+				this.childrenViews = new Ele.Layout("ele_menu_label_children_wt");
+				this.childrenViews.setAlign("center");
+				this.position = new Ele.Utils.Position();
+			}else{
+				this.childrenViews = new Ele.Layout("ele_menu_label_children");
+				this.childrenViews.setAlign("center");
+				this.childrenViews.ele.style.zIndex = this.masking.maxZIndex + 1;
+				this.view.add(this.childrenViews);
+			}
+			
 			if(img != null){
-				this.view.add(img);
+				contentView.add(img);
 			}
 			if(txt != null){
-				this.view.add(txt);
+				contentView.add(txt);
 			}
+			
+			contentView.ele.onclick = function(){
+				if(hasChildren){
+					context.showChildren();
+				}
+				context._onItemClick(true, context._rootData);
+			};
+			this.view.add(contentView);
+			
 			if(hasChildren){
+				for(var i = 0; i < args.children.length; i ++){
+					this.addChild(args.children[i]);
+					if(i < args.children.length - 1){
+						var divider = new Ele.Layout("ele_menu_label_children_divider");
+						this.childrenViews.add(divider);
+					}
+				}
+				
 				var childrenIcon = new Ele.Img(Ele._pathPrefix+"ele/icons/icon_down_white.png","ele_menu_label_children_icon");
-				this.view.add(childrenIcon);
+				contentView.add(childrenIcon);
 			}
+			
 		};
 		this._init();
 	};

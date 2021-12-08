@@ -1,0 +1,9 @@
+{
+	"resCode":1000,
+	"data":[
+		{"text":"组件1","value":1},
+		{"text":"组件2","value":2},
+		{"text":"组件3","value":3},
+		{"text":"组件4","value":4}
+	]
+}

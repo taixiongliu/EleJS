@@ -1,6 +1,6 @@
 (function(){
 	var Form = window.Form = function(rootView){
-		MainView.call(this, rootView, 4);
+		MainView.call(this, rootView, 5);
 		
 		Form.prototype.viewCreate = function(){
 			
@@ -78,43 +78,39 @@
 			
 			var selectBoxItem = new Ele.Views.SelectBoxItem({
 				name:"select",
-				text:"下拉选择组件",
-				items:[
-					{text:"选项1", value:1},
-					{text:"选项2", value:2},
-					{text:"选项3", value:3},
-					{text:"选项4", value:4}
-				]
+				text:"下拉选择组件"
 			});
+			selectBoxItem.loadDataSourcesUrl("datasources/select.json");
 			//selectBoxItem.readOnly(true);
 			selectBoxItem.validateNotEmpty();
 			selectBoxItem.setOnFilterSearch(function(value){
 				if(value == ""){
 					selectBoxItem.setFilterData([]);
 				}else{
-					var filter1 = new Ele.OptionFilter();
-					filter1.appendNormal("p");
-					filter1.appendFilter(value);
-					filter1.appendNormal("s");
+					selectBoxItem.loadFilterDataSourcesUrl("datasources/selectfilter.php", value);
+					// var filter1 = new Ele.OptionFilter();
+					// filter1.appendNormal("p");
+					// filter1.appendFilter(value);
+					// filter1.appendNormal("s");
 					
 					
-					var filter2 = new Ele.OptionFilter();
-					filter2.appendNormal("p2");
-					filter2.appendFilter(value);
-					filter2.appendNormal("s2");
+					// var filter2 = new Ele.OptionFilter();
+					// filter2.appendNormal("p2");
+					// filter2.appendFilter(value);
+					// filter2.appendNormal("s2");
 					
-					var filter3 = new Ele.OptionFilter();
-					filter3.appendNormal("p3");
-					filter3.appendFilter(value);
-					filter3.appendNormal("s3");
+					// var filter3 = new Ele.OptionFilter();
+					// filter3.appendNormal("p3");
+					// filter3.appendFilter(value);
+					// filter3.appendNormal("s3");
 					
-					var fitems = [
-						{text:"智推1", value:1,filterView:filter1},
-						{text:"智推2", value:2,filterView:filter2},
-						{text:"智推3", value:3,filterView:filter3}
-					];
-					//更新智推数据
-					selectBoxItem.setFilterData(fitems);
+					// var fitems = [
+					// 	{text:"智推1", value:1,filterView:filter1},
+					// 	{text:"智推2", value:2,filterView:filter2},
+					// 	{text:"智推3", value:3,filterView:filter3}
+					// ];
+					// //更新智推数据
+					// selectBoxItem.setFilterData(fitems);
 				}
 			});
 			

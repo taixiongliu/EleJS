@@ -2,18 +2,19 @@
 	"resCode":1000,
 	"data":[
 		{"title":"组件","expend":true,"data":{"id":"01"}, "children":[
-			{"text":"表格","data":{"id":1,"href":"table.html"}},
-			{"icon":"img/gonggao.png","text":"轮播","data":{"id":2,"href":"switch.html"}},
-			{"icon":"img/gonggao.png","text":"多媒体","data":{"id":3,"href":"media.html"}},
-			{"icon":"img/gonggao.png","text":"表单","data":{"id":4,"href":"form.html"}},
-			{"icon":"img/gonggao.png","text":"二级菜单E","data":{"id":5,"href":"table.html"}}
+			{"text":"导航","data":{"id":1,"href":"nav.html"}},
+			{"text":"表格","data":{"id":2,"href":"table.html"}},
+			{"icon":"img/gonggao.png","text":"轮播","data":{"id":3,"href":"switch.html"}},
+			{"icon":"img/gonggao.png","text":"多媒体","data":{"id":4,"href":"media.html"}},
+			{"icon":"img/gonggao.png","text":"表单","data":{"id":5,"href":"form.html"}},
+			{"icon":"img/gonggao.png","text":"二级菜单E","data":{"id":6,"href":"table.html"}}
 		]},
 		{"icon":"img/shoucang.png","title":"主菜单2","expend":true, "data":{"id":"02"}, "children":[
-			{"icon":"img/gonggao.png","text":"二级菜单A","data":{"id":6,"href":"table.html"}},
-			{"icon":"img/gonggao.png","text":"二级菜单B","data":{"id":7,"href":"table.html"}},
-			{"icon":"img/gonggao.png","text":"二级菜单C","data":{"id":8,"href":"table.html"}},
-			{"icon":"img/gonggao.png","text":"二级菜单D","data":{"id":9,"href":"table.html"}},
-			{"icon":"img/gonggao.png","text":"二级菜单E","data":{"id":10,"href":"table.html"}}
+			{"icon":"img/gonggao.png","text":"二级菜单A","data":{"id":7,"href":"table.html"}},
+			{"icon":"img/gonggao.png","text":"二级菜单B","data":{"id":8,"href":"table.html"}},
+			{"icon":"img/gonggao.png","text":"二级菜单C","data":{"id":9,"href":"table.html"}},
+			{"icon":"img/gonggao.png","text":"二级菜单D","data":{"id":10,"href":"table.html"}},
+			{"icon":"img/gonggao.png","text":"二级菜单E","data":{"id":11,"href":"table.html"}}
 		]},
 		{"icon":"img/shoucang.png","title":"主菜单3","expend":true, "data":{"id":"03"}}
 	]

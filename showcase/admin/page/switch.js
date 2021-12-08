@@ -1,6 +1,6 @@
 (function(){
 	var Switch = window.Switch = function(rootView){
-		MainView.call(this, rootView, 2);
+		MainView.call(this, rootView, 3);
 		
 		Switch.prototype.viewCreate = function(){
 			

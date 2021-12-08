@@ -5,10 +5,15 @@
 		this.view;
 		this.hintView;
 		this.edit;
+		this.windowType;
 		this.listView;
 		this.masking;
 		this.filter;
 		this.optionList;
+		this.optionController;
+		this.filterController;
+		this.position;
+		this.offset;
 		
 		this._disable;
 		this._options = [];
@@ -16,6 +21,14 @@
 		this._itemClickEvent = null;
 		this._updateEvent = null;
 		this._filterSearchEvent = null;
+		this._onErrorResponse = null;
+		this._onFilterErrorResponse = null;
+		
+		SelectBox.prototype.setWindowOffset = function(size){
+			if(this.windowType){
+				this.offset = size;
+			}
+		};
 		
 		SelectBox.prototype.setOnItemClick = function(event){
 			if(typeof(event) == "function"){
@@ -54,6 +67,22 @@
 					}
 				}
 			}
+		};
+		SelectBox.prototype.loadFilterDataSourcesUrl = function(url, keyValue, funError){
+			if(typeof(funError) == "function"){
+				this._onFilterErrorResponse = funError;
+			}
+			if(typeof(keyValue) == "string" && keyValue.trim() != ""){
+				this.filterController.setParameter("keyvalue="+keyValue);
+			}
+			this.filterController.loadData(url);
+		};
+		
+		SelectBox.prototype.loadDataSourcesUrl = function(url, funError){
+			if(typeof(funError) == "function"){
+				this._onErrorResponse = funError;
+			}
+			this.optionController.loadData(url);
 		};
 		SelectBox.prototype.setValue = function(value){
 			if(typeof(value) == "undefined"){
@@ -109,6 +138,19 @@
 			this.ele.className = "ele_selectbox";
 		};
 		SelectBox.prototype.expend = function(){
+			if(this.windowType){
+				this.position.inBottomLeft(this.view.ele);
+				if(this.offset != null && this.offset instanceof Ele.Utils.Size){
+					this.position.setOffset(this.offset);
+				}
+				this.masking.setContent(this.listView, this.position);
+				this.masking.showMasking();
+				var context = this;
+				this.masking.setHiddenHandler(function(){
+					context._onBlur();
+				});
+				return;
+			}
 			this.masking.setContentNone();
 			this.masking.showMasking();
 			var context = this;
@@ -119,7 +161,12 @@
 		};
 		
 		SelectBox.prototype.hide = function (){
+			if(this.windowType){
+				this.masking.hideMasking();
+				return ;
+			}
 			this.listView.ele.style.display = "none";
+			this.masking.hideMasking();
 		};
 		
 		SelectBox.prototype.setFilterData = function (data){
@@ -152,11 +199,44 @@
 				this.edit.ele.readOnly = disable;
 			}
 		};
+		SelectBox.prototype._onFilterDataResponse = function(dataSources){
+			if(!Ele._isArray(dataSources)){
+				this.setFilterData([]);
+				return ;
+			}
+			var fitems = [];
+			for(var i in dataSources){
+				var filterView = new Ele.OptionFilter();
+				if(typeof(dataSources[i].filter) == "string"){
+					if(dataSources[i].filter.indexOf(";") > -1){
+						var farr = dataSources[i].filter.split(";");
+						for(var f in farr){
+							if(farr[f].length < 1){
+								continue;
+							}
+							if(farr[f].charAt(0) == "@"){
+								filterView.appendNormal(farr[f].substring(1, farr[f].length));
+								continue;
+							}
+							if(farr[f].charAt(0) == "#"){
+								filterView.appendFilter(farr[f].substring(1, farr[f].length));
+								continue;
+							}
+						}
+					}
+				}
+				var item = {text:dataSources[i].text, value:dataSources[i].value,filterView:filterView};
+				
+				fitems.push(item);
+			}
+			this.setFilterData(fitems);
+		};
+		SelectBox.prototype._onDataResponse = function(dataSources){
+			this.setOptions(dataSources);
+		};
 		SelectBox.prototype._onFilterItemClick = function (value){
 			this.ele.className = "ele_selectbox";
 			this.hide();
-			this.masking.hideMasking();
-			
 			this.setValue(value);
 		};
 		SelectBox.prototype._onFilterKey = function(){
@@ -170,7 +250,6 @@
 			}
 			this.ele.className = "ele_selectbox";
 			this.hide();
-			this.masking.hideMasking();
 			this.selectIndex(index);
 		};
 		SelectBox.prototype._onBlur = function(){
@@ -181,7 +260,10 @@
 				this.edit.setValue("");
 			}
 			this.setFilterData([]);
-			this.hide();
+			//非窗口类型需要关闭本地窗口
+			if(!this.windowType){
+				this.hide();
+			}
 		};
 		
 		SelectBox.prototype._onFocus = function(){
@@ -204,6 +286,7 @@
 			this.view = new Ele.Layout("ele_selectbox");
 			this.ele = this.view.ele;
 			this._disable = false;
+			this.windowType = false;
 			var items = [];
 			var context = this;
 			this.masking = Ele.masking;
@@ -226,9 +309,19 @@
 				if(typeof(args.filterSearch) == "function"){
 					this._filterSearchEvent = args.filterSearch;
 				}
+				if(typeof(args.windowType) == "boolean" && args.windowType){
+					this.windowType = true;
+				}
 			}
-			this.listView = new Ele.Layout("ele_selectbox_list_view ele_scrollbar");
-			this.listView.ele.style.zIndex = this.masking.maxZIndex + 1;
+			if(this.windowType){
+				this.listView = new Ele.Layout("ele_selectbox_list_view_wt ele_scrollbar");
+				this.position = new Ele.Utils.Position();
+			}else{
+				this.listView = new Ele.Layout("ele_selectbox_list_view ele_scrollbar");
+				this.listView.ele.style.zIndex = this.masking.maxZIndex + 1;
+				this.view.add(this.listView);
+			}
+			
 			this.filter = new Ele.Layout("ele_selectbox_filter");
 			this.setFilterData([]);
 			this.listView.add(this.filter);
@@ -236,8 +329,6 @@
 			this.listView.add(divider);
 			this.optionList = new Ele.Layout("ele_selectbox_option");
 			this.listView.add(this.optionList);
-			
-			this.view.add(this.listView);
 			
 			var contentView = new Ele.HLayout("ele_selectbox_panle");
 			contentView.ele.onclick = function(){
@@ -263,6 +354,27 @@
 			this.view.add(contentView);
 			
 			this.setOptions(items);
+			
+			this.optionController = new Ele.Controllers.BaseController({
+				loadHandler:function(data){
+					context._onDataResponse(data);
+				},
+				errorHandler:function(error){
+					if(context._onErrorResponse != null){
+						context._onErrorResponse(error);
+					}
+				}
+			});
+			this.filterController = new Ele.Controllers.BaseController({
+				loadHandler:function(data){
+					context._onFilterDataResponse(data);
+				},
+				errorHandler:function(error){
+					if(context._onFilterErrorResponse != null){
+						context._onFilterErrorResponse(error);
+					}
+				}
+			});
 		};
 		this._init();
 	};

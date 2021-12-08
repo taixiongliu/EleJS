@@ -30,6 +30,7 @@
 		this.filterView;
 		this.search;
 		this.setView;
+		this.windowType;
 		this.masking;
 		this.position;
 		this.offset;
@@ -50,8 +51,10 @@
 		GridView.prototype.addToolBarMenu = function(button){
 			this.menuView.add(button,{padding:"0 0 0 16px"});
 		};
-		GridView.prototype.setBarMenuOffset = function(size){
-			this.offset = size;
+		GridView.prototype.setWindowOffset = function(size){
+			if(this.windowType){
+				this.offset = size;
+			}
 		};
 		
 		GridView.prototype.setOnSearch = function(onSearch){
@@ -148,8 +151,8 @@
 			var tempArgs = Ele._cloneObject(this.setArgs);
 			tempArgs.fields = tempFields;
 			
-			this.masking.hideMasking();
-			this.setView.ele.style.display = "none";
+			//关闭窗口
+			this._hideMenuView();
 			
 			this.content.remove(this.listGrid);
 			this.listGrid = new Ele.ListGrid(tempArgs);
@@ -166,20 +169,41 @@
 			this.lbMsg.setText("Tip："+tip);
 		};
 		
-		GridView.prototype._onBlur = function(){
+		GridView.prototype._hideMenuView = function(){
+			if(this.windowType){
+				this.masking.hideMasking();
+				return ;
+			}
 			this.setView.ele.style.display = "none";
+			this.masking.hideMasking();
 		};
 		
 		GridView.prototype._showMenuView = function(){
+			if(this.windowType){
+				var oleft = this.ele.offsetLeft + this.ele.offsetParent.offsetLeft;
+				var otop = this.ele.offsetTop + this.ele.offsetParent.offsetTop;
+				//定位在菜单布局下面
+				this.position.positionType = "bottom-left";
+				this.position.top = otop + this.menuView.ele.offsetHeight;
+				this.position.left = oleft;
+				
+				if(this.offset != null && this.offset instanceof Ele.Utils.Size){
+					this.position.setOffset(this.offset);
+				}
+				this.masking.setContent(this.setView, this.position);
+				this.masking.showMasking();
+				
+				this._initSetValue();
+				return ;
+			}
 			this.masking.setContentNone();
 			this.masking.showMasking();
 			var context = this;
 			this.masking.setHiddenHandler(function(){
-				context._onBlur();
+				context._hideMenuView();
 			});
+			
 			this.setView.ele.style.display = "block";
-			
-			
 			this._initSetValue();
 		};
 		
@@ -278,23 +302,31 @@
 			this.view = new Ele.Layout("ele_grid_view");
 			this.ele = this.view.ele;
 			this.masking = Ele.masking;
-			this.position = new Ele.Utils.Position();
-			this.offset = new Ele.Utils.Size(20, 0);
 			
-			this.setView = new Ele.HLayout("ele_grid_set_view");
 			this.args = args;
 			this.setArgs = Ele._cloneObject(args);
 			var context = this;
-			this.setView.ele.style.zIndex = this.masking.maxZIndex + 1;
-			this.view.add(this.setView);
-			
-			this.toolBar = new Ele.HLayout("ele_grid_tool_bar");
-			this.menuView = new Ele.HLayout("ele_grid_menu_view");
 			
 			var barMenu = true;
 			if(typeof(this.args.barMenu) == "boolean"){
 				barMenu = this.args.barMenu;
 			}
+			if(typeof(args.windowType) == "boolean" && args.windowType){
+				this.windowType = true;
+			}
+			if(this.windowType){
+				this.setView = new Ele.HLayout("ele_grid_set_view_wt");
+				this.position = new Ele.Utils.Position();
+			}else{
+				this.setView = new Ele.HLayout("ele_grid_set_view");
+				this.setView.ele.style.zIndex = this.masking.maxZIndex + 1;
+				this.view.add(this.setView);
+			}
+			
+			this.toolBar = new Ele.HLayout("ele_grid_tool_bar");
+			this.menuView = new Ele.HLayout("ele_grid_menu_view");
+			
+			
 			if(barMenu){
 				var refresh = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/assets/64/icon_refresh.png",onclick:function(){
 					context._onReset();
