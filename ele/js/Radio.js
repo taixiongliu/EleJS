@@ -13,13 +13,16 @@
 		this.eleType = "layout";
 		this.ele;
 		this.view;
+		this.icon;
+		this.selectedIcon;
 		
 		this._able;
-		this._img;
+		this._cancel;
 		this._text;
 		this._value;
 		this._checked = false;
 		this._clickEvent = null;
+		this._drawEvent = null;
 		this._data = null;
 		
 		IRadio.prototype.click = function(){
@@ -32,9 +35,17 @@
 		};
 		IRadio.prototype.update = function(){
 			if(this._checked){
+				if(this._cancel){
+					this.unChecked();
+				}
 				return ;
 			}
 			this.checked();
+		};
+		IRadio.prototype.onDraw = function(event){
+			if(typeof(event) == "function"){
+				this._drawEvent = event;
+			}
 		};
 		IRadio.prototype.isChecked = function(){
 			return this._checked;
@@ -51,11 +62,16 @@
 			return this._text.getText();
 		};
 		IRadio.prototype.checked = function(){
-			this._img.ele.src = Ele._pathPrefix+"ele/assets/16/icon_radio_select.png";
+			this.ele.style.backgroundImage = "url("+this.selectedIcon+")";
 			this._checked = true;
 		};
+		IRadio.prototype.setCancel = function(cancel){
+			if(typeof(cancel) == "boolean"){
+				this._cancel = cancel;
+			}
+		};
 		IRadio.prototype.unChecked = function(){
-			this._img.ele.src = Ele._pathPrefix+"ele/assets/16/icon_radio_unselect.png";
+			this.ele.style.backgroundImage = "url("+this.icon+")";
 			this._checked = false;
 		};
 		IRadio.prototype.addClickEvent = function(event){
@@ -65,8 +81,24 @@
 		IRadio.prototype._init = function(){
 			var text = "";
 			var value = "";
+			this.icon = Ele._pathPrefix+"ele/assets/16/icon_radio_unselect.png";
+			this.selectedIcon = Ele._pathPrefix+"ele/assets/16/icon_radio_select.png";
+			var cssName = "ele_radio";
 			this._able = true;
+			this._cancel = false;
 			if(typeof(args) != "undefined"){
+				if(typeof(args.style) == "string"){
+					cssName = args.style;
+				}
+				if(typeof(args.cancel) == "boolean"){
+					this._cancel = args.cancel;
+				}
+				if(typeof(args.icon) == "string"){
+					this.icon = args.icon;
+				}
+				if(typeof(args.selectedIcon) == "string"){
+					this.selectedIcon = args.selectedIcon;
+				}
 				if(typeof(args.text) == "string"){
 					text = args.text;
 				}
@@ -79,17 +111,20 @@
 			}
 			this._checked = false;
 			this._value = value;
-			this.view = new Ele.HLayout("ele_radio");
+			this.view = new Ele.Layout(cssName);
 			this.ele = this.view.ele;
-			this._img = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_radio_unselect.png","ele_radio_icon");
-			this._text = new Ele.Label(text,"ele_radio_text");
-			this.view.add(this._img);
-			this.view.add(this._text,{padding:"0 0 0 4px"});
+			this.ele.style.backgroundImage = "url("+this.icon+")";
+			this.view.setHtml(text);
 			
 			var context = this;
 			this.ele.onclick = function(){
 				context.click();
 			};
+			setTimeout(function() {
+				if(context._drawEvent != null){
+					context._drawEvent();
+				}
+			}, 0);
 		};
 		this._init();
 	};
@@ -98,7 +133,6 @@
 		this.ele;
 		this.view;
 		
-		this._checked = false;
 		this._orientation = "landscape";//竖向布局portrait
 		this._clickEvent = null;
 		this._updateEvent = null;
@@ -184,7 +218,6 @@
 		};
 		
 		RadioBox.prototype._init = function(){
-			this._checked = false;
 			this._disable = false;
 			var items = [];
 			if(typeof(args) != "undefined"){
@@ -205,9 +238,9 @@
 				}
 			}
 			if(this._orientation == "landscape"){
-				this.view = new Ele.HLayout();
+				this.view = new Ele.HLayout("ele_nocrspace");
 			}else{
-				this.view = new Ele.VLayout();
+				this.view = new Ele.VLayout("ele_nocrspace");
 			}
 			this.ele = this.view.ele;
 			var context = this;

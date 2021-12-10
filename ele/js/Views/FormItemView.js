@@ -40,6 +40,14 @@
 		FormItem.prototype.validateInjectionKey = function(){
 			this._validate.addInjectionKey();
 		};
+		FormItem.prototype.setHeight = function(height){
+			if(typeof(height) == "number" && height > 34){
+				this.view.setSize("auto", height+"px");
+				this.label.ele.style.height = height+"px";
+				this.label.ele.style.lineHeight = height+"px";
+				this.tip.ele.style.paddingTop = ((height - 34)/2)+"px";
+			}
+		};
 		
 		FormItem.prototype.initView = function(lableText, view, height){
 			this.view = new Ele.HLayout("ele_form_item_view");
@@ -60,13 +68,159 @@
 			this.view.add(this.label,{width:"100px", align:"right"});
 			this.view.add(view,{width:"220px", padding:"0 0 0 20px"});
 			this.view.add(this.tip,{width:"224px"});
-			if(typeof(height) == "number" && height > 34){
-				this.view.setSize("auto", height+"px");
-				this.label.ele.style.height = height+"px";
-				this.label.ele.style.lineHeight = height+"px";
-				this.tip.ele.style.paddingTop = ((height - 34)/2)+"px";
-			}
+			
+			this.setHeight(height);
 		};
+	};
+	
+	var CheckBoxItem = Ele.Views.CheckBoxItem = function(args) {
+		FormItem.call(this);
+		
+		this.item;
+		this.name;
+		this.hditem;
+		this.checkGroup;
+		this.lines;
+		this.width = 202;
+		
+		CheckBoxItem.prototype.validate = function(){
+			var res = this._validate.validate(this.getValueString());
+			if(res){
+				this.clearMessage();
+			}else{
+				this.showMessage(this._validate.error);
+			}
+			return res;
+		};
+		
+		CheckBoxItem.prototype.formString = function(){
+			if(typeof(this.name) != "string" || this.name.trim() == ""){
+				return null;
+			}
+			return this.name+"="+this.getValueString();
+		};
+		
+		CheckBoxItem.prototype.setValue = function(value){
+			this.checkGroup.selectByValue(value);
+			this.hditem.setValue(value);
+		};
+		
+		CheckBoxItem.prototype.reset = function(){
+			this.checkGroup.clearSelected();
+			this.hditem.setValue("");
+		};
+		
+		CheckBoxItem.prototype.getValueString = function(){
+			var arr = this.checkGroup.getSelectedValue();
+			var value = "";
+			for(var i in arr){
+				value += arr[i];
+				if(i < arr.length - 1){
+					value += ","
+				}
+			}
+			return value;
+		};
+		
+		CheckBoxItem.prototype.getValues = function(){
+			return this.checkGroup.getSelectedValue();
+		};
+		
+		CheckBoxItem.prototype.readOnly = function(readOnly){
+			this.checkGroup.disable(readOnly);
+		};
+		
+		CheckBoxItem.prototype._updateValue = function(index){
+			this.hditem.setValue(this.getValueString());
+		};
+		
+		CheckBoxItem.prototype._updateView = function(viewSize){
+			//自定义lines优先
+			if(this.lines > 0){
+				return ;
+			}
+			var tlen = 0;
+			var inLine = false;
+			for(var i in viewSize){
+				var line = parseInt(viewSize[i].height / 24);
+				if(line > 1){
+					this.lines += line;
+					tlen = 0;
+					inLine = false;
+					continue;
+				}
+				if(!inLine){
+					this.lines ++;
+					inLine = true;
+				}
+				tlen += viewSize[i].width;
+				if(tlen < this.width){
+					continue;
+				}
+				if(tlen == this.width){
+					tlen = 0;
+					inLine = false;
+					continue;
+				}
+				tlen = viewSize[i].width;
+				this.lines ++;
+			}
+			if(this.lines < 1){
+				this.lines = 1;
+			}
+			var height = (this.lines * 24) + 10;
+			this.setHeight(height);
+		};
+		
+		CheckBoxItem.prototype._init = function(){
+			
+			//初始化布局组件
+			this.item = new Ele.Layout("ele_form_checkbox");
+			this.hditem = new Ele.TextBox();
+			this.hditem.ele.type = "hidden";
+			
+			var context = this;
+			this.lines = 0;
+			var lines = 1;
+			var text = "";
+			var disable = false;
+			
+			if(typeof(args) != "undefined"){
+				if(typeof(args.name) == "string"){
+					this.name = args.name;
+					this.hditem.ele.name = this.name;
+				}
+				if(typeof(args.lines) == "number"){
+					lines = parseInt(args.lines);
+					this.lines = lines;
+				}
+				if(typeof(args.text) == "string"){
+					text = args.text;
+				}
+				if(typeof(args.readOnly) == "boolean" && args.readOnly){
+					disable = true;
+				}
+				var opts = {
+					onload:function(viewSize){
+						context._updateView(viewSize);
+					},
+					selectChange:function(index){
+						context._updateValue(index);
+					},
+					disable:disable,
+					items:args.items
+				};
+				this.checkGroup = new Ele.CheckGroup(opts);
+			}
+			
+			this.item.add(this.hditem);
+			this.item.add(this.checkGroup);
+			
+			var height = (lines * 24) + 10;
+			this.initView(text, this.item, height);
+		};
+		
+		this._init();
 	};
 	
 	/**
@@ -595,6 +749,14 @@
 			this.item.setValue(value);
 		};
 		
+		TextBoxItem.prototype.setPassword = function(value){
+			if(typeof(value) == "boolean" && value){
+				this.item.ele.type = "password";
+			}else{
+				this.item.ele.type = "text";
+			}
+		};
+		
 		TextBoxItem.prototype.reset = function(){
 			this.clearMessage();
 			this.setValue("");
@@ -618,6 +780,9 @@
 				}
 				if(typeof(args.text) == "string"){
 					text = args.text;
+				}
+				if(typeof(args.password) == "boolean" && args.password){
+					this.item.ele.type = "password";
 				}
 				if(typeof(args.hint) == "string"){
 					this.item.setHint(args.hint);
@@ -676,5 +841,12 @@
 	var selectBoxSuper = new SelectBoxSuper();
 	selectBoxSuper.constructor = SelectBoxItem;
 	SelectBoxItem.prototype = selectBoxSuper;
+	
+	var CheckBoxSuper = function (){};
+	CheckBoxSuper.prototype = FormItem.prototype;
+	CheckBoxSuper.constructor = CheckBoxItem;
+	var checkBoxSuper = new CheckBoxSuper();
+	checkBoxSuper.constructor = CheckBoxItem;
+	CheckBoxItem.prototype = checkBoxSuper;
 	
 })();

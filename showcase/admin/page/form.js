@@ -114,11 +114,51 @@
 				}
 			});
 			
+			var checkBoxItem = new Ele.Views.CheckBoxItem({
+				name:"checkbox",
+				text:"多选组件",
+				//lines:4,优先级大于自动填充的行数
+				items:[{
+					text:"A类型",
+					value:1
+				},
+				{
+					text:"B类型",
+					value:2
+				},
+				{
+					text:"C类型",
+					value:3
+				},
+				{
+					text:"D类型",
+					value:4
+				},
+				{
+					text:"E类型",
+					value:5
+				},
+				{
+					text:"F类型",
+					value:6
+				}]
+			});
+			// checkBoxItem.validateNotEmpty();
+			
+			var passwordItem = new Ele.Views.TextBoxItem({
+				name:"pass",
+				password:true,
+				text:"密码框",
+				hint:"请输入"
+			});
+			
 			formView.addItem(textBoxItem);
 			formView.addItem(textAreaItem);
 			formView.addItem(radioBoxItem);
 			formView.addItem(fileItem);
 			formView.addItem(selectBoxItem);
+			formView.addItem(checkBoxItem);
+			formView.addItem(passwordItem);
 			
 			form.add(formView);
 			var btnPanel = new Ele.HLayout("form_button_panel");

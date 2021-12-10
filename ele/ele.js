@@ -272,7 +272,6 @@ var Ele = window.Ele = Ele || {
 		//IE
 		if(script.readyState) {
 			script.onreadystatechange = function() {
-				console.log(script.readyState);
 				if(script.readyState == 'loaded' || script.readyState == 'complete') {
 					script.onreadystatechange = null;
 					fn(context,model);
@@ -302,7 +301,6 @@ var Ele = window.Ele = Ele || {
 		//IE
 		if(script.readyState) {
 			script.onreadystatechange = function() {
-				console.log(script.readyState);
 				if(script.readyState == 'loaded' || script.readyState == 'complete') {
 					script.onreadystatechange = null;
 					fn(context,fileName);

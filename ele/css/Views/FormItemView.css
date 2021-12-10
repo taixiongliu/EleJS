@@ -35,13 +35,18 @@
 	height: 29px;
 	padding-top: 5px;
 }
+.ele_form_checkbox{
+	width: 202px;
+	height: 29px;
+	padding-top: 5px;
+}
 .ele_form_file{
-	width: 200px;
+	width: 202px;
 	height: 64px;
 	position: relative;
 }
 .ele_form_file_value{
-	width: 130px;
+	width: 132px;
 	padding-right: 6px;
 	height: 64px;
 	line-height: 64px;

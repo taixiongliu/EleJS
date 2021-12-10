@@ -57,8 +57,8 @@
 			this.startRow = startRow;
 			this.pageSize = pageSize;
 			this.rows = rows;
-			this.page = Number.parseInt(this.startRow/this.pageSize) + 1;
-			this.totalPage = Number.parseInt(this.rows/this.pageSize);
+			this.page = parseInt(this.startRow/this.pageSize) + 1;
+			this.totalPage = parseInt(this.rows/this.pageSize);
 			if(this.rows % this.pageSize != 0){
 				this.totalPage ++;
 			}
