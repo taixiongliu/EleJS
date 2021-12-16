@@ -14,7 +14,7 @@ var Ele = window.Ele = Ele || {
 		"ListGrid","TreeNode","PopWindow","SearchBox","Media",
 		"SelectBox"
 	],
-	mUtils:["Ajax","WinInner","Filter","Timer","Validate","Position"],
+	mUtils:["Ajax","WinInner","Filter","Timer","Validate","Position","DateFormat"],
 	mCharts:["Radar","BrokenLine","AreaLine","Sector","Histogram"],
 	mViews :["Masking","Board","GridView","PageBarView","TreeMenuView",
 		"SwitchView","FormView","FormItemView"

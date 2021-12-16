@@ -1,9 +1,222 @@
 (function(){
-	var DateBox = Ele.DateBox = function(){
+	var DateBox = Ele.DateBox = function(args){
 		this.eleType = "layout";
 		this.ele;
 		this.view;
-		this.bg;
+		this.edit;
+		this.windowType;
+		this.dateView;
+		this.masking;
+		this.position;
+		this.offset;
+		
+		this._disable;
+		this._itemClickEvent = null;
+		this._updateEvent = null;
+		this._onErrorResponse = null;
+		
+		DateBox.prototype.setWindowOffset = function(size){
+			if(this.windowType){
+				this.offset = size;
+			}
+		};
+		
+		DateBox.prototype.setOnItemClick = function(event){
+			if(typeof(event) == "function"){
+				this._itemClickEvent = event;
+			}
+		};
+		DateBox.prototype.setOnSelectChange = function(event){
+			if(typeof(event) == "function"){
+				this._updateEvent = event;
+			}
+		};
+		
+		DateBox.prototype.setValue = function(value){
+			if(typeof(value) == "undefined"){
+				return ;
+			}
+			if(value instanceof Date){
+				this.dateView.setDate(value);
+				return ;
+			}
+			if(typeof(value) == "string"){
+				this.dateView.setDateString(value);
+			}
+		};
+		DateBox.prototype.reset = function(){
+			this.edit.setValue("");
+			this.dateView.setDate(new Date());
+		};
+		DateBox.prototype.setPattern = function(pattern){
+			return this.dateView.setPattern(pattern);
+		};
+		
+		DateBox.prototype.getValue = function(){
+			return this.edit.getValue();
+		};
+		
+		DateBox.prototype.showErrorStyle = function(){
+			this.ele.className = "ele_datebox_style_error";
+		};
+		DateBox.prototype.clearErrorStyle = function(){
+			this.ele.className = "ele_datebox";
+		};
+		DateBox.prototype.expend = function(){
+			if(this.windowType){
+				this.position.inBottomLeft(this.view.ele);
+				if(this.offset != null && this.offset instanceof Ele.Utils.Size){
+					this.position.setOffset(this.offset);
+				}
+				this.masking.setContent(this.dateView, this.position);
+				this.masking.showMasking();
+				this.dateView.show();
+				var context = this;
+				this.masking.setHiddenHandler(function(){
+					context._onBlur();
+				});
+				return;
+			}
+			this.masking.setContentNone();
+			this.masking.showMasking();
+			var context = this;
+			this.masking.setHiddenHandler(function(){
+				context._onBlur();
+			});
+			this.dateView.show();
+		};
+		
+		DateBox.prototype.hide = function (){
+			if(this.windowType){
+				this.masking.hideMasking();
+				return ;
+			}
+			this.dateView.hide();
+			this.masking.hideMasking();
+		};
+		
+		DateBox.prototype.setDisable = function (disable){
+			if(typeof(disable) == "boolean"){
+				this._disable = disable;
+				this.edit.ele.readOnly = disable;
+			}
+		};
+		DateBox.prototype._onItemClick = function(dateString){
+			if(this._itemClickEvent != null){
+				this._itemClickEvent();
+			}
+			this.ele.className = "ele_datebox";
+			this.hide();
+		};
+		DateBox.prototype._onSelectUpdate = function(){
+			if(this._itemClickEvent != null){
+				this._itemClickEvent();
+			}
+			this.ele.className = "ele_datebox";
+			this.hide();
+			this.edit.setValue(this.dateView.getSelectDateString());
+		};
+		DateBox.prototype._onBlur = function(){
+			this.ele.className = "ele_datebox";
+			this.edit.setValue(this.dateView.getSelectDateString());
+			//非窗口类型需要关闭本地窗口
+			if(!this.windowType){
+				this.dateView.hide();
+				this.masking.hideMasking();
+			}
+		};
+		
+		DateBox.prototype._onFocus = function(){
+			if(this._disable){
+				this.ele.className = "ele_datebox_disable_focus";
+				return ;
+			}else{
+				this.ele.className = "ele_datebox_focus";
+			}
+			this.edit.setValue(this.dateView.getSelectDateString());
+			this.expend();
+		};
+		
+		DateBox.prototype._updateValue = function(){
+			var value = this.getValue();
+			if(value.trim() != "" && value.length >= this.dateView.getPattern().length){
+				var res = this.dateView.validateDateString(value);
+				if(res){
+					this.setValue(value);
+				}
+			}
+		};
+		
+		DateBox.prototype._init = function(){
+			this.view = new Ele.Layout("ele_datebox");
+			this.ele = this.view.ele;
+			this._disable = false;
+			this.windowType = false;
+			var items = [];
+			var context = this;
+			this.masking = Ele.masking;
+			if(typeof(args) == "object"){
+				if(typeof(args.style) != "undefined"){
+					this.ele.className = args.style;
+				}
+				if(typeof(args.disable) == "boolean" && args.disable){
+					this._disable = args.disable;
+				}
+				if(typeof(args.onItemClick) == "function"){
+					this._itemClickEvent = args.onItemClick;
+				}
+				if(typeof(args.selectChange) == "function"){
+					this._updateEvent = args.selectChange;
+				}
+				if(typeof(args.windowType) == "boolean" && args.windowType){
+					this.windowType = true;
+				}
+			}
+			this.dateView = new DateView();
+			this.dateView.setItemClickHandler(function(dateString){
+				context._onItemClick(dateString);
+			});
+			this.dateView.setSelectUpdateHandler(function(){
+				context._onSelectUpdate();
+			});
+			if(this.windowType){
+				this.position = new Ele.Utils.Position();
+			}else{
+				this.dateView.ele.style.zIndex = this.masking.maxZIndex + 1;
+				this.dateView.ele.style.marginTop = 33+"px";
+				this.view.add(this.dateView);
+			}
+			
+			var contentView = new Ele.HLayout("ele_datebox_panle");
+			contentView.ele.onclick = function(){
+				context._onFocus();
+			};
+			
+			this.edit = new Ele.TextBox({style:"ele_datebox_intut_style"});
+			this.edit.ele.onblur = function(e){
+				context._updateValue();
+			};
+			if(this._disable){
+				this.edit.ele.readOnly = true;
+			}
+			contentView.add(this.edit);
+			var iconView = new Ele.Layout("ele_datebox_icon_view");
+			var icon = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_date.png","ele_datebox_icon");
+			iconView.add(icon);
+			contentView.add(iconView);
+			
+			this.view.add(contentView);
+		};
+		this._init();
+	};
+	
+	/**
+	 * 时间面板
+	 */
+	var DateView = Ele.DateView = function(){
+		this.eleType = "layout";
+		this.ele;
+		this.view;
 		//时间文本显示
 		this.dateText;
 		//时间元素VIEW
@@ -11,66 +224,62 @@
 		this._year;
 		this._month;
 		this._day;
+		this._dateFormat;
 		//选择的ITEM
 		this._selected = null;
 		//选择的日期字符串
 		this._selectedDateString = "";
-		
+		this._itemClickHandler = null;
 		this._selectedUpdateHandler = null;
 		this._pageUpdateHandler = null;
 		
 		//初始化布局
-		DateBox.prototype.initView = function(){
+		DateView.prototype.initView = function(){
 			var context = this;
-			this.view = new Ele.Layout("ele_date_box_panel");
+			this.view = new Ele.Layout("ele_dateview_panel");
 			this.ele = this.view.ele;
-			this.bg = new Ele.Layout("ele_data_box_bg");
-			//点击主布局外隐藏窗口
-			this.bg.ele.onclick = function(e){
-				context.hide();
-			};
+			
 			//标题布局
-			var titleView = new Ele.Layout("ele_date_box_title_view");
-			var titleLeft = new Ele.Layout("ele_date_box_title_left_view");
+			var titleView = new Ele.HLayout("ele_dateview_title_view");
+			var titleLeft = new Ele.Layout("ele_dateview_title_left_view");
 			titleLeft.setAlign("center");
-			var titleCenter = new Ele.Layout("ele_date_box_title_center_view");
+			var titleCenter = new Ele.Layout("ele_dateview_title_center_view");
 			titleCenter.setAlign("center");
-			var titleRight = new Ele.Layout("ele_date_box_title_right_view");
+			var titleRight = new Ele.Layout("ele_dateview_title_right_view");
 			titleRight.setAlign("center");
-			var iconLeft = new Ele.Img("ele/icons/icon_left.png", "ele_date_box_title_icon ele_ml20");
+			var iconLeft = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_left.png", "ele_dateview_title_icon ele_ml20");
 			iconLeft.ele.onclick = function(){
 				context.previousMonth();
 			};
-			var icon2Left = new Ele.Img("ele/icons/icon_2_left.png", "ele_date_box_title_icon");
+			var icon2Left = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_2_left.png", "ele_dateview_title_icon");
 			icon2Left.ele.onclick = function(){
 				context.previousYear();
 			};
-			this.dateText = new Ele.Label(this._year+"-"+this._month, "ele_date_box_date_txt");
-			var iconRight = new Ele.Img("ele/icons/icon_right.png", "ele_date_box_title_icon");
+			this.dateText = new Ele.Label(this._year+"-"+this._month, "ele_dateview_date_txt");
+			var iconRight = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_right.png", "ele_dateview_title_icon");
 			iconRight.ele.onclick = function(){
 				context.nextMonth();
 			};
 			
-			var icon2Right = new Ele.Img("ele/icons/icon_2_right.png", "ele_date_box_title_icon ele_ml20");
+			var icon2Right = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_2_right.png", "ele_dateview_title_icon ele_ml20");
 			icon2Right.ele.onclick = function(){
 				context.nextYear();
 			};
-			var titleFc = new Ele.Layout("ele_cl");
 			titleLeft.add(icon2Left);
 			titleLeft.add(iconLeft);
 			titleCenter.add(this.dateText);
 			titleRight.add(iconRight);
 			titleRight.add(icon2Right);
-			titleView.add(titleLeft);
-			titleView.add(titleCenter);
-			titleView.add(titleRight);
-			titleView.add(titleFc);
+			
+			titleView.add(titleLeft,{width:"25%"});
+			titleView.add(titleCenter,{width:"50%"});
+			titleView.add(titleRight,{width:"25%"});
 			
 			//星期标题布局
-			var weekView = new Ele.Layout("ele_date_box_week_view");
+			var weekView = new Ele.Layout("ele_dateview_week_view");
 			var weeks = ["一","二","三","四","五","六","日"];
 			for(var index in weeks){
-				var item = new Ele.Layout("ele_date_box_week_item");
+				var item = new Ele.Layout("ele_dateview_week_item");
 				item.setAlign("center");
 				item.setHtml(weeks[index]);
 				weekView.add(item);
@@ -80,40 +289,33 @@
 			
 			this.view.add(titleView);
 			this.view.add(weekView);
-			var divider = new Ele.Layout("ele_date_box_divider");
+			var divider = new Ele.Layout("ele_dateview_divider");
 			this.view.add(divider);
 			
 			//时间元素布局
 			for(var row = 0; row < 6; row ++){
-				var rowView = new Ele.Layout("ele_date_box_line_view");
-				var colViews = new Array();
+				var rowView = new Ele.HLayout("ele_dateview_line_view");
+				var rowViews = [];
 				for(var col = 0; col < 7; col ++){
-					var dateItemView = new Ele.Layout("ele_date_box_line_item");
-					dateItemView.setAlign("center");
-					rowView.add(dateItemView);
-					var dbItem = new DateBoxItem(dateItemView.ele);
-					colViews.push(dbItem);
+					var dateItem = new DateItem();
+					rowView.add(dateItem, {padding:"0 0 0 8px"});
+					rowViews.push(dateItem);
 				}
-				this.daysView.push(colViews);
-				var rowFc = new Ele.Layout("ele_cl");
-				rowView.add(rowFc);
+				this.daysView.push(rowViews);
 				this.view.add(rowView);
 			}
-			
-			var body = document.getElementsByTagName("body")[0];
-			body.appendChild(this.bg.ele);
-			body.appendChild(this.view.ele);
 		};
 		
 		//初始化时间，默认为今天
-		DateBox.prototype.initDate = function(){
+		DateView.prototype.initDate = function(){
 			var now = new Date();
 			this._year = now.getFullYear();
 			this._month = now.getMonth() + 1;
 			this._day = now.getDate();
+			this._dateFormat = new Ele.Utils.DateFormat();
 		};
 		//初始化数据（指定元素布局填充元素数据）
-		DateBox.prototype.initData = function(){
+		DateView.prototype.initData = function(){
 			var now = new Date();
 			var year = now.getFullYear();
 			var month = now.getMonth() + 1;
@@ -127,77 +329,93 @@
 				for(var col = 0; col < 7; col ++){
 					var data = datas[row][col];
 					var dayItem = this.daysView[row][col];
-					var dayElement = dayItem.getElement();
-					dayElement.innerHTML = data;
+					dayItem.setHtml(data);
 					if(data == ""){
 						dayItem.removeClickHandler();
-						dayElement.className = "ele_date_box_line_item";
+						dayItem.ele.className = "ele_dateview_line_item";
 					}else{
 						dayItem.addClickHandler(function(item){
 							context._onItemClick(item);
 						});
 						dayItem.setData(data);
-						dayElement.className = "ele_date_box_line_item_full";
+						dayItem.ele.className = "ele_dateview_line_item ele_dateview_line_item_full";
 						if(col > 4){
 							dayItem.isWeek = true;
-							dayElement.className = "ele_date_box_line_item_week";
+							dayItem.ele.className = "ele_dateview_line_item ele_dateview_line_item_week";
 						}
 						var tempDay = data;
 						if(new Number(data) < 10){
 							tempDay = "0"+data;
 						}
 						if((yearAndMonth +"-"+tempDay) == this._selectedDateString){
-							dayElement.className = "ele_date_box_line_item_select";
+							dayItem.ele.className = "ele_dateview_line_item ele_dateview_line_item_select";
 							this._selected = dayItem;
 						}
 					}
 					
 					if(this._year == year && this._month == month && new Number(data) == day){
 						dayItem.isToday = true;
-						dayElement.className = "ele_date_box_line_item_today";
+						dayItem.ele.className = "ele_dateview_line_item ele_dateview_line_item_today";
 					}
 				}
 			}
 		};
 		
 		//设置日期选择更新事件
-		DateBox.prototype.setSelectUpdateHandler = function(funName){
-			this._selectedUpdateHandler = funName;
+		DateView.prototype.setSelectUpdateHandler = function(funName){
+			if(typeof(funName) == "function"){
+				this._selectedUpdateHandler = funName;
+			}
 		};
 		//移除日期选择更新事件
-		DateBox.prototype.removeSelectUpdateHandler = function(){
+		DateView.prototype.removeSelectUpdateHandler = function(){
 			this._selectedUpdateHandler = null;
 		};
+		//设置日期元素点击事件
+		DateView.prototype.setItemClickHandler = function(funName){
+			if(typeof(funName) == "function"){
+				this._itemClickHandler = funName;
+			}
+		};
+		//移除日期选择更新事件
+		DateView.prototype.removeItemClickHandler = function(){
+			this._itemClickHandler = null;
+		};
 		//设置日期翻页事件
-		DateBox.prototype.setPageUpdateHandler = function(funName){
-			this._pageUpdateHandler = funName;
+		DateView.prototype.setPageUpdateHandler = function(funName){
+			if(typeof(funName) == "function"){
+				this._pageUpdateHandler = funName;
+			}
 		};
 		//移除日期翻页事件
-		DateBox.prototype.removePageUpdateHandler = function(){
+		DateView.prototype.removePageUpdateHandler = function(){
 			this._pageUpdateHandler = null;
 		};
 		
-		DateBox.prototype.getSelectDateString = function(){
+		DateView.prototype.getSelectDateString = function(){
 			return this._selectedDateString;
 		};
 		
 		//捕捉元素点击事件
-		DateBox.prototype._onItemClick = function(item){
+		DateView.prototype._onItemClick = function(item){
 			if(this._selected != null){
 				if(item.data == this._selected.data){
+					if(this._itemClickHandler != null){
+						this._itemClickHandler(this._selectedDateString);
+					}
 					this.hide();
 					return ;
 				}
 				if(!this._selected.isToday){
 					if(this._selected.isWeek){
-						this._selected.getElement().className = "ele_date_box_line_item_week";
+						this._selected.ele.className = "ele_dateview_line_item ele_dateview_line_item_week";
 					}else{
-						this._selected.getElement().className = "ele_date_box_line_item_full";
+						this._selected.ele.className = "ele_dateview_line_item ele_dateview_line_item_full";
 					}
 				}
 			}
 			if(!item.isToday){
-				item.getElement().className = "ele_date_box_line_item_select";
+				item.ele.className = "ele_dateview_line_item ele_dateview_line_item_select";
 			}
 			//设置选择对象
 			this._selected = item;
@@ -205,6 +423,9 @@
 			this._day = new Number(item.data);
 			//设置当前选择的日期
 			this._selectedDateString = this.toDateString();
+			if(this._itemClickHandler != null){
+				this._itemClickHandler(this._selectedDateString);
+			}
 			this.hide();
 			if(this._selectedUpdateHandler != null){
 				this._selectedUpdateHandler();
@@ -212,7 +433,7 @@
 		};
 		
 		//生成所有时间元素二位数组数据
-		DateBox.prototype.getArrayData = function(){
+		DateView.prototype.getArrayData = function(){
 			var firstDay = new Date(this._year, this._month - 1, 1);
 			var week = firstDay.getDay();
 			if(week == 0){
@@ -240,7 +461,7 @@
 			return rows;
 		};
 		//获取当前月的天数
-		DateBox.prototype.getDays = function(){
+		DateView.prototype.getDays = function(){
 			var days = 31;
 			if(this._month == 2){
 				days = 28;
@@ -253,22 +474,82 @@
 			}
 			return days;
 		};
+		//设置文本封装格式
+		DateView.prototype.setPattern = function(pattern){
+			this._dateFormat.setPattern(pattern);
+		};
+		//获取文本封装格式
+		DateView.prototype.getPattern = function(){
+			return this._dateFormat.getPattern();
+		};
+		//获取选择的日期
+		DateView.prototype.toDate = function(){
+			return new Date(this._year, this._month - 1, this._day);
+		};
 		//将时间转换为字符串格式
-		DateBox.prototype.toDateString = function(){
-			var year = this._year;
-			var month = this._month+"";
-			var day = this._day+"";
-			if(this._month < 10){
-				month = "0"+month;
+		DateView.prototype.toDateString = function(){
+			var date = this.toDate();
+			return this._dateFormat.format(date);
+		};
+		
+		//设置日期
+		DateView.prototype.setDate = function(date){
+			if(!(date instanceof Date)){
+				return false;
 			}
-			if(this._day < 10){
-				day = "0"+day;
+			this._year = date.getFullYear();
+			this._month = date.getMonth() + 1;
+			this._day = date.getDate();
+			
+			//设置选择日期
+			this._selectedDateString = this.toDateString();
+			
+			this.initData();
+			this.dateText.ele.innerHTML = this.toYearMonthString();
+			if(this._selectedUpdateHandler != null){
+				this._selectedUpdateHandler();
 			}
-			return year+"-"+month+"-"+day;
+			return true;
+		};
+		//设置日期字符串
+		DateView.prototype.setDateString = function(str){
+			if(typeof(str) != "string"){
+				return false;
+			}
+			var date = null;
+			try{
+				date = this._dateFormat.parse(str);
+			}catch(e){
+				//TODO handle the exception
+				console.log(e.message);
+			}
+			if(date == null){
+				return false;
+			}
+			if(date instanceof Date && date.getTime() != "" && !isNaN(date.getTime())){
+				return this.setDate(date);
+			}
+			return false;
+		};
+		//日期字符串校验
+		DateView.prototype.validateDateString = function(str){
+			if(typeof(str) != "string"){
+				return false;
+			}
+			var date = null;
+			try{
+				date = this._dateFormat.parse(str);
+			}catch(e){
+				//TODO handle the exception
+			}
+			if(date instanceof Date && date.getTime() != "" && !isNaN(date.getTime())){
+				return true;
+			}
+			return false;
 		};
 		
 		//转换成只有年-月的时间字符串
-		DateBox.prototype.toYearMonthString = function(){
+		DateView.prototype.toYearMonthString = function(){
 			var year = this._year;
 			var month = this._month+"";
 			if(this._month < 10){
@@ -278,7 +559,7 @@
 		};
 		
 		//向前翻一个月
-		DateBox.prototype.previousMonth = function(){
+		DateView.prototype.previousMonth = function(){
 			var temp = this._month - 1;
 			if(temp < 1){
 				if(this._year - 1 < 1970){
@@ -297,7 +578,7 @@
 			}
 		};
 		//向前翻一年
-		DateBox.prototype.previousYear = function(){
+		DateView.prototype.previousYear = function(){
 			if(this._year - 1 < 1970){
 				return;
 			}
@@ -309,7 +590,7 @@
 			}
 		};
 		//向后翻一个月
-		DateBox.prototype.nextMonth = function(){
+		DateView.prototype.nextMonth = function(){
 			var temp = this._month + 1;
 			if(temp > 12){
 				this._year ++;
@@ -325,7 +606,7 @@
 			}
 		};
 		//向后翻一年
-		DateBox.prototype.nextYear = function(){
+		DateView.prototype.nextYear = function(){
 			this._year ++;
 			this.initData();
 			this.dateText.ele.innerHTML = this.toYearMonthString();
@@ -334,106 +615,58 @@
 			}
 		};
 		
-		//将星期转换为字符串格式
-		DateBox.prototype.toWeekString = function(weekNum){
-			var week = "";
-			switch(weekNum){ 
-				case 1:
-					week = "星期一";
-					break;
-				case 2:
-					week = "星期二";
-					break;
-				case 3:
-					week = "星期三";
-					break;
-				case 4:
-					week = "星期四";
-					break;
-				case 5:
-					week = "星期五";
-					break;
-				case 6:
-					week = "星期六";
-					break;
-				case 0:
-					week = "星期日";
-					break;
-				
-				default:
-					break;
-			}
-			return week;
-		};
-		//在对象下方左对齐显示
-		DateBox.prototype.showBelowLeft = function(obj){
-			var otop = obj.offsetTop;
-			var oleft = obj.offsetLeft;
-			var cheight = obj.clientHeight;
-			this.view.ele.style.top = (otop + cheight + 2)+"px";
-			this.view.ele.style.left = oleft+"px";
-			this.view.ele.style.display = "block";
-			this.bg.ele.style.display = "block";
-		};
 		//隐藏窗体
-		DateBox.prototype.hide = function (){
+		DateView.prototype.hide = function (){
 			this.view.ele.style.display = "none";
-			this.bg.ele.style.display = "none";
 		};
-		DateBox.prototype.show = function(left, top){
-			this.view.ele.style.top = top;
-			this.view.ele.style.left = left;
+		DateView.prototype.show = function(){
 			this.view.ele.style.display = "block";
-			this.bg.ele.style.display = "block";
 		};
-		//销毁窗体
-		DateBox.prototype.destroy = function(){
-			var body = document.getElementsByTagName("body")[0];
-			body.removeChild(this.bg.ele);
-			body.removeChild(this.view.ele);
-			this.view = null;
-			this.bg = null;
-		};
+		
 		this.initDate();
 		this.initView();
 		this.initData();
 	};
 	
-	/*DateBoxItem private*/
-	var DateBoxItem = function(obj){
-		this._element = obj;
+	/*DateItem private*/
+	var DateItem = function(obj){
+		this.eleType = "layout";
+		this.ele;
+		this.view;
 		this.data = "";
 		this.isWeek = false;
 		this.isToday = false;
 		this._clickHandle = null;
 		
-		DateBoxItem.prototype._init = function(){
-			var context = this;
-			this._element.onclick = function(){
-				context._onClickEvent();
-			};
-		};
-		
-		DateBoxItem.prototype.getElement = function(){
-			return this._element;
-		};
-		
-		DateBoxItem.prototype.addClickHandler = function(funName){
+		DateItem.prototype.addClickHandler = function(funName){
 			this._clickHandle = funName;
 		};
 		
-		DateBoxItem.prototype.removeClickHandler = function(){
+		DateItem.prototype.removeClickHandler = function(){
 			this._clickHandle = null;
 		};
 		
-		DateBoxItem.prototype.setData = function(data){
+		DateItem.prototype.setData = function(data){
 			this.data = data;
 		};
 		
-		DateBoxItem.prototype._onClickEvent = function(){
+		DateItem.prototype.setHtml = function(text){
+			this.view.setHtml(text);
+		};
+		
+		DateItem.prototype._onClickEvent = function(){
 			if(this._clickHandle != null){
 				this._clickHandle(this);
 			}
+		};
+		
+		DateItem.prototype._init = function(){
+			this.view = new Ele.Layout("ele_dateview_line_item");
+			this.ele = this.view.ele;
+			var context = this;
+			this.ele.onclick = function(){
+				context._onClickEvent();
+			};
 		};
 		
 		this._init();

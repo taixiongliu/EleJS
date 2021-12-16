@@ -73,6 +73,113 @@
 		};
 	};
 	
+	/**
+	 * @param {Object} args
+	 * 时间选择组件
+	 */
+	var DateBoxItem = Ele.Views.DateBoxItem = function(args) {
+		FormItem.call(this);
+		
+		this.item;
+		this.name;
+		this.dateBox;
+		
+		DateBoxItem.prototype.setWindowOffset = function(size){
+			this.dateBox.setWindowOffset(size);
+		};
+		
+		DateBoxItem.prototype.validate = function(){
+			var res = this._validate.validate(this.getValue()+"");
+			if(res){
+				this.clearMessage();
+				this.dateBox.clearErrorStyle();
+			}else{
+				this.showMessage(this._validate.error);
+				this.dateBox.showErrorStyle();
+			}
+			return res;
+		};
+		
+		DateBoxItem.prototype.formString = function(){
+			if(this._validate.isEmpty(this.name)){
+				return null;
+			}
+			return this.name+"="+this.getValue();
+		};
+		DateBoxItem.prototype.setPattern = function(pattern){
+			return this.dateBox.setPattern(pattern);
+		};
+		
+		DateBoxItem.prototype.setValue = function(value){
+			this.dateBox.setValue(value);
+		};
+		
+		DateBoxItem.prototype.reset = function(){
+			this.clearMessage();
+			this.dateBox.reset();
+		};
+		DateBoxItem.prototype.readOnly = function(readOnly){
+			this.dateBox.setDisable(readOnly);
+		};
+		
+		DateBoxItem.prototype.getValue = function(){
+			return this.dateBox.getValue();
+		};
+		DateBoxItem.prototype._updateValue = function(index){
+			this.hditem.setValue(this.dateBox.getValue());
+		};
+		
+		DateBoxItem.prototype._init = function(){
+			//初始化布局组件
+			var context = this;
+			this.item = new Ele.Layout();
+			
+			var text = "";
+			var opts = {
+				selectChange:function(index){
+					context._updateValue(index);
+				}
+			};
+			
+			var value = "";
+			if(typeof(args) != "undefined"){
+				if(typeof(args.name) == "string"){
+					this.name = args.name;
+				}
+				if(typeof(args.text) == "string"){
+					text = args.text;
+				}
+				if(typeof(args.windowType) == "boolean"){
+					opts.windowType = args.windowType;
+				}
+				if(typeof(args.readOnly) == "boolean"){
+					opts.disable = args.readOnly;
+				}
+				if(typeof(args.value) != "undefined"){
+					value = args.value;
+				}
+				if(typeof(args.items) != "undefined"){
+					opts.items = args.items;
+				}
+			}
+			this.dateBox = new Ele.DateBox(opts);
+			if(value != ""){
+				this.setValue(value);
+			}
+			if(typeof(this.name) == "string"){
+				this.dateBox.edit.ele.name = this.name;
+			}
+			this.item.add(this.dateBox);
+			this.initView(text, this.item);
+		};
+		
+		this._init();
+	};
+	
+	/**
+	 * @param {Object} args
+	 * 复选框组件
+	 */
 	var CheckBoxItem = Ele.Views.CheckBoxItem = function(args) {
 		FormItem.call(this);
 		
@@ -848,5 +955,12 @@
 	var checkBoxSuper = new CheckBoxSuper();
 	checkBoxSuper.constructor = CheckBoxItem;
 	CheckBoxItem.prototype = checkBoxSuper;
+	
+	var DateBoxSuper = function (){};
+	DateBoxSuper.prototype = FormItem.prototype;
+	DateBoxSuper.constructor = DateBoxItem;
+	var dateBoxSuper = new DateBoxSuper();
+	dateBoxSuper.constructor = DateBoxItem;
+	DateBoxItem.prototype = dateBoxSuper;
 	
 })();

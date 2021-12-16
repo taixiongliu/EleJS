@@ -11,7 +11,7 @@
 			
 			var context = this;
 			
-			var formPanel = new Ele.Layout("form");
+			var formPanel = new Ele.Layout("form ele_scrollbar");
 			var formTitle = new Ele.Layout("form_title");
 			var lbTitle = new Ele.Label("表单元素", "form_title_text");
 			formTitle.add(lbTitle);
@@ -114,6 +114,15 @@
 				}
 			});
 			
+			var dateBoxItem = new Ele.Views.DateBoxItem({
+				name:"date",
+				windowType:true,
+				// readOnly:true,
+				value:"2021-10-10",
+				text:"时间选择组件"
+			});
+			//dateBoxItem.setPattern("yyyy/MM/dd HH:mm:ss S EEE qq");
+			
 			var checkBoxItem = new Ele.Views.CheckBoxItem({
 				name:"checkbox",
 				text:"多选组件",
@@ -157,6 +166,7 @@
 			formView.addItem(radioBoxItem);
 			formView.addItem(fileItem);
 			formView.addItem(selectBoxItem);
+			formView.addItem(dateBoxItem);
 			formView.addItem(checkBoxItem);
 			formView.addItem(passwordItem);
 			

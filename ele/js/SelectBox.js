@@ -101,6 +101,7 @@
 			this.setFilterData([]);
 			this._selectIndex = -1;
 			this.edit.setValue("");
+			this.hintView.setHtml("请选择");
 		};
 		SelectBox.prototype.selectIndex = function(index){
 			//越界角标
@@ -119,6 +120,7 @@
 			}
 			this._options[index].setSelectedStyle();
 			this._selectIndex = index;
+			this.hintView.setHtml("已选择");
 			if(this._updateEvent != null){
 				this._updateEvent(index);
 			}

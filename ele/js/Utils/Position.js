@@ -19,11 +19,14 @@
 			if(!Ele._isElement(ele)){
 				return ;
 			}
+			
 			this.positionType = "top-left";
 			var otop = ele.offsetTop + ele.offsetParent.offsetTop;
 			var oleft = ele.offsetLeft + ele.offsetParent.offsetLeft;
-			this.bottom = otop;
-			this.left = oleft;
+			var scrollTop = ele.offsetParent.scrollTop;
+			var scrollLeft = ele.offsetParent.scrollLeft;
+			this.bottom = otop - scrollTop;
+			this.left = oleft - scrollLeft;
 		};
 		Position.prototype.inTopRight = function(ele) {
 			if(!Ele._isElement(ele)){
@@ -33,8 +36,10 @@
 			var otop = ele.offsetTop + ele.offsetParent.offsetTop;
 			var oleft = ele.offsetLeft + ele.offsetParent.offsetLeft;
 			var width = ele.offsetWidth;
-			this.bottom = otop;
-			this.right = oleft + width;
+			var scrollTop = ele.offsetParent.scrollTop;
+			var scrollLeft = ele.offsetParent.scrollLeft;
+			this.bottom = otop - scrollTop;
+			this.right = oleft + width - scrollLeft;
 		};
 		Position.prototype.inBottomLeft = function(ele) {
 			if(!Ele._isElement(ele)){
@@ -43,9 +48,11 @@
 			this.positionType = "bottom-left";
 			var otop = ele.offsetTop + ele.offsetParent.offsetTop;
 			var oleft = ele.offsetLeft + ele.offsetParent.offsetLeft;
+			var scrollTop = ele.offsetParent.scrollTop;
+			var scrollLeft = ele.offsetParent.scrollLeft;
 			var height = ele.offsetHeight;
-			this.top = otop + height;
-			this.left = oleft;
+			this.top = otop + height - scrollTop;
+			this.left = oleft - scrollLeft;
 		};
 		Position.prototype.inBottomRight = function(ele) {
 			if(!Ele._isElement(ele)){
@@ -56,8 +63,10 @@
 			var oleft = ele.offsetLeft + ele.offsetParent.offsetLeft;
 			var width = ele.offsetWidth;
 			var height = ele.offsetHeight;
-			this.top = otop + height;
-			this.right = oleft + width;
+			var scrollTop = ele.offsetParent.scrollTop;
+			var scrollLeft = ele.offsetParent.scrollLeft;
+			this.top = otop + height - scrollTop;
+			this.right = oleft + width - scrollLeft;
 		};
 		Position.prototype.setOffset = function(size) {
 			if(!(size instanceof Ele.Utils.Size)){
