@@ -5,7 +5,7 @@
 		this.view;
 		this.bg;
 		this.content;
-		this.maxZIndex = 102;
+		this.maxZIndex = 1002;
 		this._hiddenEvent = null;
 		
 		Masking.prototype._init = function(){

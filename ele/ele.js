@@ -25,6 +25,7 @@ var Ele = window.Ele = Ele || {
 	Views : {},//目录对象申明
 	Controllers : {},//目录对象申明
 	imports:[],//导入内容申明
+	_importsCSS:[],//导入内容申明
 	_loadCallback:{},
 	_loadModels:0,
 	_loadCount:0,
@@ -57,6 +58,13 @@ var Ele = window.Ele = Ele || {
 	 */
 	importJS:function(name){
 		this.imports.push(name);
+	},
+	
+	/**
+	 * @param {Object} name 导入css文件名
+	 */
+	importCSS:function(name){
+		this._importsCSS.push(name);
 	},
 	
 	/**
@@ -191,8 +199,18 @@ var Ele = window.Ele = Ele || {
 	 * 加载类文件
 	 */
 	_loadImports:function(){
+		//加载JS
 		for(var index = 0; index < this.imports.length; index ++){
 			this._importJS(this.imports[index], this._loadHandler);
+		}
+		//加载CSS
+		for(var i = 0; i < this._importsCSS.length; i ++){
+			var head = document.getElementsByTagName('head')[0];
+			var link = document.createElement('link');
+			link.type='text/css';
+			link.rel = 'stylesheet';
+			link.href = this._importsCSS[i];
+			head.appendChild(link);
 		}
 	},
 	
