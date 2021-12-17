@@ -10,7 +10,7 @@
 			{"icon":"img/gonggao.png","text":"窗口","data":{"id":6,"href":"window.html"}}
 		]},
 		{"icon":"img/shoucang.png","title":"统计图","expend":true, "data":{"id":"02"}, "children":[
-			{"icon":"img/gonggao.png","text":"二级菜单A","data":{"id":7,"href":"table.html"}},
+			{"icon":"img/gonggao.png","text":"统计图","data":{"id":7,"href":"charts.html"}},
 			{"icon":"img/gonggao.png","text":"二级菜单B","data":{"id":8,"href":"table.html"}},
 			{"icon":"img/gonggao.png","text":"二级菜单C","data":{"id":9,"href":"table.html"}},
 			{"icon":"img/gonggao.png","text":"二级菜单D","data":{"id":10,"href":"table.html"}},

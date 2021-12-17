@@ -26,12 +26,12 @@
 		this.ctx;
 		this.width = 610; //默认宽度
 		this.height = 486; //默认高度
-		this.background = "#fff"; //默认背景
-		this.border = "1px #f5f5f5 solid"; //默认边框
+		this.background = "#444444"; //默认背景
+		this.border = "1px #555555 solid"; //默认边框
 		this.padding = 20; //四周边距
 		this.edgeLeftSpacing = 60; //默认左侧线条左侧间距
 		this.showTitle = false;
-		this.titleColor = "#41BABD"; //节点颜色a0e0a3
+		this.titleColor = "#F5F5F5"; //节点颜色a0e0a3
 		this.itemlineWidth = 1; //节点线条宽度
 		this.cellSpacing = 80;//圆形内间距
 		this.data;
@@ -177,7 +177,7 @@
 			/*线的方向怎么判断 伸出去的点在X0的左边 线的方向就是左边*/
 			/*线的方向怎么判断 伸出去的点在X0的右边 线的方向就是右边*/
 			/*结束的点坐标  和文字大小*/
-			this.ctx.font = '14px Microsoft YaHei';
+			this.ctx.font = '13px Microsoft YaHei';
 			var textWidth = this.ctx.measureText(title).width ;
 			if(outX > x0){
 				/*右*/
@@ -232,7 +232,7 @@
 			this.ctx.fillStyle = this.titleColor;
 			this.ctx.textAlign = 'center';
 			this.ctx.textBaseline = 'top';
-			this.ctx.font = "16px Microsoft YaHei";
+			this.ctx.font = "13px Microsoft YaHei";
 			this.ctx.beginPath();
 			this.ctx.fillText(this.data.title, this.width/2, this.padding);
 		};

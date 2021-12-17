@@ -8,15 +8,15 @@
 		this.ctx;
 		this.width = 300;//默认宽度
 		this.height = 300;//默认高度
-		this.background = "#fff";//默认背景
-		this.border = "1px #f5f5f5 solid";//默认边框
+		this.background = "#444444";//默认背景
+		this.border = "1px #555555 solid";//默认边框
 		this.padding = 70;//默认左右边框距离
 		this.numSlot = 4;//一条线上的总节点数
-		this.edgeLineColor="#8bbef5";//轮廓线条颜色
+		this.edgeLineColor="#EDEDED";//轮廓线条颜色
 		this.edgelineWidth=1;//轮廓线条宽度
-		this.textColor="#333";//文本字体颜色
-		this.itemColor="#fa8a9d";//节点颜色a0e0a3
-		this.itemFillColor="rgba(250,138,157, 0.28)";//节点填充颜色rgba(160,224,163, 0.28)
+		this.textColor="#F5F5F5";//文本字体颜色
+		this.itemColor="#4FDBDB";//节点颜色
+		this.itemFillColor="rgba(79,219,219, 0.5)";//节点填充颜色
 		this.itemlineWidth=1;//节点线条宽度
 		this.itemPointWeight=2;//节点半径
 		this.data;

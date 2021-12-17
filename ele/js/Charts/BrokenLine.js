@@ -16,20 +16,20 @@
 		this.ctx;
 		this.width = 750; //默认宽度
 		this.height = 300; //默认高度
-		this.background = "#fff"; //默认背景
-		this.border = "1px #f5f5f5 solid"; //默认边框
+		this.background = "#444444"; //默认背景
+		this.border = "1px #555555 solid"; //默认边框
 		this.padding = 20; //四周边距
-		this.edgeLineColor = "#3898C8"; //轮廓线条颜色
-		this.edgeLineHintColor = "rgba(139,190,245, 0.28)"; //轮廓线条颜色
+		this.edgeLineColor = "#F5F5F5"; //轮廓线条颜色
+		this.edgeLineHintColor = "rgba(237,237,237, 0.28)"; //轮廓线条颜色
 		this.edgelineWidth = 1; //轮廓线条宽度
 		this.edgeLeftSpacing = 40; //默认左侧线条左侧间距
 		this.edgeBottomSpacing = 16; //默认底部线条地侧间距
 		this.showTitle = false;
-		this.itemColor = "#41BABD"; //节点颜色a0e0a3
+		this.itemColor = "#4FDBDB"; //节点颜色a0e0a3
 		this.itemlineWidth = 1; //节点线条宽度
 		this.itemPointWeight = 4; //节点半径
 		this.data;
-		this.filter = new Ele.Filter();
+		this.filter = new Ele.Utils.Filter();
 		
 		this._node_lenght = 10;//节点线条长度
 		this._title_height = 36;//标题布局高度
@@ -265,7 +265,7 @@
 				return ;
 			}
 			this.ctx.fillStyle = this.edgeLineColor;
-			this.ctx.font = "16px Microsoft YaHei";
+			this.ctx.font = "13px Microsoft YaHei";
 			this.ctx.textBaseline = 'bottom';
 			this.ctx.beginPath();
 			this.ctx.fillText(this.data.title, this.padding, this.padding);
@@ -289,7 +289,7 @@
 				this.ctx.fillRect(x, y - this._rectH, this._rectW, this._rectH);
 				x += 24;//16+8
 				this.ctx.fillText(name, x, y);
-				x += this.strLen(name) + 16;
+				x += this.strLen(name) + 13;
 				this.ctx.closePath();
 				this.ctx.fill();
 			}
