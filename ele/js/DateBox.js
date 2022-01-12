@@ -49,7 +49,7 @@
 			this.dateView.setDate(new Date());
 		};
 		DateBox.prototype.setPattern = function(pattern){
-			return this.dateView.setPattern(pattern);
+			this.dateView.setPattern(pattern);
 		};
 		
 		DateBox.prototype.getValue = function(){

@@ -95,8 +95,7 @@
 		
 		Alert.prototype.close = function(){
 			if(this.ele != null){
-				var body = document.getElementsByTagName('body')[0];
-				body.removeChild(this.ele);
+				Ele.rootView.remove(this.view);
 				this.ele = null;
 			}
 		};
@@ -116,7 +115,6 @@
 		Confirm.prototype._init = function() {
 			var context = this;
 			
-			var body = document.getElementsByTagName('body')[0];
 			this.view = new Ele.Layout("ele_shade_pl");
 			this.ele = this.view.ele;
 			var bg = new Ele.Layout("ele_shade_bg");
@@ -204,7 +202,7 @@
 			this.view.add(bg);
 			this.view.add(content);
 			
-			this.view.setContainer(body);
+			Ele.rootView.add(this.view);
 		};
 		
 		Confirm.prototype.setSureHandler = function(handler){
@@ -235,8 +233,7 @@
 		
 		Confirm.prototype.close = function(){
 			if(this.ele != null){
-				var body = document.getElementsByTagName('body')[0];
-				body.removeChild(this.ele);
+				Ele.rootView.remove(this.view);
 				this.ele = null;
 			}
 		};
