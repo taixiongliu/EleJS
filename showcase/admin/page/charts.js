@@ -1,6 +1,6 @@
 (function(){
 	var Chart = window.Chart = function(rootView){
-		MainView.call(this, rootView, 7);
+		MainView.call(this, rootView, 8);
 		
 		Chart.prototype.viewCreate = function(){
 			

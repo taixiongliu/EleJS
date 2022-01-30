@@ -32,10 +32,18 @@
 		this._style;
 		this._focusStyle;
 		this.data="";
+		this._canFocus;
+		
+		IconLabel.prototype.canFocus = function(focus){
+			if(typeof(focus) == "boolean"){
+				this._canFocus = focus;
+			}
+		};
 		
 		IconLabel.prototype._init = function(){
 			this._style = "ele_icon_label";
 			this._focusStyle = "ele_icon_label_focus";
+			this._canFocus = true;
 			this.view = new Ele.Layout("ele_icon_label");
 			this.ele = this.view.ele;
 			var img = null;
@@ -71,9 +79,15 @@
 				this.view.add(txt);
 			}
 			this.ele.onmouseover = function(){
+				if(!context._canFocus){
+					return;
+				}
 				context.ele.className = context._focusStyle;
 			};
 			this.ele.onmouseout = function(){
+				if(!context._canFocus){
+					return;
+				}
 				context.ele.className = context._style;
 			};
 		};

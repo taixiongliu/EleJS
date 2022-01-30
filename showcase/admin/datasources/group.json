@@ -1,0 +1,10 @@
+{
+	"resCode":1000,
+	"data":[
+		{"id":0, "name":"全部", "value":"all"},
+		{"id":1, "name":"分组1", "value":"t1"},
+		{"id":2, "name":"分组2", "value":"t2"},
+		{"id":3, "name":"分组3", "value":"t3"},
+		{"id":4, "name":"分组4", "value":"t4"}
+	]
+}

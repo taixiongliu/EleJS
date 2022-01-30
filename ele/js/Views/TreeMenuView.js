@@ -7,6 +7,7 @@
 		this.height = 36;
 		this.title;
 		this.content;
+		this.nodes;
 		this.onItemClickHandler;
 		this.baseController;
 		this._onErrorResponse = null;
@@ -49,6 +50,18 @@
 			}
 			
 			this.content.add(node);
+			this.nodes.push(node);
+		};
+		TreeMenuView.prototype.expendStatus = function(){
+			var status = "";
+			for(var node in this.nodes){
+				if(this.nodes[node].isExpend){
+					status += "1";
+				}else{
+					status += "0";
+				}
+			}
+			return status;
 		};
 		TreeMenuView.prototype.setTitle = function(title){
 			this.title.setText(title);
@@ -84,6 +97,7 @@
 		TreeMenuView.prototype._init = function(){
 			this.view = new Ele.Layout("ele_menulist");
 			this.ele = this.view.ele;
+			this.nodes = [];
 			var context = this;
 			if(typeof(args) == "object"){
 				if(typeof(args.onItemClick) == "function"){

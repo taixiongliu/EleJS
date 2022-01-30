@@ -132,14 +132,21 @@
 			this.appendData.push(name+"="+value);
 		};
 		
+		FormView.prototype.setAction = function(action){
+			if(typeof(action) == "string"){
+				this.url = action;
+				this.form.setAction(action);
+			}
+		};
+		
 		FormView.prototype._init = function(){
 			this.view = new Ele.Layout("ele_form_view");
 			this.ele = this.view.ele;
 			
-			this.url = action;
-			this.form = new Ele.Form(action);
+			this.form = new Ele.Form();
 			this.form.ele.method = "post";
 			this.method = "post";
+			this.setAction(action);
 			this.view.add(this.form);
 			
 			this.items = [];

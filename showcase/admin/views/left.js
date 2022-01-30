@@ -29,12 +29,6 @@
 						window.location.href = res.href;
 					}
 				},
-				expendFormat:function(root){
-					if(root.id == "03"){
-						return false;
-					}
-					return true;
-				},
 				selectFormat:function(child){
 					if(child.id == mi){
 						return true;

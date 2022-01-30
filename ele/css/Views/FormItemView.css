@@ -71,8 +71,8 @@
 	overflow: hidden;
 	margin-left: -22px;
 	border-radius: 10px;
-	-moz-border-radius: 11px;
-	-moz-border-radius: 11px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 	cursor: pointer;
 	display: none;
 }

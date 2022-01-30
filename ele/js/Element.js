@@ -24,9 +24,15 @@
 			this.ele.appendChild(eleView.ele);
 		};
 		
+		Form.prototype.setAction = function(action){
+			if(typeof(action) == "string"){
+				this.ele.action = action;
+			}
+		};
+		
 		Form.prototype._init = function(){
 			this.ele = document.createElement("form");
-			this.ele.action = action;
+			this.setAction(action);
 		};
 		this._init();
 	};

@@ -1,0 +1,9 @@
+{
+	"resCode":1000,
+	"data":[
+		{"id":1, "name":"图片1", "url":"img/shouye.png","type":"","size":"24x24"},
+		{"id":2, "name":"图片2", "url":"img/shoucang.png","type":"","size":"24x24"},
+		{"id":3, "name":"图片3", "url":"img/shouye.png","type":"","size":"24x24"},
+		{"id":4, "name":"图片4", "url":"img/shoucang.png","type":"","size":"24x24"}
+	]
+}
