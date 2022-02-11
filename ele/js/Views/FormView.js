@@ -117,7 +117,7 @@
 			this.form.add(dividerPanel);
 		};
 		FormView.prototype.appendFormData = function(name, value){
-			if(typeof(name) != "string" || typeof(value) != "string"){
+			if(typeof(name) != "string" || typeof(value) == "undefined"){
 				return ;
 			}
 			if(name.trim() == ""){

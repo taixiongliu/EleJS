@@ -13,8 +13,12 @@
 		this._onErrorResponse = null;
 		this._selectFormat = null;
 		this._expendFormat = null;
+		this._dataFormat = null;
 		
 		TreeMenuView.prototype.add = function(args){
+			if(this._dataFormat != null){
+				this._dataFormat(args);
+			}
 			if(typeof(args.icon) == "undefined"){
 				args.icon = Ele._pathPrefix+"ele/assets/30/icon_menuroot.png";
 			}
@@ -30,6 +34,9 @@
 			}
 			if(typeof(args.children) == "object"){
 				for(var i = 0; i < args.children.length; i ++){
+					if(this._dataFormat != null){
+						this._dataFormat(args.children[i]);
+					}
 					if(typeof(args.children[i].icon) == "undefined"){
 						args.children[i].icon = Ele._pathPrefix+"ele/assets/20/icon_menuitem.png";
 					}
@@ -108,6 +115,9 @@
 				}
 				if(typeof(args.expendFormat) == "function"){
 					this._expendFormat = args.expendFormat;
+				}
+				if(typeof(args.dataFormat) == "function"){
+					this._dataFormat = args.dataFormat;
 				}
 				if(typeof(args.heightPx) == "number"){
 					this.height = args.heightPx;

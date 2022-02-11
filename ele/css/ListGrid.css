@@ -71,6 +71,10 @@
 .ele_listgrid_cb{
 	position: absolute;
 	z-index: 1;
+	border-bottom: 1px #494949 solid;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 }
 .ele_listgrid_line_view{
 	width: 100%;

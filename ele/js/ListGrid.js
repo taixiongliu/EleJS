@@ -90,13 +90,13 @@
 			
 			var bar = new Ele.HLayout("ele_listgrid_line_bar");
 			if(this.oprs != null){
-				var opitem = new Ele.HLayout();
+				var opitem = new Ele.HLayout("ele_listgrid_item");
 				opitem.getView().setHeight(this.itemHeight+"px");
-				opitem.getView().setLineHeight(this.itemHeight+"px");
 				opitem.getView().setWidth(this.oprsWidth+"px");
 				opitem.getView().setAlign("center");
 				
 				if(typeof(this.oprs.menus) != "undefined" && this.oprs.menus.length > 0){
+					var ptop = (this.itemHeight - 26)/2;
 					for(var i = 0; i < this.oprs.menus.length; i ++){
 						if(typeof(this.oprs.menus[i].format) == "function"){
 							if(!this.oprs.menus[i].format(row)){
@@ -106,7 +106,7 @@
 						
 						var ic = new Ele.IconLabel(this.oprs.menus[i]);
 						ic.data = row;
-						opitem.add(ic,{padding:"0px 0px 0px 4px"});
+						opitem.add(ic,{padding:ptop+"px 0px 0px 4px"});
 					}
 				}
 				bar.add(opitem);

@@ -389,8 +389,7 @@
 			var mn_back = new Ele.IconLabel({text:"返回",icon:Ele._pathPrefix+"ele/assets/64/icon_previous.png",onclick:function (isRoot, data){
 				context._pages.pullView();
 			}});
-			var mn_position = new Ele.IconLabel({text:"文件列表 / 添加文件",icon:Ele._pathPrefix+"ele/assets/64/icon_position.png"});
-			mn_position.canFocus(false);
+			var mn_position = new Ele.IconLabel({text:"文件列表 / 添加文件",style:"ele_icon_label ele_icon_label_none",icon:Ele._pathPrefix+"ele/assets/64/icon_position.png"});
 			right.add(mn_position);
 			left.add(mn_back);
 			barView.add(left, {width:"40%"});
@@ -458,7 +457,7 @@
 					}
 				}
 			});
-			btnView.add(reset, {padding:"0 0 0 136px"});
+			btnView.add(reset, {padding:"0 0 0 176px"});
 			btnView.add(submit, {padding:"0 0 0 16px"});
 			form.add(btnView);
 			
@@ -480,8 +479,7 @@
 			var mn_back = new Ele.IconLabel({text:"返回",icon:Ele._pathPrefix+"ele/assets/64/icon_previous.png",onclick:function (isRoot, data){
 				context._pages.pullView();
 			}});
-			var mn_position = new Ele.IconLabel({text:"文件列表 / 修改文件",icon:Ele._pathPrefix+"ele/assets/64/icon_position.png"});
-			mn_position.canFocus(false);
+			var mn_position = new Ele.IconLabel({text:"文件列表 / 修改文件",style:"ele_icon_label ele_icon_label_none",icon:Ele._pathPrefix+"ele/assets/64/icon_position.png"});
 			right.add(mn_position);
 			left.add(mn_back);
 			barView.add(left, {width:"40%"});
@@ -535,7 +533,7 @@
 					}
 				}
 			});
-			btnView.add(reset, {padding:"0 0 0 136px"});
+			btnView.add(reset, {padding:"0 0 0 176px"});
 			btnView.add(submit, {padding:"0 0 0 16px"});
 			form.add(btnView);
 			

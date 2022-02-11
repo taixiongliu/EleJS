@@ -29,42 +29,28 @@
 		this.eleType = "layout";
 		this.ele;
 		this.view;
-		this._style;
-		this._focusStyle;
+		this._icon;
+		this._focusIcon;
 		this.data="";
-		this._canFocus;
-		
-		IconLabel.prototype.canFocus = function(focus){
-			if(typeof(focus) == "boolean"){
-				this._canFocus = focus;
-			}
-		};
 		
 		IconLabel.prototype._init = function(){
-			this._style = "ele_icon_label";
-			this._focusStyle = "ele_icon_label_focus";
-			this._canFocus = true;
-			this.view = new Ele.Layout("ele_icon_label");
+			this.view = new Ele.Layout("ele_icon_label ele_icon_label_def");
 			this.ele = this.view.ele;
-			var img = null;
-			var txt = null;
 			var context = this;
 			if(typeof(args) == "object"){
 				if(typeof(args.style) != "undefined"){
 					this.ele.className = args.style;
 					this._style = args.style;
 				}
-				if(typeof(args.focusStyle) != "undefined"){
-					this._focusStyle = args.focusStyle;
-				}
 				if(typeof(args.icon) != "undefined"){
-					img = new Ele.Img(args.icon,"ele_icon_label_icon");
+					this.ele.style.backgroundImage = "url('"+args.icon+"')";
+					this._icon = args.icon;
+				}
+				if(typeof(args.focusIcon) != "undefined"){
+					this._focusIcon = args.focusIcon;
 				}
 				if(typeof(args.text) != "undefined"){
-					txt = new Label(args.text,"ele_label ele_icon_label_txt ele_ml2");
-				}
-				if(txt != null && typeof(args.textStyle) != "undefined"){
-					txt.ele.className = args.textStyle+" ele_icon_label_txt ele_ml2";
+					this.view.setHtml(args.text);
 				}
 				if(typeof(args.onclick) == "function"){
 					this.ele.onclick = function(){
@@ -72,23 +58,18 @@
 					};
 				}
 			}
-			if(img != null){
-				this.view.add(img);
-			}
-			if(txt != null){
-				this.view.add(txt);
-			}
+			
 			this.ele.onmouseover = function(){
-				if(!context._canFocus){
+				if(typeof(context._focusIcon) == "undefined"){
 					return;
 				}
-				context.ele.className = context._focusStyle;
+				context.ele.style.backgroundImage = "url('"+context._focusIcon+"')";
 			};
 			this.ele.onmouseout = function(){
-				if(!context._canFocus){
+				if(typeof(context._focusIcon) == "undefined" || typeof(context._icon) == "undefined"){
 					return;
 				}
-				context.ele.className = context._style;
+				context.ele.style.backgroundImage = "url('"+context._icon+"')";
 			};
 		};
 		this._init();

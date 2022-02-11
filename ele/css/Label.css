@@ -2,34 +2,97 @@
 /** iconlabel **/
 .ele_icon_label{
 	display: inline-flex;
-	padding: 5px 9px 5px 9px;
-	font-size: 0px;
+	height: 24px;
+	line-height: 22px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
+	border: 1px transparent solid;
 	cursor: pointer;
+	background-position: 4px 3px;
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	padding: 0px 8px 0px 24px;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 }
-.ele_icon_label_focus{
-	display: inline-flex;
-	padding: 4px 8px 4px 8px;
+.ele_icon_label_none{
+	font-size: 12px;
+	color: #FFFFFF;
+}
+.ele_icon_label_def{
+	font-size: 12px;
+	color: #F5F5F5;
+}
+.ele_icon_label_def:hover{
 	background-color: #009999;
 	border: 1px #038985 solid;
-	font-size: 0px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	cursor: pointer;
+	color: #FFFFFF;
 }
-.ele_icon_label_icon{
-	width: 16px;
-	height: 16px;
+
+.ele_icon_label_red{
+	font-size: 12px;
+	color: #E84345;
 }
-.ele_icon_label_txt{
-	line-height: 16px;
-	vertical-align: top;
+.ele_icon_label_red:hover{
+	background-color: #E84345;
+	border: 1px #DD2C35 solid;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #FFFFFF;
+}
+.ele_icon_label_blue{
+	font-size: 12px;
+	color: #0077E8;
+}
+.ele_icon_label_blue:hover{
+	background-color: #0077E8;
+	border: 1px #056FC6 solid;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #FFFFFF;
+}
+.ele_icon_label_orange{
+	font-size: 12px;
+	color: #F26A11;
+}
+.ele_icon_label_orange:hover{
+	background-color: #F26A11;
+	border: 1px #DB5D16 solid;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #FFFFFF;
+}
+.ele_icon_label_yellow{
+	font-size: 12px;
+	color: #FFC63E;
+}
+.ele_icon_label_yellow:hover{
+	background-color: #FFC63E;
+	border: 1px #FCB21D solid;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #FFFFFF;
+}
+.ele_icon_label_green{
+	font-size: 12px;
+	color: #97C200;
+}
+.ele_icon_label_green:hover{
+	background-color: #97C200;
+	border: 1px #8EAF04 solid;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #FFFFFF;
 }
 
 /** menulabel **/

@@ -5,7 +5,7 @@
 		this.ele;
 		this.view;
 		this.label;
-		this.width=564;
+		this.width=604;
 		this.tip;
 		this.tipText;
 		this._validate;
@@ -65,7 +65,7 @@
 			this.tip.add(errorIcon);
 			this.tip.add(this.tipText, {padding:"0 0 0 8px"});
 			
-			this.view.add(this.label,{width:"100px", align:"right"});
+			this.view.add(this.label,{width:"140px", align:"right"});
 			this.view.add(view,{width:"220px", padding:"0 0 0 20px"});
 			this.view.add(this.tip,{width:"224px"});
 			
