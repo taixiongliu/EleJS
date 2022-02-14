@@ -6,6 +6,10 @@
 		this.top;
 		this.right;
 		this.bottom;
+		this.toTop;
+		this.toLeft;
+		this.toScrollTop;
+		this.toScrollLeft;
 	
 		Position.prototype._init = function() {
 			this.positionType = "bottom-left";
@@ -14,6 +18,23 @@
 			this.right = 0;
 			this.bottom = 0;
 		};
+		Position.prototype.toPosition = function(ele){
+			this.toTop = 0;
+			this.toLeft = 0;
+			this.toScrollTop = 0;
+			this.toScrollLeft = 0;
+			this._recursion(ele);
+		};
+		Position.prototype._recursion = function(ele){
+			if(ele.offsetParent == null){
+				return ;
+			}
+			this.toTop += ele.offsetParent.offsetTop;
+			this.toLeft += ele.offsetParent.offsetLeft;
+			this.toScrollTop += ele.offsetParent.scrollTop;
+			this.toScrollLeft += ele.offsetParent.scrollLeft;
+			this._recursion(ele.offsetParent);
+		};
 	
 		Position.prototype.inTopLeft = function(ele) {
 			if(!Ele._isElement(ele)){
@@ -21,10 +42,11 @@
 			}
 			
 			this.positionType = "top-left";
-			var otop = ele.offsetTop + ele.offsetParent.offsetTop;
-			var oleft = ele.offsetLeft + ele.offsetParent.offsetLeft;
-			var scrollTop = ele.offsetParent.scrollTop;
-			var scrollLeft = ele.offsetParent.scrollLeft;
+			this.toPosition(ele);
+			var otop = ele.offsetTop + this.toTop;
+			var oleft = ele.offsetLeft + this.toLeft;
+			var scrollTop = this.toScrollTop;
+			var scrollLeft = this.toScrollLeft;
 			this.bottom = otop - scrollTop;
 			this.left = oleft - scrollLeft;
 		};
@@ -33,11 +55,12 @@
 				return ;
 			}
 			this.positionType = "top-right";
-			var otop = ele.offsetTop + ele.offsetParent.offsetTop;
-			var oleft = ele.offsetLeft + ele.offsetParent.offsetLeft;
+			this.toPosition(ele);
+			var otop = ele.offsetTop + this.toTop;
+			var oleft = ele.offsetLeft + this.toLeft;
 			var width = ele.offsetWidth;
-			var scrollTop = ele.offsetParent.scrollTop;
-			var scrollLeft = ele.offsetParent.scrollLeft;
+			var scrollTop = this.toScrollTop;
+			var scrollLeft = this.toScrollLeft;
 			this.bottom = otop - scrollTop;
 			this.right = oleft + width - scrollLeft;
 		};
@@ -46,10 +69,11 @@
 				return ;
 			}
 			this.positionType = "bottom-left";
-			var otop = ele.offsetTop + ele.offsetParent.offsetTop;
-			var oleft = ele.offsetLeft + ele.offsetParent.offsetLeft;
-			var scrollTop = ele.offsetParent.scrollTop;
-			var scrollLeft = ele.offsetParent.scrollLeft;
+			this.toPosition(ele);
+			var otop = ele.offsetTop + this.toTop;
+			var oleft = ele.offsetLeft + this.toLeft;
+			var scrollTop = this.toScrollTop;
+			var scrollLeft = this.toScrollLeft;
 			var height = ele.offsetHeight;
 			this.top = otop + height - scrollTop;
 			this.left = oleft - scrollLeft;
@@ -59,12 +83,13 @@
 				return ;
 			}
 			this.positionType = "bottom-right";
-			var otop = ele.offsetTop + ele.offsetParent.offsetTop;
-			var oleft = ele.offsetLeft + ele.offsetParent.offsetLeft;
+			this.toPosition(ele);
+			var otop = ele.offsetTop + this.toTop;
+			var oleft = ele.offsetLeft + this.toLeft;
 			var width = ele.offsetWidth;
 			var height = ele.offsetHeight;
-			var scrollTop = ele.offsetParent.scrollTop;
-			var scrollLeft = ele.offsetParent.scrollLeft;
+			var scrollTop = this.toScrollTop;
+			var scrollLeft = this.toScrollLeft;
 			this.top = otop + height - scrollTop;
 			this.right = oleft + width - scrollLeft;
 		};
