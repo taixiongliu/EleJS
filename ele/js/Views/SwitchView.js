@@ -48,8 +48,6 @@
 				layout.ele.background = background;
 			}
 			if(this.count > 1){
-				layout.ele.style.left = "100%";
-				layout.ele.style.zIndex = 1;
 				layout.ele.style.display = "none";
 			}
 			
@@ -73,14 +71,18 @@
 			var newPage = this.pages[index];
 			var yetPage = this.pages[this.selectedIndex];
 			var left = 100;
-			newPage.ele.style.zIndex = 2;
+			
+			newPage.ele.style.position = "absolute";
+			newPage.ele.style.top = "0px";
+			newPage.ele.style.left = "100%";
+			newPage.ele.style.zIndex = 1;
 			newPage.ele.style.display = "block";
-			yetPage.ele.style.zIndex = 1;
 			var context = this;
 			var timer = new Ele.Utils.Timer(function(){
 				if(left <= 0){
-					yetPage.ele.style.left = "100%";
 					yetPage.ele.style.display = "none";
+					newPage.ele.style.position = "static";
+					
 					context.barItems[context.selectedIndex].ele.className = "ele_switch_bar_item";
 					context.barItems[index].ele.className = "ele_switch_bar_item ele_switch_bar_item_selected";
 					context.selectedIndex = index;
