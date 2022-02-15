@@ -345,7 +345,12 @@
 		SelectBoxItem.prototype.setWindowOffset = function(size){
 			this.selectBox.setWindowOffset(size);
 		};
-		
+		SelectBoxItem.prototype.setOnDataLoad = function(event){
+			this.selectBox.setOnDataLoad(event);
+		};
+		SelectBoxItem.prototype.setOnSelectChange = function(event){
+			this.selectBox.setOnSelectChange(event);
+		};
 		SelectBoxItem.prototype.setOnFilterSearch = function(event){
 			this.selectBox.setOnFilterSearch(event);
 		};

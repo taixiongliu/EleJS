@@ -23,6 +23,7 @@
 		this._filterSearchEvent = null;
 		this._onErrorResponse = null;
 		this._onFilterErrorResponse = null;
+		this._onDataLoad = null;
 		
 		SelectBox.prototype.setWindowOffset = function(size){
 			if(this.windowType){
@@ -30,6 +31,11 @@
 			}
 		};
 		
+		SelectBox.prototype.setOnDataLoad = function(event){
+			if(typeof(event) == "function"){
+				this._onDataLoad = event;
+			}
+		};
 		SelectBox.prototype.setOnItemClick = function(event){
 			if(typeof(event) == "function"){
 				this._itemClickEvent = event;
@@ -66,6 +72,9 @@
 						this.optionList.add(odivider);
 					}
 				}
+			}
+			if(this._onDataLoad != null){
+				this._onDataLoad();
 			}
 		};
 		SelectBox.prototype.loadFilterDataSourcesUrl = function(url, keyValue, funError){
