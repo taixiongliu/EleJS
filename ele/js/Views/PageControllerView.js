@@ -17,10 +17,13 @@
 			}
 			//初始页面直接显示
 			if(this.pages.length > 0){
+				layout.ele.style.position = "absolute";
+				layout.ele.style.top = "0px";
 				layout.ele.style.left = "100%";
 				layout.ele.style.zIndex = 1;
 				layout.ele.style.display = "none";
 			}
+			
 			layout.add(view);
 			this.view.add(layout);
 			//第二个页面开启动画
@@ -28,14 +31,12 @@
 				//当前显示页面
 				var yetPage = this.pages[this.pages.length - 1];
 				var left = 100;
-				layout.ele.style.zIndex = 2;
 				layout.ele.style.display = "block";
-				yetPage.ele.style.zIndex = 1;
 				var context = this;
 				var timer = new Ele.Utils.Timer(function(){
 					if(left <= 0){
-						yetPage.ele.style.left = "100%";
 						yetPage.ele.style.display = "none";
+						layout.ele.style.position = "static";
 						return false;
 					}
 					left -=10;
@@ -60,13 +61,16 @@
 				var prePage = this.pages[this.pages.length - 2];
 				var yetPage = this.pages[this.pages.length - 1];
 				var left = 0;
-				prePage.ele.style.left = "0%";
+				//prePage.ele.style.left = "0%";
+				//prePage.ele.style.display = "block";
+				yetPage.ele.style.position = "absolute";
+				yetPage.ele.style.top = "0px";
+				yetPage.ele.style.left = "0%";
+				yetPage.ele.style.zIndex = 1;
 				prePage.ele.style.display = "block";
 				var context = this;
 				var timer2 = new Ele.Utils.Timer(function(){
 					if(left >= 100){
-						prePage.ele.style.zIndex = 2;
-						yetPage.ele.style.zIndex = 1;
 						yetPage.ele.style.display = "none";
 						//页面删除
 						context.view.remove(yetPage);
