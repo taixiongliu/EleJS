@@ -2,6 +2,7 @@
 	var Ajax = Ele.Utils.Ajax = function(){
 		this.eleType = "util";
 		this._method = 'POST';
+		this._contentType = "application/x-www-form-urlencoded";
 		this._con = true;
 		this._parameter = null;
 	
@@ -29,6 +30,10 @@
 		Ajax.prototype.setMethod = function(method) {
 			this._method = method;
 		};
+		
+		Ajax.prototype.setContentType = function(contentType) {
+			this._contentType = contentType;
+		};
 	
 		Ajax.prototype.setSynchronization = function(syn) {
 			this._con = syn;
@@ -53,7 +58,9 @@
 				}
 			};
 			xmlhttp.open(this._method, url, this._con);
-			xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			if(this._contentType != null){
+				xmlhttp.setRequestHeader("Content-Type", this._contentType);
+			}
 			xmlhttp.send(this._parameter);
 		};
 	}

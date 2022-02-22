@@ -77,6 +77,8 @@
 				}
 			}
 			var ajax = new Ele.Utils.Ajax();
+			//取消请求头设置，表单提交自动填充类型
+			ajax.setContentType(null);
 			var uri = this.url;
 			if(this.method.toLowerCase() == "get"){
 				ajax.setMethod("GET");

@@ -14,7 +14,6 @@
 		this.fileController;
 		this.gAddController;
 		this.gDeleteController;
-		this.fUpdateController;
 		this.fDeleteController;
 		this._groupCount;
 		this._groupSelect;
@@ -248,18 +247,6 @@
 					},
 				});
 			}
-			if(this._updateUrl != null && this._updateUrl.trim() != ""){
-				this.fUpdateController = new Ele.Controllers.BaseController({
-					loadHandler:function(data){
-						context._onDataResponse("fileUpdate",data);
-					},
-					errorHandler:function(error){
-						if(context._errorEvent != null){
-							context._errorEvent(error);
-						}
-					},
-				});
-			}
 			if(this._deleteUrl != null && this._deleteUrl.trim() != ""){
 				this.fDeleteController = new Ele.Controllers.BaseController({
 					loadHandler:function(data){
@@ -314,14 +301,6 @@
 			if(type == "groupDelete"){
 				this._groupSelect = -1;
 				this.groupController.loadData(this._groupListUrl);
-				return ;
-			}
-			if(type == "fileUpdate"){
-				this._pages.pullView();
-				var value = this._items[this._groupSelect].ele.value;
-				if(this._fileListUrl != null && this._fileListUrl.trim() != ""){
-					this.fileController.loadData(this._fileListUrl+"?group="+value);
-				}
 				return ;
 			}
 			if(type == "fileDelete"){
@@ -410,6 +389,7 @@
 				text:"文件",
 			});
 			fileItem.validateNotEmpty();
+			formView.setEnctypeMfd();
 			formView.addItem(textBoxItem);
 			formView.addItem(fileItem);
 			form.add(formView);
@@ -433,13 +413,13 @@
 						return ;
 					}
 					if(context._uploadUrl != null && context._uploadUrl.trim() != ""){
-						formView.setAction(context._uploadUrl);
+						formView.setAction(context._uploadUrl+"?group="+context._items[context._groupSelect].ele.value);
 						formView.submitFormAjax(function(res){
 							var result = JSON.parse(res);
 							if(result.resCode != 1000 && context._errorEvent != null){
 								var error = {
-									resCode:res.resCode,
-									resMsg:res.resMsg
+									resCode:result.resCode,
+									resMsg:result.resMsg
 								};
 								context._errorEvent(error);
 								return ;
@@ -502,6 +482,7 @@
 			});
 			textBoxItem.validateNotEmpty();
 			
+			formView.appendFormData("file", file.id);
 			formView.addItem(textBoxItem);
 			form.add(formView);
 			
@@ -525,7 +506,23 @@
 					}
 					
 					if(context._updateUrl != null && context._updateUrl.trim() != ""){
-						context.fUpdateController.loadData(context._updateUrl+"?file="+file.id);
+						formView.setAction(context._updateUrl);
+						formView.submitAjax(function(res){
+							var result = JSON.parse(res);
+							if(result.resCode != 1000 && context._errorEvent != null){
+								var error = {
+									resCode:result.resCode,
+									resMsg:result.resMsg
+								};
+								context._errorEvent(error);
+								return ;
+							}
+							context._pages.pullView();
+							var value = context._items[context._groupSelect].ele.value;
+							if(context._fileListUrl != null && context._fileListUrl.trim() != ""){
+								context.fileController.loadData(context._fileListUrl+"?group="+value);
+							}
+						});
 						return ;
 					}
 					if(typeof(context._viewEvent) == "function"){
