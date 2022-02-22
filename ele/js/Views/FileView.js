@@ -10,6 +10,7 @@
 		this.tbGroup;
 		this.listView;
 		this.fileView;
+		this.permission;
 		this.groupController;
 		this.fileController;
 		this.gAddController;
@@ -89,8 +90,13 @@
 			};
 			deleteView.add(delIcon);
 			editView.add(editIcon);
-			item.add(deleteView);
-			item.add(editView);
+			
+			if(this.permission != null && this.permission.length == 7 && this.permission.charAt(6) == '1'){
+				item.add(deleteView);
+			}
+			if(this.permission != null && this.permission.length == 7 && this.permission.charAt(5) == '1'){
+				item.add(editView);
+			}
 			
 			var img = new Ele.Img(file.url, "ele_file_item_img");
 			var name = new Ele.Layout("ele_file_item_text");
@@ -130,7 +136,9 @@
 			this._groupSelect = index;
 			//获取对应的列表数据
 			if(this._fileListUrl != null && this._fileListUrl.trim() != ""){
-				this.fileController.loadData(this._fileListUrl+"?group="+value);
+				if(this.permission != null && this.permission.length == 7 && this.permission.charAt(3) == '1'){
+					this.fileController.loadData(this._fileListUrl+"?group="+value);
+				}
 			}
 		};
 		
@@ -138,6 +146,7 @@
 			this.view = new Ele.Layout("ele_file_view");
 			this.ele = this.view.ele;
 			this.confirm = new Ele.Confirm();
+			this.permission = "1111111";
 			this._groupCount = 0;
 			this._groupSelect = -1;
 			this._items = [];
@@ -163,6 +172,9 @@
 				}
 				if(typeof(args.deleteUrl) == "string"){
 					this._deleteUrl = args.deleteUrl;
+				}
+				if(typeof(args.permission) == "string"){
+					this.permission = args.permission;
 				}
 			}
 			
@@ -194,7 +206,9 @@
 			
 			this.view.add(groupPanle);
 			this.view.add(this.titleView);
-			this.view.add(addView);
+			if(this.permission != null && this.permission.length == 7 && this.permission.charAt(1) == '1'){
+				this.view.add(addView);
+			}
 			this.view.add(contentPanle);
 			
 			//如果绑定了分组数据源 自动加载
@@ -209,7 +223,9 @@
 						}
 					}
 				});
-				this.groupController.loadData(this._groupListUrl);
+				if(this.permission != null && this.permission.length == 7 && this.permission.charAt(0) == '1'){
+					this.groupController.loadData(this._groupListUrl);
+				}
 			}
 			if(this._fileListUrl != null && this._fileListUrl.trim() != ""){
 				this.fileController = new Ele.Controllers.BaseController({
@@ -338,8 +354,13 @@
 				});
 				context.confirm.show();
 			}});
-			left.add(mn_delete);
-			right.add(mn_add);
+			if(this.permission != null && this.permission.length == 7 && this.permission.charAt(2) == '1'){
+				left.add(mn_delete);
+			}
+			if(this.permission != null && this.permission.length == 7 && this.permission.charAt(4) == '1'){
+				right.add(mn_add);
+			}
+			
 			barView.add(left, {width:"40%"});
 			barView.add(center, {width:"20%"});
 			barView.add(right, {width:"40%"});
