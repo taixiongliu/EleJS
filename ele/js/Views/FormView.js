@@ -114,9 +114,11 @@
 			}
 			this.form.add(item);
 			this.items.push(item);
-			var dividerPanel = new Ele.Layout("ele_form_view_divider_panel");
-			dividerPanel.add(new Ele.Layout("ele_form_view_divider"));
-			this.form.add(dividerPanel);
+			if(!(item instanceof Ele.Views.HiddenItem)){
+				var dividerPanel = new Ele.Layout("ele_form_view_divider_panel");
+				dividerPanel.add(new Ele.Layout("ele_form_view_divider"));
+				this.form.add(dividerPanel);
+			}
 		};
 		FormView.prototype.appendFormData = function(name, value){
 			if(typeof(name) != "string" || typeof(value) == "undefined"){
