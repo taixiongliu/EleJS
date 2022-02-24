@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta name="Description" content=""/>
+		<meta name="Keywords" content=""/>
+		<title>管理后台</title>
+		<script src="../../ele/ele.js" type="text/javascript" charset="utf-8"></script>
+		<script src="main.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../../ele/ele.css"/>
+		<link rel="stylesheet" type="text/css" href="main.css"/>
+		
+		<!-- 主布局样式导入 -->
+		<link rel="stylesheet" type="text/css" href="page/permission.css"/>
+		<script src="page/permission.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body id="main">
+		
+	</body>
+</html>
+<script type="text/javascript">
+	window.onload = init;
+	
+	function init(){
+		
+		Ele.initPath("EleJs");
+		//动态导入JS
+		Ele.importJS("views/left.js");
+		Ele.importJS("views/top.js");
+		Ele.importJS("views/bottom.js");
+		Ele.initView("main");
+		
+		Ele.load(function(rootView){
+			console.log("ele .load ...");
+			new Permission(rootView);
+		});
+	}
+</script>

@@ -1,0 +1,27 @@
+{
+	"resCode":1000,
+	"data":[
+		{"title":"数据权限", "items":[
+			{"text":"数据列表","value":1},
+			{"text":"添加数据","value":2},
+			{"text":"修改数据","value":3},
+			{"text":"删除数据","value":4},
+			{"text":"设置数据","value":5}
+		]},
+		{"title":"数据权限2", "items":[
+			{"text":"数据列表","value":6},
+			{"text":"添加数据","value":7},
+			{"text":"修改数据","value":8},
+			{"text":"删除数据","value":9},
+			{"text":"设置数据","value":10}
+		]},
+		{"title":"数据权限3", "items":[
+			{"text":"数据列表","value":11},
+			{"text":"添加数据","value":12},
+			{"text":"修改数据","value":13},
+			{"text":"删除数据","value":14},
+			{"text":"设置数据","value":15}
+		]}
+		
+	]
+}

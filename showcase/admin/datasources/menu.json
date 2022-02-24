@@ -14,7 +14,8 @@
 			{"icon":"img/gonggao.png","text":"统计图","data":{"id":8,"href":"charts.html"}}
 		]},
 		{"title":"视图","expend":true, "data":{"id":"03"}, "children":[
-			{"text":"文件视图","data":{"id":9,"href":"file.html"}}
+			{"text":"文件视图","data":{"id":9,"href":"file.html"}},
+			{"text":"权限视图","data":{"id":10,"href":"permission.html"}}
 		]}
 	]
 }
