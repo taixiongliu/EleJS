@@ -161,6 +161,11 @@
 				hint:"请输入"
 			});
 			
+			var hiddenItem = new Ele.Views.HiddenItem({
+				name:"auto",
+				value:"set"
+			});
+			
 			formView.addItem(textBoxItem);
 			formView.addItem(textAreaItem);
 			formView.addItem(radioBoxItem);
@@ -169,6 +174,7 @@
 			formView.addItem(dateBoxItem);
 			formView.addItem(checkBoxItem);
 			formView.addItem(passwordItem);
+			formView.addItem(hiddenItem);
 			
 			form.add(formView);
 			var btnPanel = new Ele.HLayout("form_button_panel");
@@ -190,15 +196,15 @@
 					if(!formView.validate()){
 						return ;
 					}
-					
+					hiddenItem.setValue("reset");
 					console.log("form data:"+formView.formData());
-					// formView.submit();
+					formView.submit();
 					// formView.submitFormAjax(function(res){
 					// 	console.log(res);
 					// });
-					formView.submitAjax(function(res){
-						console.log(res);
-					});
+					// formView.submitAjax(function(res){
+					// 	console.log(res);
+					// });
 				}
 			});
 			btnPanel.add(reset, {padding:"0 0 0 16px"});

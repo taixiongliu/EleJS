@@ -75,6 +75,60 @@
 	
 	/**
 	 * @param {Object} args
+	 * 隐藏组件
+	 */
+	var HiddenItem = Ele.Views.HiddenItem = function(args) {
+		this.eleType = "layout";
+		this.ele;
+		this.view;
+		this.name;
+		this.hditem;
+		
+		HiddenItem.prototype.formString = function(){
+			if(typeof(this.name) != "string" || this.name.trim() == ""){
+				return null;
+			}
+			return this.name+"="+this.getValue();
+		};
+		
+		HiddenItem.prototype.setValue = function(value){
+			this.hditem.setValue(value);
+		};
+		
+		HiddenItem.prototype.reset = function(){
+			
+		};
+		
+		HiddenItem.prototype.getValue = function(){
+			return this.hditem.getValue();
+		};
+		
+		HiddenItem.prototype._init = function(){
+			this.view = new Ele.HLayout("ele_form_hidden_view");
+			this.ele = this.view.ele;
+			
+			//初始化布局组件
+			this.hditem = new Ele.TextBox();
+			this.hditem.ele.type = "hidden";
+			
+			var context = this;
+			if(typeof(args) != "undefined"){
+				if(typeof(args.name) == "string"){
+					this.name = args.name;
+					this.hditem.ele.name = this.name;
+				}
+				if(typeof(args.value) == "string"){
+					this.hditem.setValue(args.value);
+				}
+			}
+			this.view.add(this.hditem);
+		};
+		
+		this._init();
+	};
+	
+	/**
+	 * @param {Object} args
 	 * 时间选择组件
 	 */
 	var DateBoxItem = Ele.Views.DateBoxItem = function(args) {
@@ -967,5 +1021,12 @@
 	var dateBoxSuper = new DateBoxSuper();
 	dateBoxSuper.constructor = DateBoxItem;
 	DateBoxItem.prototype = dateBoxSuper;
+	
+	var HiddenSuper = function (){};
+	HiddenSuper.prototype = FormItemView.prototype;
+	HiddenSuper.constructor = HiddenItem;
+	var hiddenSuper = new HiddenSuper();
+	hiddenSuper.constructor = HiddenItem;
+	HiddenItem.prototype = hiddenSuper;
 	
 })();

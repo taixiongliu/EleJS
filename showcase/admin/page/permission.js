@@ -14,6 +14,7 @@
 			var permissionView = new Ele.Views.PermissionView();
 			permissionView.setOnDataSourcesLoad(function(){
 				console.log("data load completed.");
+				permissionView.setPermission("111000100110100001");
 			});
 			content.addView(permissionView);
 			var buttonView = new Ele.Layout("permission_buttom_view");

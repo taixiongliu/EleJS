@@ -5,6 +5,7 @@
 		this.view;
 		this.baseController;
 		this.items;
+		this.permissionLength;
 		this._dataFormat = null;
 		this._onDataSourcesLoad = null;
 		
@@ -41,12 +42,42 @@
 				for(var j in arr){
 					tp[arr[j]] = "1";
 				}
-				//
+				//组装
 				for(var t in tp){
 					permission += tp[t];
 				}
 			}
 			return permission;
+		};
+		
+		PermissionView.prototype.setPermission = function(permission){
+			if(typeof(permission) != "string"){
+				return ;
+			}
+			if(this.permissionLength != permission.length){
+				return ;
+			}
+			if(this.items.length < 1){
+				return ;
+			}
+			//解析权限游标
+			var cursor = 0;
+			for(var i in this.items){
+				var eles = this.items[i]._radios;
+				if(permission.charAt(cursor) == '0'){
+					continue;
+				}
+				cursor ++;
+				if(eles.length < 1){
+					continue;
+				}
+				for(var j = 0; j < eles.length; j ++){
+					if(permission.charAt(cursor) == '1'){
+						this.items[i].select(j);
+					}
+					cursor ++;
+				}
+			}
 		};
 		
 		PermissionView.prototype.add = function(args){
@@ -67,6 +98,7 @@
 			
 			this.view.add(item);
 			this.items.push(child);
+			this.permissionLength += args.items.length + 1;
 		};
 		//加载数据源
 		PermissionView.prototype.loadDataSources = function(dataSources){
@@ -75,6 +107,7 @@
 			}
 			this.view.clear();
 			this.items = [];
+			this.permissionLength = 0;
 			for(var i = 0; i < dataSources.length; i ++){
 				this.add(dataSources[i]);
 			}
@@ -96,6 +129,7 @@
 			this.view = new Ele.Layout("ele_permission_view");
 			this.ele = this.view.ele;
 			this.items = [];
+			this.permissionLength = 0;
 			
 			var context = this;
 			

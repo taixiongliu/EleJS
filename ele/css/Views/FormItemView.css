@@ -100,3 +100,6 @@
 	overflow : hidden;
 	text-overflow: ellipsis;
 }
+.ele_form_hidden_view{
+	display: none;
+}
