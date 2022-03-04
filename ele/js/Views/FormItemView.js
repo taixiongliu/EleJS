@@ -802,7 +802,7 @@
 			text = text+":";
 			this.label = new Ele.Label(text, "ele_form_item_text");
 			
-			this.view.add(this.label,{width:"100px", align:"right"});
+			this.view.add(this.label,{width:"140px", align:"right"});
 			this.view.add(this.item,{width:"452px", padding:"0 0 0 12px"});
 		};
 		
