@@ -1,5 +1,5 @@
 (function(){
-	var PermissionView = Ele.Views.PermissionView = function() {
+	var ClusterCheckBoxView = Ele.Views.ClusterCheckBoxView = function() {
 		this.eleType = "layout";
 		this.ele;
 		this.view;
@@ -9,18 +9,55 @@
 		this._dataFormat = null;
 		this._onDataSourcesLoad = null;
 		
-		PermissionView.prototype.setDataFormat = function(event){
+		ClusterCheckBoxView.prototype.setDataFormat = function(event){
 			if(typeof(event) == "function"){
 				this._dataFormat = event;
 			}
 		};
-		PermissionView.prototype.setOnDataSourcesLoad = function(event){
+		ClusterCheckBoxView.prototype.setOnDataSourcesLoad = function(event){
 			if(typeof(event) == "function"){
 				this._onDataSourcesLoad = event;
 			}
 		};
-		
-		PermissionView.prototype.getPermission = function(){
+		ClusterCheckBoxView.prototype.getValues = function(){
+			if(this.items.length < 1){
+				return "";
+			}
+			var values = "";
+			for(var i in this.items){
+				var arr = this.items[i].getSelectedValue();
+				for(var j = 0; j < arr.length; j ++){
+					values += arr[j]+",";
+				}
+			}
+			if(values != ""){
+				values = values.substr(0, values.length - 1);
+			}
+			return values;
+		};
+		ClusterCheckBoxView.prototype.setValues = function(values, format){
+			if(this.items.length < 1){
+				return ;
+			}
+			var arr = values.split(",");
+			for(var val in arr){
+				var value = arr[val];
+				if(typeof(format) == "function"){
+					value = format(value);
+					if(typeof(value) == "undefined"){
+						break;
+					}
+				}
+				for(var i in this.items){
+					var index = this.items[i].getIndexByValue(value);
+					if(index != -1){
+						this.items[i].select(index);
+						break;
+					}
+				}
+			}
+		};
+		ClusterCheckBoxView.prototype.getPermission = function(){
 			if(this.items.length < 1){
 				return "";
 			}
@@ -50,7 +87,7 @@
 			return permission;
 		};
 		
-		PermissionView.prototype.setPermission = function(permission){
+		ClusterCheckBoxView.prototype.setPermission = function(permission){
 			if(typeof(permission) != "string"){
 				return ;
 			}
@@ -80,7 +117,7 @@
 			}
 		};
 		
-		PermissionView.prototype.add = function(args){
+		ClusterCheckBoxView.prototype.add = function(args){
 			if(this._dataFormat != null){
 				this._dataFormat(args);
 			}
@@ -101,7 +138,7 @@
 			this.permissionLength += args.items.length + 1;
 		};
 		//加载数据源
-		PermissionView.prototype.loadDataSources = function(dataSources){
+		ClusterCheckBoxView.prototype.loadDataSources = function(dataSources){
 			if(!Ele._isArray(dataSources)){
 				return ;
 			}
@@ -115,17 +152,17 @@
 				this._onDataSourcesLoad();
 			}
 		};
-		PermissionView.prototype._onDataResponse = function(dataSources){
+		ClusterCheckBoxView.prototype._onDataResponse = function(dataSources){
 			this.loadDataSources(dataSources);
 		};
-		PermissionView.prototype.loadDataSourcesUrl = function(url, funError){
+		ClusterCheckBoxView.prototype.loadDataSourcesUrl = function(url, funError){
 			if(typeof(funError) == "function"){
 				this._onErrorResponse = funError;
 			}
 			this.baseController.loadData(url);
 		};
 		
-		PermissionView.prototype._init = function(){
+		ClusterCheckBoxView.prototype._init = function(){
 			this.view = new Ele.Layout("ele_permission_view");
 			this.ele = this.view.ele;
 			this.items = [];
