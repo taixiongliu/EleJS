@@ -11,6 +11,7 @@
 	-moz-border-radius: 4px;
 	cursor: pointer;
 	font-size: 0px;
+	position: relative;
 }
 .ele_selectbox_focus{
 	width: 200px;
@@ -28,6 +29,7 @@
 	-moz-border-radius: 4px;
 	cursor: pointer;
 	font-size: 0px;
+	position: relative;
 }
 .ele_selectbox_panle{
 	width: 200px;
