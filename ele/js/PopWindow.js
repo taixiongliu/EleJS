@@ -17,7 +17,6 @@
 		
 		PopWindow.prototype.init = function(){
 			var context = this;
-			var body = document.getElementsByTagName("body")[0];
 			this.bgView = new Ele.Layout("ele_popwindow_bg_view");
 			this.view = new Ele.Layout("ele_popwindow_view");
 			this.ele = this.view.ele;
@@ -54,8 +53,8 @@
 			this.view.add(titleView);
 			this.view.add(this.contentView);
 			
-			body.appendChild(this.bgView.ele);
-			body.appendChild(this.view.ele);
+			Ele.rootView.add(this.bgView);
+			Ele.rootView.add(this.view);
 		};
 		
 		PopWindow.prototype.setTitle = function(title){

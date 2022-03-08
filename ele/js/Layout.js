@@ -84,7 +84,7 @@
 			this.view.setContainerById(id);
 		};
 		HLayout.prototype.add = function(obj,args){
-			var panel = new Layout("ele_fl");
+			var panel = new Layout("ele_bs_border ele_fl");
 			if(this._height == null){
 				panel.setHeight("100%");
 			}else{
@@ -148,7 +148,7 @@
 		};
 		
 		VLayout.prototype.add = function(obj,args){
-			var panel = new Layout();
+			var panel = new Layout("ele_bs_border");
 			if(this._width == null){
 				panel.setWidth("100%");
 			}else{

@@ -7,6 +7,11 @@
 .ele_fl{
 	float: left;
 }
+.ele_bs_border{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
 .ele_fr{
 	float: right;
 }
