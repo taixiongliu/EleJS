@@ -1,6 +1,6 @@
 (function(){
 	var Pop = window.Pop = function(rootView){
-		MainView.call(this, rootView, 6);
+		MainView.call(this, rootView, 11);
 		
 		Pop.prototype.viewCreate = function(){
 			

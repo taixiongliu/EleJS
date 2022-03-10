@@ -2,6 +2,7 @@
 	width: 100%;
 	height: auto;
 	padding-right: 16px;
+	padding-top: 16px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -18,7 +19,7 @@
 	width: 100%;
 	height: auto;
 	background-color: #393939;
-	margin-top: 16px;
+	margin-bottom: 16px;
 }
 .ele_full_board_view{
 	width: 100%;

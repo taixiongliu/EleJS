@@ -1,0 +1,9 @@
+{
+	"resCode":1000,
+	"data":[
+		{"value":1, "text":"图片1", "data":[{"name":"ltx"},{"name":"ltx2"}]},
+		{"value":2, "text":"图片2", "data":[{"name":"ltx"},{"name":"ltx2"}]},
+		{"value":3, "text":"图片3", "data":[{"name":"ltx"},{"name":"ltx2"}]},
+		{"value":4, "text":"图片4", "data":[{"name":"ltx"},{"name":"ltx2"}]}
+	]
+}
