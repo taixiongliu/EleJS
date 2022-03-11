@@ -14,6 +14,7 @@
 			var args = {toolBar:true,
 			pageBar:true,
 			selectOpr:{},
+			//canScoll:false,
 			// itemHeightPx:60,
 			//barMenu:false,
 			// windowType:true,

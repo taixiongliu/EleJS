@@ -182,6 +182,7 @@
 			this.view = new Ele.Layout('ele_listgrid_view');
 			this.ele = this.view.ele;
 			var context = this;
+			var canScoll = true;
 			if(typeof(args) == "object"){
 				if(typeof(args.widthPx) == "number"){
 					this.view.setWidth(args.widthPx+"px");
@@ -193,6 +194,9 @@
 				}
 				if(typeof(args.itemHeightPx) == "number"){
 					this.itemHeight = args.itemHeightPx;
+				}
+				if(typeof(args.canScoll) == "boolean" && !args.canScoll){
+					canScoll = false;
 				}
 				if(typeof(args.fields) == "object"){
 					this.fields = args.fields;
@@ -297,7 +301,12 @@
 			}
 			var pos = new Ele.Layout("ele_listgrid_list_panel");
 			
-			this.listView = new Ele.VLayout('ele_listgrid_list_view ele_scrollbar');
+			var listCss = "ele_listgrid_list_view ele_scrollbar";
+			if(!canScoll){
+				listCss = "ele_listgrid_list_view_no_scoll";
+			}
+			
+			this.listView = new Ele.VLayout(listCss);
 			this.addEmpty();
 			pos.add(this.listView);
 			this.view.add(pos);
