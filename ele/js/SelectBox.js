@@ -257,7 +257,7 @@
 		};
 		SelectBox.prototype._onItemClick = function(index){
 			if(this._itemClickEvent != null){
-				this._itemClickEvent();
+				this._itemClickEvent(index);
 			}
 			this.ele.className = "ele_selectbox";
 			this.hide();

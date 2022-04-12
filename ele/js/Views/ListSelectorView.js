@@ -51,7 +51,7 @@
 			}
 			return res;
 		};
-		ListSelectorView.prototype.setValues = function(values){
+		ListSelectorView.prototype.setValues = function(values, format){
 			if(this.leftItems.length < 1 || values.length < 1){
 				return ;
 			}

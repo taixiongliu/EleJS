@@ -96,7 +96,7 @@
 		};
 		
 		HiddenItem.prototype.reset = function(){
-			
+			this.setValue("");
 		};
 		
 		HiddenItem.prototype.getValue = function(){
@@ -117,7 +117,7 @@
 					this.name = args.name;
 					this.hditem.ele.name = this.name;
 				}
-				if(typeof(args.value) == "string"){
+				if(typeof(args.value) != "undefined"){
 					this.hditem.setValue(args.value);
 				}
 			}
@@ -211,9 +211,6 @@
 				}
 				if(typeof(args.value) != "undefined"){
 					value = args.value;
-				}
-				if(typeof(args.items) != "undefined"){
-					opts.items = args.items;
 				}
 			}
 			this.dateBox = new Ele.DateBox(opts);
@@ -872,7 +869,7 @@
 				if(typeof(args.readOnly) == "boolean"){
 					this.item.readOnly(args.readOnly);
 				}
-				if(typeof(args.value) == "string"){
+				if(typeof(args.value) != "undefined"){
 					this.item.setValue(args.value);
 				}
 			}
@@ -956,7 +953,7 @@
 				if(typeof(args.readOnly) == "boolean"){
 					this.item.readOnly(args.readOnly);
 				}
-				if(typeof(args.value) == "string"){
+				if(typeof(args.value) != "undefined"){
 					this.item.setValue(args.value);
 				}
 			}

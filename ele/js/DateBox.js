@@ -152,7 +152,6 @@
 			this.ele = this.view.ele;
 			this._disable = false;
 			this.windowType = false;
-			var items = [];
 			var context = this;
 			this.masking = Ele.masking;
 			if(typeof(args) == "object"){
