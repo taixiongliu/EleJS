@@ -48,6 +48,10 @@
 			this.ele.removeChild(obj.ele);
 		};
 		Layout.prototype.setHtml = function(html){
+			if(typeof(html) == "undefined"){
+				this.ele.innerHTML = "";
+				return ;
+			}
 			this.ele.innerHTML = html;
 		};
 		Layout.prototype.setAlign = function(align){
