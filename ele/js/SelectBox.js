@@ -57,7 +57,13 @@
 			this._selectIndex = -1;
 			this.edit.setValue("");
 			var context = this;
-			
+			var empty = new Option("--请选择--", -1);
+			empty.eleId = -1;
+			empty.setClickEvent(function(){
+				context._onItemClick(this.eleId);
+			});
+			this.optionList.add(empty);
+			this.optionList.add(new Ele.Layout("ele_selectbox_option_divider"));
 			if(items.length > 0){
 				for(var i = 0; i < items.length; i ++){
 					var option = new Option(items[i].text, items[i].value);
@@ -108,15 +114,26 @@
 		};
 		SelectBox.prototype.reset = function(){
 			this.setFilterData([]);
+			if(this._selectIndex > -1){
+				this._options[this._selectIndex].clearSelectedStyle();
+			}
 			this._selectIndex = -1;
 			this.edit.setValue("");
 			this.hintView.setHtml("请选择");
 		};
 		SelectBox.prototype.selectIndex = function(index){
 			//越界角标
-			if(index < 0 || index >= this._options.length){
+			if(index < -1 || index >= this._options.length){
 				return ;
 			}
+			if(index == -1){
+				this.reset();
+				if(this._updateEvent != null){
+					this._updateEvent(index);
+				}
+				return ;
+			}
+			
 			//防止智推选择同选项不更新文本
 			this.edit.setValue(this._options[index].text);
 			//与当前选择角标选择一致

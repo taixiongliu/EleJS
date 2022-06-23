@@ -5,7 +5,7 @@
 		this.ele;
 		this.view;
 		this.label;
-		this.width=604;
+		this.width=614;
 		this.tip;
 		this.tipText;
 		this._validate;
@@ -67,7 +67,7 @@
 			
 			this.view.add(this.label,{width:"140px", align:"right"});
 			this.view.add(view,{width:"220px", padding:"0 0 0 20px"});
-			this.view.add(this.tip,{width:"224px"});
+			this.view.add(this.tip,{width:"224px", padding:"0 0 0 10px"});
 			
 			this.setHeight(height);
 		};
@@ -443,6 +443,7 @@
 		SelectBoxItem.prototype.reset = function(){
 			this.clearMessage();
 			this.selectBox.reset();
+			this.hditem.setValue("");
 		};
 		SelectBoxItem.prototype.readOnly = function(readOnly){
 			this.selectBox.setDisable(readOnly);
@@ -452,6 +453,10 @@
 			return this.selectBox.getValue();
 		};
 		SelectBoxItem.prototype._updateValue = function(index){
+			if(index == -1){
+				this.hditem.setValue("");
+				return ;
+			}
 			this.hditem.setValue(this.selectBox.getValue());
 		};
 		
@@ -593,6 +598,7 @@
 			this.fileView.clear();
 			var icon = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_file_add.png", "ele_form_file_icon");
 			this.fileView.add(icon);
+			this.hditem.setValue("");
 		};
 		
 		FileItem.prototype.getValue = function(){
