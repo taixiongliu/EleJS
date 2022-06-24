@@ -102,6 +102,7 @@
 			for(var i in this.items){
 				var eles = this.items[i]._radios;
 				if(permission.charAt(cursor) == '0'){
+					cursor += eles.length + 1;
 					continue;
 				}
 				cursor ++;

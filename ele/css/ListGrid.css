@@ -87,11 +87,6 @@
 	width: 100%;
 	position: relative;
 	color: #E1E1E1;
-	display: -webkit-box;
-	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
-	overflow : hidden;
-	text-overflow: ellipsis;
 }
 .ele_listgrid_line_bar{
 	position: absolute;
@@ -129,6 +124,11 @@
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
 }
 .ele_listgrid_empty_txt{
 	color: #888;
