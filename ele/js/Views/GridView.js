@@ -92,11 +92,11 @@
 		GridView.prototype._onDataResponse = function(dataSources){
 			this.loadDataSources(dataSources);
 		};
-		GridView.prototype.loadDataSourcesUrl = function(url, funError){
+		GridView.prototype.loadDataSourcesUrl = function(url, funError, pageSize){
 			var context = this;
 			this.pageBarView.loadData(url, function(dataSources){
 				context._onDataResponse(dataSources);
-			}, funError);
+			}, funError, pageSize);
 		};
 		
 		GridView.prototype._onReset = function(){

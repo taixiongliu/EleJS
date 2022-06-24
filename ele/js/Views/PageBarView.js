@@ -1,5 +1,5 @@
 (function(){
-	var PageBarView = Ele.Views.PageBarView = function() {
+	var PageBarView = Ele.Views.PageBarView = function(pageSize) {
 		this.eleType = "layout";
 		this.ele;
 		this.view;
@@ -10,7 +10,7 @@
 		this._onDataResponse = null;
 		this._onErrorResponse = null;
 		
-		PageBarView.prototype.loadData = function(url, funName, funError){
+		PageBarView.prototype.loadData = function(url, funName, funError, pageSize){
 			//加载page数据
 			if(typeof(funName) == "function"){
 				this._onDataResponse = funName;
@@ -18,10 +18,19 @@
 			if(typeof(funError) == "function"){
 				this._onErrorResponse = funError;
 			}
+			if(typeof(pageSize) == "number"){
+				this.setPageSize(pageSize);
+			}
 			this.pageController.loadData(url);
 		};
 		PageBarView.prototype.reload = function(){
 			this.pageController.reload();
+		};
+		PageBarView.prototype.setPageSize = function(pageSize){
+			this.pageController.pageSize = pageSize;
+		};
+		PageBarView.prototype.getPageSize = function(){
+			return this.pageController.pageSize;
 		};
 		PageBarView.prototype.jumpPage = function(page){
 			this.pageController.jumpPage(page);
@@ -108,7 +117,8 @@
 					if(context._onErrorResponse != null){
 						context._onErrorResponse(error);
 					}
-				}
+				},
+				pageSize:pageSize
 			});
 			
 			var btnPrevious = new Ele.Button({text:"上一页",icon:Ele._pathPrefix+"ele/assets/64/icon_previous.png",onclick:function(){

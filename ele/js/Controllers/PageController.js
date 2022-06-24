@@ -87,7 +87,7 @@
 				return ;
 			}
 			var startRow = 0;
-			var pageSize = 10;
+			var pageSize = 0;
 			var rows = 0;
 			if(typeof(res.startRow) == "number"){
 				startRow = res.startRow;
@@ -115,9 +115,13 @@
 			if(typeof(args.formatHandler) == "function"){
 				this._formatEvent = args.formatHandler;
 			}
+			if(typeof(args.pageSize) == "number"){
+				this.pageSize = args.pageSize;
+			}else{
+				this.pageSize = -1;
+			}
 			this.page = 1;
 			this.startRow = 0;
-			this.pageSize = 10;
 			this.totalPage = 0;
 			this.rows = 0;
 		};
