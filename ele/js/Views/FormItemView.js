@@ -422,6 +422,16 @@
 			return res;
 		};
 		
+		SelectBoxItem.prototype.itemCount = function(){
+			return this.selectBox.count;
+		};
+		SelectBoxItem.prototype.addOptionValue = function(text, value){
+			this.selectBox.addOptionValue(text, value);
+		};
+		SelectBoxItem.prototype.addOption = function(option){
+			this.selectBox.addOption(option);
+		};
+		
 		SelectBoxItem.prototype.formString = function(){
 			if(this._validate.isEmpty(this.name)){
 				return null;

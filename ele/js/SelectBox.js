@@ -14,6 +14,7 @@
 		this.filterController;
 		this.position;
 		this.offset;
+		this.count;
 		
 		this._disable;
 		this._options = [];
@@ -51,6 +52,24 @@
 				this._filterSearchEvent = event;
 			}
 		};
+		SelectBox.prototype.addOptionValue = function(text, value){
+			var option = new Option(text, value);
+			this.addOption(option);
+		};
+		SelectBox.prototype.addOption = function(option){
+			if(!(option instanceof Option)){
+				return ;
+			}
+			var context = this;
+			this.optionList.add(new Ele.Layout("ele_selectbox_option_divider"));
+			option.eleId = this.count;
+			option.setClickEvent(function(){
+				context._onItemClick(this.eleId);
+			});
+			this._options.push(option);
+			this.optionList.add(option);
+			this.count ++;
+		};
 		SelectBox.prototype.setOptions = function(items){
 			this.optionList.clear();
 			this._options = [];
@@ -63,20 +82,18 @@
 				context._onItemClick(this.eleId);
 			});
 			this.optionList.add(empty);
-			this.optionList.add(new Ele.Layout("ele_selectbox_option_divider"));
+			
 			if(items.length > 0){
 				for(var i = 0; i < items.length; i ++){
 					var option = new Option(items[i].text, items[i].value);
-					option.eleId = i;
+					option.eleId = this.count;
 					option.setClickEvent(function(){
 						context._onItemClick(this.eleId);
 					});
 					this._options.push(option);
+					this.optionList.add(new Ele.Layout("ele_selectbox_option_divider"));
 					this.optionList.add(option);
-					if(i != items.length - 1){
-						var odivider = new Ele.Layout("ele_selectbox_option_divider");
-						this.optionList.add(odivider);
-					}
+					this.count ++;
 				}
 			}
 			if(this._onDataLoad != null){
@@ -315,6 +332,7 @@
 			this.ele = this.view.ele;
 			this._disable = false;
 			this.windowType = false;
+			this.count = 0;
 			var items = [];
 			var context = this;
 			this.masking = Ele.masking;
