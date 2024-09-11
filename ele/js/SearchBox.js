@@ -27,7 +27,7 @@
 					this.onSearchEvent = args.onSearch;
 				}
 			}
-			var img = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_search.png","ele_searchbox_icon");
+			var img = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_search.png","ele_searchbox_icon");
 			this.view.add(this.tb);
 			this.view.add(img);
 			var context = this;

@@ -1,19 +1,19 @@
 {
 	"resCode":1000,
 	"data":[
-		{"title":"组件","expend":true,"data":{"id":"01"}, "children":[
+		{"title":"组件","expand":true,"data":{"id":"01"}, "children":[
 			{"text":"导航","data":{"id":1,"href":"nav.html"}},
 			{"text":"表格","data":{"id":2,"href":"table.html"}},
-			{"icon":"img/gonggao.png","text":"轮播","data":{"id":3,"href":"switch.html"}},
-			{"icon":"img/gonggao.png","text":"多媒体","data":{"id":4,"href":"media.html"}},
-			{"icon":"img/gonggao.png","text":"表单","data":{"id":5,"href":"form.html"}},
-			{"icon":"img/gonggao.png","text":"窗口","data":{"id":6,"href":"window.html"}},
-			{"icon":"img/gonggao.png","text":"步骤","data":{"id":7,"href":"step.html"}}
+			{"text":"轮播","data":{"id":3,"href":"switch.html"}},
+			{"text":"多媒体","data":{"id":4,"href":"media.html"}},
+			{"text":"表单","data":{"id":5,"href":"form.html"}},
+			{"text":"窗口","data":{"id":6,"href":"window.html"}},
+			{"text":"步骤","data":{"id":7,"href":"step.html"}}
 		]},
-		{"icon":"img/shoucang.png","title":"统计","expend":true, "data":{"id":"02"}, "children":[
-			{"icon":"img/gonggao.png","text":"统计图","data":{"id":8,"href":"charts.html"}}
+		{"icon":"icon/root.png","title":"统计","expand":true, "data":{"id":"02"}, "children":[
+			{"icon":"icon/children.png","text":"统计图","data":{"id":8,"href":"charts.html"}}
 		]},
-		{"title":"视图","expend":true, "data":{"id":"03"}, "children":[
+		{"title":"视图","expand":true, "data":{"id":"03"}, "children":[
 			{"text":"文件视图","data":{"id":9,"href":"file.html"}},
 			{"text":"集群选择视图","data":{"id":10,"href":"permission.html"}},
 			{"text":"弹出视图","data":{"id":11,"href":"pop.html"}},

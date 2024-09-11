@@ -8,18 +8,24 @@
 		this.ctx;
 		this.width = 300;//默认宽度
 		this.height = 300;//默认高度
-		this.background = "#444444";//默认背景
-		this.border = "1px #555555 solid";//默认边框
+		this.background = "#FFFFFF";//默认背景
+		this.border = "1px #EEEEEE solid";//默认边框
 		this.padding = 70;//默认左右边框距离
 		this.numSlot = 4;//一条线上的总节点数
 		this.edgeLineColor="#EDEDED";//轮廓线条颜色
 		this.edgelineWidth=1;//轮廓线条宽度
-		this.textColor="#F5F5F5";//文本字体颜色
+		this.textColor="#4C4C4C";//文本字体颜色
 		this.itemColor="#4FDBDB";//节点颜色
 		this.itemFillColor="rgba(79,219,219, 0.5)";//节点填充颜色
 		this.itemlineWidth=1;//节点线条宽度
 		this.itemPointWeight=2;//节点半径
 		this.data;
+		
+		if(Ele._skin == "skin-black"){
+			this.background = "#444444";
+			this.border = "1px #555555 solid";
+			this.textColor = "#F5F5F5";
+		}
 	
 		Radar.prototype._init = function(){
 			if(typeof(opts) != "object"){

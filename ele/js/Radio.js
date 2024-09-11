@@ -59,7 +59,7 @@
 			}
 		};
 		IRadio.prototype.getText = function(){
-			return this._text.getText();
+			return this._text;
 		};
 		IRadio.prototype.checked = function(){
 			this.ele.style.backgroundImage = "url("+this.selectedIcon+")";
@@ -81,8 +81,8 @@
 		IRadio.prototype._init = function(){
 			var text = "";
 			var value = "";
-			this.icon = Ele._pathPrefix+"ele/assets/16/icon_radio_unselect.png";
-			this.selectedIcon = Ele._pathPrefix+"ele/assets/16/icon_radio_select.png";
+			this.icon = Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_radio_unselect.png";
+			this.selectedIcon = Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_radio_select.png";
 			var cssName = "ele_radio";
 			this._able = true;
 			this._cancel = false;
@@ -110,6 +110,7 @@
 				}
 			}
 			this._checked = false;
+			this._text = text;
 			this._value = value;
 			this.view = new Ele.Layout(cssName);
 			this.ele = this.view.ele;

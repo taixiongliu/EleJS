@@ -1,0 +1,72 @@
+/*list selector view*/
+.ele_list_selector_view{
+	width: 740px;
+	height: 460px;
+	margin: 0px;
+	padding: 16px;
+}
+.ele_list_selector_panel{
+	width: 100%;
+	height: 100%;
+	background-color: #DDDDDD;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding: 4px;
+}
+.ele_list_selector_item_view{
+	width: 320px;
+	height: 100%;
+	background-color: #FFFFFF;
+	float: left;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding: 7px 8px 8px 8px;
+	overflow: auto;
+}
+.ele_list_selector_bar_view{
+	width: 92px;
+	height: 100%;
+	float: left;
+}
+.ele_list_selector_bar_panel{
+	width: 100%;
+	height: 72px;
+	padding-top: 194px;
+}
+.ele_list_selector_bar_divider{
+	width: 100%;
+	height: 16px;
+}
+
+.ele_list_selector_empty{
+	width: 304px;
+	height: 32px;
+	line-height: 32px;
+	vertical-align: middle;
+	font-size: 12px;
+	color: #C4C4C4;
+	text-align: center;
+}
+.ele_list_selector_item{
+	width: 288px;
+	height: 32px;
+	line-height: 32px;
+	vertical-align: middle;
+	padding-left: 16px;
+	font-size: 12px;
+	color: #4C4C4C;
+	cursor: pointer;
+	margin-top: 1px;
+}
+.ele_list_selector_item_single{
+	background-color: #F5F5F5;
+}
+.ele_list_selector_item_double{
+	background-color: #F1F1F1;
+}
+.ele_list_selector_item_select{
+	background-color: #009999;
+	color: #FFFFFF;
+}

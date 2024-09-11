@@ -106,20 +106,21 @@
 			item.ele.onclick = function(){
 				context._onBarSelected(index - 1);
 			}
-			//12+12+12
-			//12+8
-			var base = 36;
+			
 			if(index == 1){
 				//默认选择第一个
 				this.selectedIndex = 0;
 				item.ele.className = "ele_switch_bar_item ele_switch_bar_item_selected";
 				this.bar.add(item, {width:"12px"});
 			}else{
+				//12+12+12
+				//12+8
+				var base = 36;
 				base += (index - 1) * 20;
-				this.bar.add(item, {width:"12px", padding:"0 0 0 8px"});
+				this.bar.setSize(base+"px","20px");
+				this.bar.add(item, {width:"20px", padding:"0 0 0 8px"});
 			}
 			this.barItems.push(item);
-			this.bar.setSize(base+"px","20px");
 		};
 		
 		SwitchView.prototype._init = function(){

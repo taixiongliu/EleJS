@@ -1,0 +1,17 @@
+.ele_form_view{
+	width: 100%;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding: 16px;
+}
+.ele_form_view_divider_panel{
+	width: 100%;
+	height: 1px;
+	padding: 8px 0px;
+}
+.ele_form_view_divider{
+	width: 100%;
+	height: 1px;
+	background-color: #333333;
+}

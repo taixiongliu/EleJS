@@ -100,19 +100,29 @@
 				this._onDataLoad();
 			}
 		};
-		SelectBox.prototype.loadFilterDataSourcesUrl = function(url, keyValue, funError){
+		SelectBox.prototype.loadFilterDataSourcesUrl = function(url, keyValue, method, funError){
 			if(typeof(funError) == "function"){
 				this._onFilterErrorResponse = funError;
 			}
 			if(typeof(keyValue) == "string" && keyValue.trim() != ""){
 				this.filterController.setParameter("keyvalue="+keyValue);
 			}
+			if(typeof(method) != "undefined" && method != "" && method != null){
+				this.filterController.setMethod(method);
+			}else{
+				this.filterController.setMethod("GET");
+			}
 			this.filterController.loadData(url);
 		};
 		
-		SelectBox.prototype.loadDataSourcesUrl = function(url, funError){
+		SelectBox.prototype.loadDataSourcesUrl = function(url, method, funError){
 			if(typeof(funError) == "function"){
 				this._onErrorResponse = funError;
+			}
+			if(typeof(method) != "undefined" && method != "" && method != null){
+				this.optionController.setMethod(method);
+			}else{
+				this.optionController.setMethod("GET");
 			}
 			this.optionController.loadData(url);
 		};
@@ -135,6 +145,7 @@
 				this._options[this._selectIndex].clearSelectedStyle();
 			}
 			this._selectIndex = -1;
+			this.clearErrorStyle();
 			this.edit.setValue("");
 			this.hintView.setHtml("请选择");
 		};
@@ -384,7 +395,7 @@
 			this.hintView = new Ele.Layout("ele_selectbox_select_view");
 			this.hintView.setHtml("请选择");
 			contentView.add(this.hintView);
-			this.edit = new Ele.TextBox({style:"ele_selectbox_intut_style"});
+			this.edit = new Ele.TextBox({style:"ele_selectbox_input_style"});
 			this.edit.ele.onkeyup = function(e){
 				context._onFilterKey();
 			};
@@ -393,7 +404,7 @@
 			}
 			contentView.add(this.edit);
 			var iconView = new Ele.Layout("ele_selectbox_icon_view");
-			var icon = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_down.png","ele_selectbox_icon");
+			var icon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/96/icon_down.png","ele_selectbox_icon");
 			iconView.add(icon);
 			contentView.add(iconView);
 			

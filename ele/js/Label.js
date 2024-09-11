@@ -229,7 +229,7 @@
 					}
 				}
 				
-				var childrenIcon = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_down_white.png","ele_menu_label_children_icon");
+				var childrenIcon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_down.png","ele_menu_label_children_icon");
 				contentView.add(childrenIcon);
 			}
 			

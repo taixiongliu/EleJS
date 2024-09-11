@@ -7,6 +7,7 @@
 		AjaxLoad.prototype._init = function(){
 			this.view = new Ele.Layout("ele_shade_pl");
 			this.ele = this.view.ele;
+			this.ele.style.display = "none";//防止未加载CSS导致页面冲突
 			
 			var bg = new Ele.Layout("ele_shade_bg");
 			
@@ -18,7 +19,7 @@
 			content.ele.style.marginLeft = (width/2 - 90)+"px";
 			
 			var img_panel = new Ele.Layout("ele_ajaxload_content_img");
-			var img_item = new Ele.Img(Ele._pathPrefix+"ele/assets/16/ajax-loader.gif");
+			var img_item = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/ajax-loader.gif");
 			img_panel.add(img_item);
 			this._msg = new Ele.Layout("ele_ajaxload_content_msg");
 			this._msg.setAlign("center");
@@ -29,8 +30,6 @@
 			
 			this.view.add(bg);
 			this.view.add(content);
-			
-			Ele.rootView.add(this.view);
 		};
 		
 		AjaxLoad.prototype.setMsg = function(msg){

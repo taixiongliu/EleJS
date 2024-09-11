@@ -156,9 +156,14 @@
 		ClusterCheckBoxView.prototype._onDataResponse = function(dataSources){
 			this.loadDataSources(dataSources);
 		};
-		ClusterCheckBoxView.prototype.loadDataSourcesUrl = function(url, funError){
+		ClusterCheckBoxView.prototype.loadDataSourcesUrl = function(url, method, funError){
 			if(typeof(funError) == "function"){
 				this._onErrorResponse = funError;
+			}
+			if(typeof(method) != "undefined" && method != "" && method != null){
+				this.baseController.setMethod(method);
+			}else{
+				this.baseController.setMethod("GET");
 			}
 			this.baseController.loadData(url);
 		};

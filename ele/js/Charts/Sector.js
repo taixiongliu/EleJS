@@ -26,12 +26,12 @@
 		this.ctx;
 		this.width = 610; //默认宽度
 		this.height = 486; //默认高度
-		this.background = "#444444"; //默认背景
-		this.border = "1px #555555 solid"; //默认边框
+		this.background = "#FFFFFF"; //默认背景
+		this.border = "1px #EEEEEE solid"; //默认边框
 		this.padding = 20; //四周边距
 		this.edgeLeftSpacing = 60; //默认左侧线条左侧间距
 		this.showTitle = false;
-		this.titleColor = "#F5F5F5"; //节点颜色a0e0a3
+		this.titleColor = "#333333"; //节点颜色a0e0a3
 		this.itemlineWidth = 1; //节点线条宽度
 		this.cellSpacing = 80;//圆形内间距
 		this.data;
@@ -43,6 +43,12 @@
 		this._rectW = 30;
 		this._rectH = 16;
 		this._space = 10;
+		
+		if(Ele._skin == "skin-black"){
+			this.background = "#444444";
+			this.border = "1px #555555 solid";
+			this.titleColor = "#FFFFFF";
+		}
 
 
 		Sector.prototype._init = function() {

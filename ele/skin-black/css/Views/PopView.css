@@ -1,0 +1,46 @@
+/*popview*/
+.ele_popview_bg_view{
+	width: 100%;
+	height: 100%;
+	background-color: #c4c4c4;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	position: absolute;
+	z-index: 100;
+	top: 0px;
+	left:  0px;
+	display: none;
+}
+.ele_popview_view{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 101;
+	top: 0px;
+	left:  0px;
+	display: none;
+}
+.ele_popview_panel{
+	width: auto;
+	height: 100%;
+}
+.ele_popview_content_view{
+	width: 800px;
+	height: 100%;
+	background-color: #F5F5F5;
+	border-left: 1px #EDEDED solid;
+	border-right: 1px #EDEDED solid;
+	overflow: auto;
+	position: relative;
+}
+.ele_popview_close_view{
+	width: 72px;
+	height: 72px;
+	background-color: #999;
+	cursor: pointer;
+}
+.ele_popview_close_img{
+	width: 72px;
+	height: 72px;
+}

@@ -15,11 +15,13 @@
 		this.ctx;
 		this.width = 750; //默认宽度
 		this.height = 300; //默认高度
-		this.background = "#444444"; //默认背景
-		this.border = "1px #555555 solid"; //默认边框
+		this.background = "#FFFFFF"; //默认背景
+		this.border = "1px #EEEEEE solid"; //默认边框
+		this.titleColor = "#333333"; //默认标题颜色
+		this.textColor = "#4C4C4C"; //默认文本颜色
 		this.padding = 20; //四周边距
-		this.edgeLineColor = "#F5F5F5"; //轮廓线条颜色
-		this.edgeLineHintColor = "rgba(237,237,237, 0.28)"; //轮廓线条颜色
+		this.edgeLineColor = "#C4C4C4"; //轮廓线条颜色
+		this.edgeLineHintColor = "rgba(221,221,221, 0.28)"; //轮廓线条颜色
 		this.edgelineWidth = 1; //轮廓线条宽度
 		this.edgeLeftSpacing = 40; //默认左侧线条左侧间距
 		this.edgeBottomSpacing = 16; //默认底部线条地侧间距
@@ -36,6 +38,15 @@
 		this._rectW = 16;//方形宽度
 		this._rectH = 16;//方形高度
 		this._txt_h_offset = 6;//字体左右对齐偏移量
+		
+		if(Ele._skin == "skin-black"){
+			this.background = "#444444";
+			this.border = "1px #555555 solid";
+			this.titleColor = "#FFFFFF";
+			this.textColor = "#F5F5F5";
+			this.edgeLineColor = "#F5F5F5";
+			this.edgeLineHintColor = "rgba(237,237,237, 0.28)";
+		}
 
 		AreaLine.prototype._init = function() {
 			if (typeof(opts) != "object") {
@@ -255,7 +266,7 @@
 		};
 		AreaLine.prototype.drawEdgeText = function(nodeHeight, vNodeX, nodeWidth, hNodeY, top) {
 			//竖向刻度值
-			this.ctx.fillStyle = this.edgeLineColor;
+			this.ctx.fillStyle = this.textColor;
 			this.ctx.textBaseline = 'top';
 			this.ctx.font = "12px Microsoft YaHei";
 			for (var i = 0; i < this.data.Y.length; i++) {
@@ -274,7 +285,7 @@
 			if(typeof(this.data.nodes) == "undefined"){
 				return ;
 			}
-			this.ctx.fillStyle = this.edgeLineColor;
+			this.ctx.fillStyle = this.titleColor;
 			this.ctx.font = "13px Microsoft YaHei";
 			this.ctx.textBaseline = 'bottom';
 			// this.ctx.shadowBlur = 4;

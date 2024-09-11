@@ -12,6 +12,7 @@
 			
 			this.view = new Ele.Layout("ele_shade_pl");
 			this.ele = this.view.ele;
+			this.ele.style.display = "none";//防止未加载CSS导致页面冲突
 			var bg = new Ele.Layout("ele_shade_bg");
 			
 			var content = new Ele.Layout("ele_confirm_panel");
@@ -67,8 +68,6 @@
 			
 			this.view.add(bg);
 			this.view.add(content);
-			
-			Ele.rootView.add(this.view);
 		};
 		
 		Alert.prototype.setSureHandler = function(handler){
@@ -117,6 +116,7 @@
 			
 			this.view = new Ele.Layout("ele_shade_pl");
 			this.ele = this.view.ele;
+			this.ele.style.display = "none";//防止未加载CSS导致页面冲突
 			var bg = new Ele.Layout("ele_shade_bg");
 			
 			var content = new Ele.Layout("ele_confirm_panel");
@@ -201,8 +201,6 @@
 			
 			this.view.add(bg);
 			this.view.add(content);
-			
-			Ele.rootView.add(this.view);
 		};
 		
 		Confirm.prototype.setSureHandler = function(handler){

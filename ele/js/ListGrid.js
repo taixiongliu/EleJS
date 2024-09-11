@@ -81,7 +81,7 @@
 				selitem.setWidth(this.selectOprWidth+"px");
 				selitem.setAlign("center");
 				var cbox = new Ele.ICheckBox();
-				cbox.ele.style.marginTop= ((this.itemHeight - 20)/2)+"px";
+				cbox.ele.style.marginTop= ((this.itemHeight - 16)/2)+"px";
 				cbox.data = row;
 				selitem.add(cbox);
 				line.add(selitem);
@@ -155,7 +155,7 @@
 			
 			
 			line.ele.onmouseover = function(){
-				this.className = "ele_listgrid_line_view ele_listgrid_bg_selected";
+				this.className = "ele_listgrid_line_view ele_listgrid_bg_over";
 			};
 			line.ele.onmouseout = function(){
 				this.className = this.rowcss;
@@ -247,7 +247,7 @@
 							context.unSelectAll();
 						}
 					});
-					cbox.ele.style.marginTop="10px";
+					cbox.ele.style.marginTop="12px";
 					selitem.add(cbox);
 					var label = new Ele.Label("全选","ele_listgrid_cb_title");
 					selitem.add(label);

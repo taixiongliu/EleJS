@@ -7,9 +7,37 @@
 		this.totalPage;
 		this.rows;
 		this._loadEvent = null;
-		this._errorEvent=null;
+		this._errorEvent = null;
 		this._formatEvent = null;
+		this._method = 'GET';
+		this._arrayHead = [];
+		this._parameter = null;
+		this._addressSufix = null;
+		this._isRest = false;
 		this.url;
+		
+		
+		PageController.prototype.setMethod = function(method) {
+			this._method = method;
+		};
+		PageController.prototype.setParameter = function(parameter) {
+			this._parameter = parameter;
+		};
+		PageController.prototype.setAddressSufix = function(as) {
+			this._addressSufix = as;
+		};
+		PageController.prototype.setRest = function(rest) {
+			this._isRest = rest;
+		};
+		PageController.prototype.addRequestHead = function(name, value){
+			if(typeof(name) != "string" || typeof(value) != "string"){
+				return ;
+			}
+			if(name.trim() == ""){
+				return ;
+			}
+			this._arrayHead.push(name+","+value);
+		};
 		
 		PageController.prototype.loadData = function(url){
 			if(typeof(url) == "string"){
@@ -66,8 +94,49 @@
 		PageController.prototype._loadData = function(){
 			var context = this;
 			var ajax = new Ele.Utils.Ajax();
-			ajax.setParameter("startRow="+this.startRow+"&pageSize="+this.pageSize);
-			ajax.request(this.url, function(result){
+			//默认GET
+			ajax.setMethod(this._method);
+			if(this._arrayHead.length > 0){
+				for(var i = 0; i < this._arrayHead.length; i ++){
+					var temp = this._arrayHead[i].split(",");
+					ajax.addRequestHead(temp[0], temp[1]);
+				}
+			}
+			var ru = this.url;
+			//rest参数向地址传递
+			if(this._isRest){
+				ru += ("/" + this.startRow + "/" + this.pageSize);
+				if(this._addressSufix != null && this._addressSufix.trim() != ""){
+					ru += ("/" + this._addressSufix);
+				}
+				if(this._parameter != null && this._parameter.trim() != ""){
+					//GET默认地址传参数
+					if(this._method == "GET"){
+						ru += ("?" + this._parameter);
+					}else{
+						ajax.setParameter(this._parameter);
+					}
+				}
+				ajax.request(ru, function(result){
+					context._onResponse(result);
+				});
+				return ;
+			}
+			//常规模式
+			var tp = "startRow=" + this.startRow + "&pageSize=" + this.pageSize;
+			if(this._parameter != null && this._parameter.trim() != ""){
+				tp += ("&" + this._parameter);
+			}
+			if(this._addressSufix != null && this._addressSufix.trim() != ""){
+				ru += ("/" + this._addressSufix);
+			}
+			//GET默认地址传参数
+			if(this._method == "GET"){
+				ru += ("?" + tp);
+			}else{
+				ajax.setParameter(tp);
+			}
+			ajax.request(ru, function(result){
 				context._onResponse(result);
 			});
 		};
@@ -77,7 +146,19 @@
 				this._formatEvent(result);
 				return ;
 			}
-			var res = JSON.parse(result);
+			var res = null;
+			try {
+				res = JSON.parse(result);
+			} catch (e) {
+				console.error("JSON parse exception：", e);
+				var error = {
+					resCode: -1,
+					resMsg: "JSON parse exception"
+				};
+				// 处理错误，例如返回默认值或抛出异常
+				this._errorEvent(error);
+				return;
+			}
 			if(res.resCode != 1000 && this._errorEvent != null){
 				var error = {
 					resCode:res.resCode,

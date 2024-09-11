@@ -104,9 +104,14 @@
 			this.leftView.add(this.leftEmpty);
 			this.rightView.add(this.rightEmpty);
 		};
-		ListSelectorView.prototype.loadDataSourcesUrl = function(url, funError){
+		ListSelectorView.prototype.loadDataSourcesUrl = function(url, method, funError){
 			if(typeof(funError) == "function"){
 				this._onErrorResponse = funError;
+			}
+			if(typeof(method) != "undefined" && method != "" && method != null){
+				this.controller.setMethod(method);
+			}else{
+				this.controller.setMethod("GET");
 			}
 			this.controller.loadData(url);
 		};
@@ -321,10 +326,10 @@
 			barView.setAlign("center");
 			centerView.add(barView);
 			
-			var btn_add = new Ele.Button({text:"添加", iconRight:true, icon:Ele._pathPrefix+"ele/assets/24/icon_2_right.png",onclick:function(){
+			var btn_add = new Ele.Button({text:"添加", iconRight:true, icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/96/icon_2_right.png",onclick:function(){
 				context.addMove();
 			}});
-			var btn_sub = new Ele.Button({text:"移除", icon:Ele._pathPrefix+"ele/assets/24/icon_2_left.png",onclick:function(){
+			var btn_sub = new Ele.Button({text:"移除", icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/96/icon_2_left.png",onclick:function(){
 				context.subMove();
 			}});
 			barView.add(btn_add);

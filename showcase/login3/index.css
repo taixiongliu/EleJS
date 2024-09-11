@@ -1,0 +1,31 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, html { height:100%; overflow:hidden; padding:0; margin:0;}
+body { background:#F8F8F8; background-size: cover; }
+img{ border:none;}
+.fl{float: left;}
+.fr{float: right;}
+.cl{clear: both;}
+
+.login_panel{ width:1100px; margin:60px auto 0;}
+.login_name{ width:100%;text-align:center;font-size:36px; font-weight: bold;color:#009999;padding-bottom: 24px;}
+.login_panel .login_l_img{ float:left; width:550px; height:440px; margin-left:50px;}
+.login_panel .login_l_img img{width:500px; height:440px; }
+.login {width:300px; padding:50px; background-color: #EEEEEE;border:1px #DDDDDD solid;border-radius:6px; float:left; margin-left:50px; position:relative; margin-top:50px;}
+.login_logo{ width:120px; height:120px; cursor: pointer; border:5px solid #DDDDDD;border-radius:100px; background:#EEEEEE; text-align:center; line-height:110px; position:absolute; top:-60px; left:135px;}
+.login_logo img{ width:60px; height:60px;display: inline-block; vertical-align: middle;}
+.form{margin-top: 48px;width: 300px;}
+.input{border: 1px solid #DDDDDD; vertical-align: middle; height: 24px; padding: 12px 8px 12px 40px; font-size: 14px; color: #009999; width:250px;line-height: 24px;background-color: #F8F8F8;border-radius: 4px;}
+.input:hover{border: 1px solid #009999; background-color: #EBFFFE;}
+.username{background: url('images/account.png') no-repeat 8px 12px; background-size: 24px 24px;background-color: #F8F8F8;}
+.password{background: url('images/password.png') no-repeat 8px 12px; background-size: 24px 24px;background-color: #F8F8F8; margin-top: 16px;}
+.verifycode{background: url('images/verify.png') no-repeat 8px 12px; background-size: 24px 24px;background-color: #F8F8F8; margin-top: 16px; width: 162px;}
+.input .divider{width: 1px; height: 24px; background-color: #dddddd; float: left;}
+input{border: 0; vertical-align: middle;height: 24px; font-size: 14px; color: #009999; outline:none; width:241px;line-height:24px;background: none;margin-left: 8px;padding: 0;}
+.verifycode input{width:153px;}
+.form img{width:80px; height: 32px; margin: 24px 0 0 8px;cursor: pointer;}
+.button{display: inline-block; vertical-align: middle; padding: 12px 0; margin: 0px; font-size:16px; line-height: 24px; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; color: #ffffff; background-color: #009999; border-radius: 4px; border: none; -webkit-appearance: none; width:100%;
+user-select: none;-webkit-user-select: none; -moz-user-select: none;margin-top: 36px;letter-spacing: 2px;}
+.button:hover{background-color: #19b4b4;}
+.copyright { font-size:14px; color:#C4C4C4; display:block;width:100%; float:left; text-align:center; margin-top:60px;}

@@ -10,7 +10,7 @@
 		this._onDataResponse = null;
 		this._onErrorResponse = null;
 		
-		PageBarView.prototype.loadData = function(url, funName, funError, pageSize){
+		PageBarView.prototype.loadData = function(url, funName, method, funError, pageSize){
 			//加载page数据
 			if(typeof(funName) == "function"){
 				this._onDataResponse = funName;
@@ -21,7 +21,19 @@
 			if(typeof(pageSize) == "number"){
 				this.setPageSize(pageSize);
 			}
+			if(typeof(method) != "undefined" && method != "" && method != null){
+				this.pageController.setMethod(method);
+			}
 			this.pageController.loadData(url);
+		};
+		PageBarView.prototype.setParameter = function(parameter) {
+			this.pageController.setParameter(parameter);
+		};
+		PageBarView.prototype.setAddressSufix = function(as) {
+			this.pageController.setAddressSufix(as);
+		};
+		PageBarView.prototype.setRest = function(rest) {
+			this.pageController.setRest(rest);
 		};
 		PageBarView.prototype.reload = function(){
 			this.pageController.reload();
@@ -121,14 +133,14 @@
 				pageSize:pageSize
 			});
 			
-			var btnPrevious = new Ele.Button({text:"上一页",icon:Ele._pathPrefix+"ele/assets/64/icon_previous.png",onclick:function(){
+			var btnPrevious = new Ele.Button({text:"上一页",icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_previous.png",onclick:function(){
 				context.previousPage();
 			}});
 			this.view.add(btnPrevious);
 			this.pageItem = new Ele.HLayout();
 			this.view.add(this.pageItem);
 			
-			var btnNext = new Ele.Button({text:"下一页",icon:Ele._pathPrefix+"ele/assets/64/icon_next.png", iconRight:true,onclick:function(){
+			var btnNext = new Ele.Button({text:"下一页",icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_next.png", iconRight:true,onclick:function(){
 				context.nextPage();
 			}});
 			this.view.add(btnNext, {padding:"0 0 0 16px"});

@@ -20,7 +20,7 @@ var Ele = window.Ele = Ele || {
 		"SwitchView","FormView","FormItemView","StepView","FileView",
 		"PageControllerView","ClusterCheckBoxView","PopView","ListSelectorView"
 	],
-	mControllers:["BaseController","PageController"],
+	mControllers:["BaseController","PageController","PoolController"],
 	Charts : {},//目录对象申明
 	Utils : {},//目录对象申明
 	Views : {},//目录对象申明
@@ -32,6 +32,7 @@ var Ele = window.Ele = Ele || {
 	_loadCount:0,
 	_pathPrefix:"/",
 	_rootId:"",
+	_skin:"skin",
 	rootView:null,
 	masking:null,
 	
@@ -43,6 +44,15 @@ var Ele = window.Ele = Ele || {
 				this._pathPrefix = "/"+path+"/";
 			}
 		}
+	},
+	
+	initSkin:function(skin){
+		if(typeof skin === "string"){
+			this._skin = skin;
+		}
+	},
+	getSkinName:function(){
+		return this._skin;
 	},
 	
 	/**
@@ -84,7 +94,10 @@ var Ele = window.Ele = Ele || {
 		this._loadModels = this.imports.length + models.length + 1;
 		this._loadCount = 0;
 		
-		//加载类文件
+		//导入通用CSS
+		this.importCSS(this._pathPrefix+"ele/"+this._skin+"/ele.css");
+		
+		//加载导入
 		this._loadImports();
 		
 		//加载Element
@@ -185,7 +198,10 @@ var Ele = window.Ele = Ele || {
 		this._loadModels = this.imports.length + this.models.length + this.mUtils.length + this.mControllers.length + this.mCharts.length+this.mViews.length + 1;
 		this._loadCount = 0;
 		
-		//全部加载
+		//导入通用CSS
+		this.importCSS(this._pathPrefix+"ele/"+this._skin+"/ele.css");
+		
+		//加载导入
 		this._loadImports();
 		//加载Element
 		this._loadJS("Element", this._loadHandler);
@@ -344,7 +360,7 @@ var Ele = window.Ele = Ele || {
 		var link = document.createElement('link');
 		link.type='text/css';
 		link.rel = 'stylesheet';
-		link.href = this._pathPrefix+"ele/css/"+model+".css";
+		link.href = this._pathPrefix+"ele/"+this._skin+"/css/"+model+".css";
 		head.appendChild(link);
 	},
 	

@@ -36,7 +36,7 @@
 			titleNameView.add(this.title);
 			
 			var titleCloseView = new Ele.Layout("ele_popwindow_title_close_view");
-			var imgClose = new Ele.Img(Ele._pathPrefix+"ele/assets/20/icon_close.png", "ele_popwindow_title_icon_close");
+			var imgClose = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_close.png", "ele_popwindow_title_icon_close");
 			imgClose.ele.onclick = function(){
 				context.hide();
 			};

@@ -8,37 +8,48 @@
 		this.title;
 		this.content;
 		this.nodes;
-		this.onItemClickHandler;
+		this._onItemClick;
+		this._onExpandChange = null;
 		this.baseController;
 		this._onErrorResponse = null;
 		this._selectFormat = null;
-		this._expendFormat = null;
+		this._expandFormat = null;
 		this._dataFormat = null;
 		
 		TreeMenuView.prototype.add = function(args){
 			if(this._dataFormat != null){
-				this._dataFormat(args);
+				this._dataFormat(args, true);
 			}
 			if(typeof(args.icon) == "undefined"){
-				args.icon = Ele._pathPrefix+"ele/assets/30/icon_menuroot.png";
+				args.icon = Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_menuroot.png";
 			}
+			var context = this;
 			args.width = (this.width - 8)+"px";
-			args.onItemClick = this.onItemClickHandler;
+			args.onItemClick = function(res){
+				if(context._onItemClick != null){
+					context._onItemClick(res);
+				}
+			};
+			args.onClick = function(res){
+				if(context._onExpandChange != null){
+					context._onExpandChange(res);
+				}
+			};
 			var node = new Ele.TreeNode(args);
-			if(this._expendFormat != null){
-				if(this._expendFormat(args.data)){
-					args.expend = true;
+			if(this._expandFormat != null){
+				if(this._expandFormat(args.data)){
+					args.expand = true;
 				}else{
-					args.expend = false;
+					args.expand = false;
 				}
 			}
 			if(typeof(args.children) == "object"){
 				for(var i = 0; i < args.children.length; i ++){
 					if(this._dataFormat != null){
-						this._dataFormat(args.children[i]);
+						this._dataFormat(args.children[i], false);
 					}
 					if(typeof(args.children[i].icon) == "undefined"){
-						args.children[i].icon = Ele._pathPrefix+"ele/assets/20/icon_menuitem.png";
+						args.children[i].icon = Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_menuitem.png";
 					}
 					if(this._selectFormat != null){
 						if(this._selectFormat(args.children[i].data)){
@@ -50,19 +61,24 @@
 					node.add(args.children[i]);
 				}
 			}
-			if(typeof(args.expend) == "boolean"){
-				if(args.expend){
-					node.expend();
+			if(typeof(args.expand) == "boolean"){
+				if(args.expand){
+					node.expand();
 				}
+			}
+			
+			if(this.nodes.length > 0){
+				var divider = new Ele.Layout("ele_menulist_divider");
+				this.content.add(divider);
 			}
 			
 			this.content.add(node);
 			this.nodes.push(node);
 		};
-		TreeMenuView.prototype.expendStatus = function(){
+		TreeMenuView.prototype.expandStatus = function(){
 			var status = "";
 			for(var node in this.nodes){
-				if(this.nodes[node].isExpend){
+				if(this.nodes[node].isExpand){
 					status += "1";
 				}else{
 					status += "0";
@@ -77,11 +93,6 @@
 			this.view.setHeight(height+"px");
 			this.content.setHeight((height - 36)+"px");
 		};
-		TreeMenuView.prototype.onItemClickHandler = function(obj){
-			if(this.onItemClickHandler != null){
-				this.onItemClickHandler(obj);
-			}
-		};
 		//加载数据源
 		TreeMenuView.prototype.loadDataSources = function(dataSources){
 			if(!Ele._isArray(dataSources)){
@@ -95,9 +106,14 @@
 		TreeMenuView.prototype._onDataResponse = function(dataSources){
 			this.loadDataSources(dataSources);
 		};
-		TreeMenuView.prototype.loadDataSourcesUrl = function(url, funError){
+		TreeMenuView.prototype.loadDataSourcesUrl = function(url, method, funError){
 			if(typeof(funError) == "function"){
 				this._onErrorResponse = funError;
+			}
+			if(typeof(method) != "undefined" && method != "" && method != null){
+				this.baseController.setMethod(method);
+			}else{
+				this.baseController.setMethod("GET");
 			}
 			this.baseController.loadData(url);
 		};
@@ -108,13 +124,16 @@
 			var context = this;
 			if(typeof(args) == "object"){
 				if(typeof(args.onItemClick) == "function"){
-					this.onItemClickHandler = args.onItemClick;
+					this._onItemClick = args.onItemClick;
+				}
+				if(typeof(args.onExpandChange) == "function"){
+					this._onExpandChange = args.onExpandChange;
 				}
 				if(typeof(args.selectFormat) == "function"){
 					this._selectFormat = args.selectFormat;
 				}
-				if(typeof(args.expendFormat) == "function"){
-					this._expendFormat = args.expendFormat;
+				if(typeof(args.expandFormat) == "function"){
+					this._expandFormat = args.expandFormat;
 				}
 				if(typeof(args.dataFormat) == "function"){
 					this._dataFormat = args.dataFormat;
@@ -132,12 +151,8 @@
 			}
 			var title = new Ele.Layout("ele_menulist_title_view");
 			title.setAlign("center");
-			var imgLeft = new Ele.Img(Ele._pathPrefix+"ele/assets/20/icon_menu_left.png", "ele_menulist_title_img");
-			this.title = new Ele.Label("功能菜单", "ele_menulist_title_txt ele_ml5");
-			var imgRight = new Ele.Img(Ele._pathPrefix+"ele/assets/20/icon_menu_right.png", "ele_menulist_title_img ele_ml5");
-			title.add(imgLeft);
+			this.title = new Ele.Label("系统菜单", "ele_menulist_title_txt ele_ml5");
 			title.add(this.title);
-			title.add(imgRight);
 			
 			var panel = new Ele.Layout("ele_menulist_panel");
 			this.content = new Ele.Layout("ele_menulist_content ele_scrollbar");

@@ -1,0 +1,34 @@
+.ele_permission_view{
+	width: 100%;
+	height: auto;
+	position: relative;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	padding: 0px 16px 16px 16px;
+}
+.ele_permission_item{
+	width: 100%;
+	height: auto;
+	padding-top: 16px;
+}
+.ele_permission_root{
+	width: 100%;
+	height: 32px;
+	line-height: 32px;
+	color: #333333;
+	font-size: 12px;
+	background-color: #EEEEEE;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	padding-left: 16px;
+}
+.ele_permission_children{
+	width: 100%;
+	background-color: #FFFFFF;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	padding: 16px;
+}

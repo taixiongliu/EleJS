@@ -1,0 +1,219 @@
+*{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box}
+*,body{padding:0px;	margin:0px;color: #ffffff;width: 100%;height: 100%;}
+body{
+    background: url("img/bj.jpg") no-repeat;
+    background-size: cover;
+    font-size: 12px;
+    color: #ffffff;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.main{
+    width: 100%;
+    height: 100%;
+    position: relative;
+	overflow: auto;
+}
+
+/*头部*/
+.header{
+    width: 100%;
+    height: 140px;
+}
+
+.header .header-center{
+    width: 50%;
+    height: 96px;
+    position: relative;
+    margin: 0 auto;
+}
+.header .header-center .header-title{
+    text-align: center;
+    color: #ffffff;
+    font-size: 32px;
+    text-shadow: 0 0 24px #00d8ff;
+    line-height: 84px;
+}
+.header .header-img{
+    background: url("img/head.gif") no-repeat center center;
+    background-size: 100%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 64px;
+}
+
+.content{
+    width: 1000px;
+    height: 560px;
+    margin: 80px auto 0 auto;
+}
+.content .content-left{
+    width: 500px;
+    height: 500px;
+    background: url("img/d.png") no-repeat;
+    background-size: 100% 100%;
+    box-sizing: border-box;
+    float: left;
+}
+@-webkit-keyframes rotation {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.content .content-left {
+    -webkit-transform: rotate(360deg);
+    animation: rotation 15s linear infinite;
+    -moz-animation: rotation 15s linear infinite;
+    -webkit-animation: rotation 15s linear infinite;
+    -o-animation: rotation 15s linear infinite;
+}
+
+.content .content-right{
+    width: 464px;
+    height: 478px;
+    background: url("img/e.png") no-repeat;
+    background-size: 100% 100%;
+	padding: 32px;
+    float: right;
+    position: relative;
+
+}
+.right-infp{
+    width: 320px;
+    height: 240px;
+    margin: auto auto;
+    vertical-align: center;
+    position: absolute;
+    top: 128px;
+    left: 72px;
+}
+.right-infp-name{
+    background: url("img/b.png") no-repeat;
+    width: 100%;
+    height: 40px;
+    background-size: 100% 100%;
+    line-height: 36px;
+    margin-bottom: 32px;
+    position: relative;
+}
+.right-infp-name input{
+    width: 85%;
+    border: none;
+    box-sizing: border-box;
+    height: 40px;
+    margin-left: 40px;
+    line-height: 32px;
+    background: none !important;
+    color: #00eaff;
+    padding-left: 12px;
+    outline: none;
+    -webkit-tap-highlight-color:rgba(255,0,0,0);
+    position: absolute;
+}
+.right-infp-code{
+    /* background: url("img/b.png") no-repeat; */
+    width: 100%;
+    height: 40px;
+    background-size: 100% 100%;
+    line-height: 36px;
+    margin-bottom: 32px;
+    position: relative;
+}
+.right-infp-code-panel{
+	width: 100%;
+	height: 40px;
+	padding-left: 136px;
+}
+.right-infp-code-view{
+	background: url("img/b.png") no-repeat;
+	width: 100%;
+	height: 40px;
+	background-size: 100% 100%;
+	line-height: 36px;
+	position: relative;
+}
+.right-infp-code input{
+    width: 100%;
+    border: none;
+    height: 40px;
+    line-height: 32px;
+    background: none !important;
+    color: #00eaff;
+    padding-left: 12px;
+    outline: none;
+    -webkit-tap-highlight-color:rgba(255,0,0,0);
+    position: absolute;
+}
+.right-infp-code img{
+	width: 120px;
+	height: 40px;
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	cursor: pointer;
+}
+
+input::-webkit-input-placeholder {
+    color: #ccc;
+}
+.right-infp-btn{
+    background: url("img/a.png") no-repeat;
+    width: 100%;
+    height: 40px;
+    background-size: 100% 100%;
+    line-height: 40px;
+    margin-bottom: 32px;
+    position: relative;
+}
+.right-infp-btn .btn{
+    width: 95%;
+    border: none;
+    box-sizing: border-box;
+    height: 36px;
+    margin-left: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    color: #fff;
+    position: absolute;
+}
+.right-infp-btn .btn:hover{
+
+}
+.footer{
+	padding-top: 64px;
+	width: 100%;
+	height: 80px;
+}
+.footer-item{
+	width: 100%;
+	height: 32px;
+	line-height: 32px;
+	color: #EAEAEA;
+	font-size: 12px;
+	text-shadow: 0 0 16px #00d8ff;
+}
+.footer-info{
+	width: 100%;
+	height: 32px;
+	line-height: 32px;
+	color: #C4C4C4;
+	font-size: 12px;
+	text-shadow: 0 0 16px #00d8ff;
+}

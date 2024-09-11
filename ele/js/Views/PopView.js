@@ -28,7 +28,7 @@
 			panel.add(this.contentView,{padding:"0 0 0 72px"});
 			
 			this.close = new Ele.Layout("ele_popview_close_view");
-			var image = new Ele.Img(Ele._pathPrefix+"ele/assets/icon_big_close.png","ele_popview_close_img");
+			var image = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/big-close.png","ele_popview_close_img");
 			this.close.add(image);
 			this.close.ele.onclick = function(){
 				context.hide();

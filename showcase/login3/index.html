@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="Expires" content="0">
+		<title>后台管理</title>
+		<link href="index.css" rel="stylesheet" type="text/css" />
+		<script src="../../ele/ele-all.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="index.js" charset="utf-8"></script>
+	</head>
+
+	<body onkeydown="enterlogin(event);">
+		<div class="login_panel" id="mainView">
+			<div class="login_name">后台管理系统</div>
+			<div class="login_l_img"><img src="images/login-img.png" /></div>
+			<div class="login">
+				<div class="login_logo"><img src="images/login_logo.png" /></div>
+				<div class="form">
+					<div class="input username">
+						<div class="divider"></div>
+						<div class="fl">
+							<input type="text" id="username" name="username" placeholder="用户名" />
+						</div>
+						<div class="cl"></div>
+					</div>
+					<div class="input password">
+						<div class="divider"></div>
+						<div class="fl">
+							<input type="password" id="password" name="password" placeholder="密码" />
+						</div>
+						<div class="cl"></div>
+					</div>
+					<div>
+						<div class="input verifycode fl">
+							<div class="divider"></div>
+							<div class="fl">
+								<input type="text" id="verifycode" name="verifycode" placeholder="验证码" />
+							</div>
+							<div class="cl"></div>
+						</div>
+						<div class="fl"><img src="images/authCode.png" alt="验证码" /></div>
+						<div class="cl"></div>
+					</div>
+					<div class="button" onclick="submit()">登录</div>
+				</div>
+			</div>
+			<div class="cl"></div>
+			<div class="copyright">某某有限公司 版权所有©2023 技术支持电话：xxx</div>
+		</div>
+	</body>
+
+</html>

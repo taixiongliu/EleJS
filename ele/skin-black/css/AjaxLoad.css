@@ -1,0 +1,32 @@
+.ele_ajaxload_content {
+	width: 180px;
+	height: 36px;
+	position: absolute;
+	z-index: 10005;
+	background-color: #666666;
+	box-shadow: 0px 0px 8px #999999;
+	-webkit-box-shadow: 0px 0px 8px #999999;
+	-moz-window-shadow: 0px 0px 8px #999999;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border: 1px #555555 solid;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.ele_ajaxload_content_img {
+	width: 16px;
+	height: 16px;
+	margin-top: 10px;
+	margin-left: 10px;
+	float: left;
+}
+.ele_ajaxload_content_msg {
+	font-family: '微软雅黑';
+	font-size: 12px;
+	color: #FFFFFF;
+	height: 36px;
+	line-height: 36px;
+	vertical-align: middle;
+}

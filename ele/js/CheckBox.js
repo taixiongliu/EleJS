@@ -47,8 +47,8 @@
 		
 		ICheckBox.prototype._init = function(){
 			this._checked = false;
-			this.icon = Ele._pathPrefix+"ele/assets/48/icon_cb_none.png";
-			this.selectedIcon = Ele._pathPrefix+"ele/assets/48/icon_cb_block.png";
+			this.icon = Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_cb_none.png";
+			this.selectedIcon = Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_cb_block.png";
 			
 			var cssName = "ele_check_img";
 			if(typeof(args) == "object"){
@@ -90,16 +90,16 @@
 		
 		CheckGroup.prototype.clearSelected = function(){
 			for(var index = 0; index < this._radios.length; index ++){
-				if(this._radios[i].isChecked()){
-					this._radios[i].unChecked();
+				if(this._radios[index].isChecked()){
+					this._radios[index].unChecked();
 				}
 			}
 		};
 		
 		CheckGroup.prototype.allSelected = function(){
 			for(var index = 0; index < this._radios.length; index ++){
-				if(!this._radios[i].isChecked()){
-					this._radios[i].checked();
+				if(!this._radios[index].isChecked()){
+					this._radios[index].checked();
 				}
 			}
 		};
@@ -256,10 +256,10 @@
 			if(items.length > 0){
 				for(var i = 0; i < items.length; i ++){
 					if(typeof(items[i].icon) == "undefined"){
-						items[i].icon = Ele._pathPrefix+"ele/assets/16/icon_check_unselect.png";
+						items[i].icon = Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_check_unselect.png";
 					}
 					if(typeof(items[i].selectedIcon) == "undefined"){
-						items[i].selectedIcon = Ele._pathPrefix+"ele/assets/16/icon_check_select.png";
+						items[i].selectedIcon = Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_check_select.png";
 					}
 					var iradio = new Ele.IRadio(items[i]);
 					iradio.setCancel(true);

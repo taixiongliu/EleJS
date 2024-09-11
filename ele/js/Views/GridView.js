@@ -64,6 +64,18 @@
 		GridView.prototype.setDataFormat = function(formatHandler){
 			this.pageBarView.setFormat(formatHandler);
 		};
+		GridView.prototype.setParameter = function(parameter) {
+			this.pageBarView.setParameter(parameter);
+		};
+		GridView.prototype.setAddressSufix = function(as) {
+			this.pageBarView.setAddressSufix(as);
+		};
+		GridView.prototype.setRest = function(rest) {
+			this.pageBarView.setRest(rest);
+		};
+		GridView.prototype.jumpPage = function(page){
+			this.pageBarView.jumpPage(page);
+		};
 		
 		GridView.prototype.getSelected = function(){
 			return this.listGrid.getSelect();
@@ -92,11 +104,33 @@
 		GridView.prototype._onDataResponse = function(dataSources){
 			this.loadDataSources(dataSources);
 		};
-		GridView.prototype.loadDataSourcesUrl = function(url, funError, pageSize){
+		GridView.prototype.loadDataSourcesUrl = function(url, method, funError, funFormat){
+			var context = this;
+			var baseController = new Ele.Controllers.BaseController({
+				loadHandler: function(data){
+					context._onDataResponse(data);
+				},
+				errorHandler: function(error){
+					if(typeof(funError) == "function"){
+						funError(error);
+					}
+				}
+			});
+			if(typeof(funFormat) == "function"){
+				baseController.setFormat(funFormat);
+			}
+			if(typeof(method) != "undefined" && method != "" && method != null){
+				baseController.setMethod(method);
+			}else{
+				baseController.setMethod("GET");
+			}
+			baseController.loadData(url);
+		};
+		GridView.prototype.loadDataSourcesPageUrl = function(url, method, funError, pageSize){
 			var context = this;
 			this.pageBarView.loadData(url, function(dataSources){
 				context._onDataResponse(dataSources);
-			}, funError, pageSize);
+			}, method, funError, pageSize);
 		};
 		
 		GridView.prototype._onReset = function(){
@@ -244,18 +278,18 @@
 			var context = this;
 			var title = new Ele.HLayout("ele_grid_set_view_title_item");
 			var cbAll = new Ele.ICheckBox();
-			cbAll.ele.style.marginTop="6px";
+			cbAll.ele.style.marginTop="8px";
 			var lbTitle = new Ele.Label("全选","");
 			title.add(cbAll);
 			title.add(lbTitle,{padding:"0 0 0 8px"});
 			
-			var imgColWidth = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_col_width.png", "ele_grid_set_view_title_icon");
+			var imgColWidth = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_col_width.png", "ele_grid_set_view_title_icon");
 			title.add(imgColWidth,{padding:"0 0 0 24px"});
 			this.radio = new Ele.RadioBox({items:[{text:"%",value:1},{text:"px",value:2}]});
 			this.radio.data = 1;
 			title.add(this.radio,{padding:"4px 0 0 0"});
 			
-			var imgRowHeight = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_row_height.png", "ele_grid_set_view_title_icon");
+			var imgRowHeight = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_row_height.png", "ele_grid_set_view_title_icon");
 			this.etRowHeight = new Ele.TextBox({style:"ele_grid_set_row_height_style"});
 			this.etRowHeight.ele.type = "number";
 			title.add(this.etRowHeight,{float:"right"});
@@ -277,7 +311,7 @@
 					item.add(cbox);
 					item.add(textName, {padding:"0 0 0 8px"});
 					item.add(etColWidth, {float:"right"});
-					var icw = new Ele.Img(Ele._pathPrefix+"ele/assets/16/icon_col_width.png", "ele_grid_set_view_title_icon");
+					var icw = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_col_width.png", "ele_grid_set_view_title_icon");
 					item.add(icw, {padding:"0 8px 0 0",float:"right"});
 					
 					this.setView.add(item);
@@ -289,7 +323,7 @@
 				}
 			}
 			var bottom = new Ele.HLayout("ele_grid_set_view_bottom_item");
-			var sure = new Ele.Button({text:"确定", icon:Ele._pathPrefix+"ele/assets/64/icon_sure.png", onclick:function(){
+			var sure = new Ele.Button({text:"确定", icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_sure.png", onclick:function(){
 				context._onSet();
 			}});
 			this.lbMsg = new Ele.Label("", "ele_grid_set_view_bottom_hint");
@@ -328,10 +362,10 @@
 			
 			
 			if(barMenu){
-				var refresh = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/assets/64/icon_refresh.png",onclick:function(){
+				var refresh = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_refresh.png",onclick:function(){
 					context._onReset();
 				}});
-				var set = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/assets/64/icon_set.png",onclick:function(){
+				var set = new Ele.Button({text:"", icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_set.png",onclick:function(){
 					context._showMenuView();
 				}});
 				var divider = new Ele.Layout("ele_grid_tool_divider");

@@ -82,6 +82,8 @@
 			var uri = this.url;
 			if(this.method.toLowerCase() == "get"){
 				ajax.setMethod("GET");
+			}else{
+				ajax.setMethod(this.method);
 			}
 			ajax.setParameter(formData);
 			ajax.request(uri, funName);
@@ -93,6 +95,7 @@
 				ajax.setMethod("GET");
 				uri = this.url +"?"+this.formData();
 			}else{
+				ajax.setMethod(this.method);
 				ajax.setParameter(this.formData());
 			}
 			ajax.request(uri, funName);
@@ -148,8 +151,8 @@
 			this.ele = this.view.ele;
 			
 			this.form = new Ele.Form();
-			this.form.ele.method = "post";
-			this.method = "post";
+			this.form.ele.method = "POST";
+			this.method = "POST";
 			this.setAction(action);
 			this.view.add(this.form);
 			

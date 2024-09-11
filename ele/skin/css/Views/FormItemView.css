@@ -1,0 +1,105 @@
+.ele_form_item_view{
+	width: auto;
+	height: 34px;
+}
+.ele_form_item_text{
+	height: 34px;
+	line-height: 34px;
+	font-size: 14px;
+	color: #4C4C4C;
+}
+.ele_form_item_tip{
+	width: 224px;
+	height: 34px;
+	display: none;
+}
+.ele_form_item_tip_icon{
+	width: 16px;
+	height: 16px;
+	margin-top: 10px;
+}
+.ele_form_item_tip_text{
+	width: 200px;
+	height: 34px;
+	line-height: 34px;
+	font-size: 12px;
+	color: #FF0086;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+}
+.ele_form_radio{
+	width: 452px;
+	height: 29px;
+	padding-top: 5px;
+}
+.ele_form_checkbox{
+	width: 202px;
+	height: 29px;
+	padding-top: 5px;
+}
+.ele_form_file{
+	width: 202px;
+	height: 64px;
+	position: relative;
+}
+.ele_form_file_value{
+	width: 132px;
+	padding-right: 6px;
+	height: 64px;
+	line-height: 64px;
+	font-size: 12px;
+	color: #CCCCCC;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+}
+.ele_form_file_view{
+	width: 64px;
+	height: 64px;
+}
+.ele_form_file_delete_view{
+	width: 22px;
+	height: 22px;
+	position: absolute;
+	z-index: 1;
+	background-color: #CCCCCC;
+	overflow: hidden;
+	margin-left: -22px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	cursor: pointer;
+	display: none;
+}
+.ele_form_file_delete_icon{
+	width: 16px;
+	height: 16px;
+	margin: 3px;
+}
+.ele_form_file_icon{
+	width: 64px;
+	height: 64px;
+	cursor: pointer;
+}
+.ele_form_file_text{
+	width: 64px;
+	height: 64px;
+	line-height: 64px;
+	cursor: pointer;
+	background-color: #EDEDED;
+	font-size: 24px;
+	color: #CCCCCC;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow : hidden;
+	text-overflow: ellipsis;
+}
+.ele_form_hidden_view{
+	display: none;
+}

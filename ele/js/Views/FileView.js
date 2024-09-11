@@ -69,17 +69,28 @@
 			var item = new Ele.Layout("ele_file_item");
 			var deleteView = new Ele.Layout("ele_file_item_delete_view");
 			var editView = new Ele.Layout("ele_file_item_edit_view");
-			var delIcon = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_remove.png", "ele_file_item_icon");
-			var editIcon = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_edit.png", "ele_file_item_icon");
+			var delIcon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_remove_white.png", "ele_file_item_icon");
+			var editIcon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_edit.png", "ele_file_item_icon");
 			editView.ele.onclick = function(){
 				context._pages.pushView(context._initPageEdit(file));
 			};
 			deleteView.ele.onclick = function(){
+				if(context.confirm == null){
+					var value = file.id;
+					if(context._deleteUrl.url != null && context._deleteUrl.url.trim() != ""){
+						context.fDeleteController.loadData(context._deleteUrl.url+"?file="+value);
+						return ;
+					}
+					if(typeof(context._viewEvent) == "function"){
+						context._viewEvent("fileDelete", {file:value});
+					}
+					return ;
+				}
 				context.confirm.setMsg("确认要删除该文件吗？");
 				context.confirm.setSureHandler(function(){
 					var value = file.id;
-					if(context._deleteUrl != null && context._deleteUrl.trim() != ""){
-						context.fDeleteController.loadData(context._deleteUrl+"?file="+value);
+					if(context._deleteUrl.url != null && context._deleteUrl.url.trim() != ""){
+						context.fDeleteController.loadData(context._deleteUrl.url+"?file="+value);
 						return ;
 					}
 					if(typeof(context._viewEvent) == "function"){
@@ -101,7 +112,7 @@
 			var img = new Ele.Img(file.url, "ele_file_item_img");
 			var name = new Ele.Layout("ele_file_item_text");
 			name.setHtml(file.name);
-			var size = new Ele.Layout("ele_file_item_text");
+			var size = new Ele.Layout("ele_file_item_text ele_file_item_text_info");
 			size.setHtml(file.size);
 			item.add(img);
 			item.add(name);
@@ -135,9 +146,9 @@
 			}
 			this._groupSelect = index;
 			//获取对应的列表数据
-			if(this._fileListUrl != null && this._fileListUrl.trim() != ""){
+			if(this._fileListUrl.url != null && this._fileListUrl.url.trim() != ""){
 				if(this.permission != null && this.permission.length == 7 && this.permission.charAt(3) == '1'){
-					this.fileController.loadData(this._fileListUrl+"?group="+value);
+					this.fileController.loadData(this._fileListUrl.url+"?group="+value);
 				}
 			}
 		};
@@ -145,7 +156,7 @@
 		FileView.prototype._init = function(){
 			this.view = new Ele.Layout("ele_file_view");
 			this.ele = this.view.ele;
-			this.confirm = new Ele.Confirm();
+			this.confirm = null;
 			this.permission = "1111111";
 			this._groupCount = 0;
 			this._groupSelect = -1;
@@ -153,28 +164,45 @@
 			var context = this;
 			if(typeof(args) == "object"){
 				if(typeof(args.groupListUrl) == "string"){
+					this._groupListUrl = {url:args.groupListUrl, method:"GET"};
+				}else{
 					this._groupListUrl = args.groupListUrl;
 				}
 				if(typeof(args.fileListUrl) == "string"){
+					this._fileListUrl = {url:args.fileListUrl, method:"GET"};
+				}else{
 					this._fileListUrl = args.fileListUrl;
 				}
 				if(typeof(args.groupAddUrl) == "string"){
+					this._groupAddUrl = {url:args.groupAddUrl, method:"POST"};
+				}else{
 					this._groupAddUrl = args.groupAddUrl;
 				}
 				if(typeof(args.groupDeleteUrl) == "string"){
+					this._groupDeleteUrl = {url:args.groupDeleteUrl, method:"DELETE"};
+				}else{
 					this._groupDeleteUrl = args.groupDeleteUrl;
 				}
 				if(typeof(args.uploadUrl) == "string"){
+					this._uploadUrl = {url:args.uploadUrl, method:"POST"};
+				}else{
 					this._uploadUrl = args.uploadUrl;
 				}
 				if(typeof(args.updateUrl) == "string"){
+					this._updateUrl = {url:args.updateUrl, method:"PUT"};
+				}else{
 					this._updateUrl = args.updateUrl;
 				}
 				if(typeof(args.deleteUrl) == "string"){
+					this._deleteUrl = {url:args.deleteUrl, method:"DELETE"};
+				}else{
 					this._deleteUrl = args.deleteUrl;
 				}
 				if(typeof(args.permission) == "string"){
 					this.permission = args.permission;
+				}
+				if(typeof(args.confirm) != "undefined"){
+					this.confirm = args.confirm;
 				}
 			}
 			
@@ -194,8 +222,8 @@
 			addView.add(this.tbGroup, {padding:"0 0 0 8px"});
 			var btnAdd = new Ele.Button({text:"添加", onclick:function(){
 				var name = context.tbGroup.getValue();
-				if(context._groupAddUrl != null && context._groupAddUrl.trim() != ""){
-					context.gAddController.loadData(context._groupAddUrl+"?groupName="+name);
+				if(context._groupAddUrl.url != null && context._groupAddUrl.url.trim() != ""){
+					context.gAddController.loadData(context._groupAddUrl.url+"?groupName="+name);
 					return ;
 				}
 				if(typeof(context._viewEvent) == "function"){
@@ -212,7 +240,7 @@
 			this.view.add(contentPanle);
 			
 			//如果绑定了分组数据源 自动加载
-			if(this._groupListUrl != null && this._groupListUrl.trim() != ""){
+			if(typeof(this._groupListUrl) == "object"){
 				this.groupController = new Ele.Controllers.BaseController({
 					loadHandler:function(data){
 						context._onDataResponse("groupList",data);
@@ -223,11 +251,12 @@
 						}
 					}
 				});
+				this.groupController.setMethod(this._groupListUrl.method);
 				if(this.permission != null && this.permission.length == 7 && this.permission.charAt(0) == '1'){
-					this.groupController.loadData(this._groupListUrl);
+					this.groupController.loadData(this._groupListUrl.url);
 				}
 			}
-			if(this._fileListUrl != null && this._fileListUrl.trim() != ""){
+			if(typeof(this._fileListUrl) == "object"){
 				this.fileController = new Ele.Controllers.BaseController({
 					loadHandler:function(data){
 						context._onDataResponse("fileList",data);
@@ -238,8 +267,9 @@
 						}
 					},
 				});
+				this.fileController.setMethod(this._fileListUrl.method);
 			}
-			if(this._groupAddUrl != null && this._groupAddUrl.trim() != ""){
+			if(typeof(this._groupAddUrl) == "object"){
 				this.gAddController = new Ele.Controllers.BaseController({
 					loadHandler:function(data){
 						context._onDataResponse("groupAdd",data);
@@ -250,8 +280,9 @@
 						}
 					},
 				});
+				this.gAddController.setMethod(this._groupAddUrl.method);
 			}
-			if(this._groupDeleteUrl != null && this._groupDeleteUrl.trim() != ""){
+			if(typeof(this._groupDeleteUrl) == "object"){
 				this.gDeleteController = new Ele.Controllers.BaseController({
 					loadHandler:function(data){
 						context._onDataResponse("groupDelete",data);
@@ -262,8 +293,9 @@
 						}
 					},
 				});
+				this.gDeleteController.setMethod(this._groupDeleteUrl.method);
 			}
-			if(this._deleteUrl != null && this._deleteUrl.trim() != ""){
+			if(typeof(this._deleteUrl) == "object"){
 				this.fDeleteController = new Ele.Controllers.BaseController({
 					loadHandler:function(data){
 						context._onDataResponse("fileDelete",data);
@@ -274,6 +306,7 @@
 						}
 					},
 				});
+				this.fDeleteController.setMethod(this._deleteUrl.method);
 			}
 		};
 		
@@ -316,13 +349,13 @@
 			}
 			if(type == "groupDelete"){
 				this._groupSelect = -1;
-				this.groupController.loadData(this._groupListUrl);
+				this.groupController.loadData(this._groupListUrl.url);
 				return ;
 			}
 			if(type == "fileDelete"){
 				var value = this._items[this._groupSelect].ele.value;
-				if(this._fileListUrl != null && this._fileListUrl.trim() != ""){
-					this.fileController.loadData(this._fileListUrl+"?group="+value);
+				if(this._fileListUrl.url != null && this._fileListUrl.url.trim() != ""){
+					this.fileController.loadData(this._fileListUrl.url+"?group="+value);
 				}
 				return ;
 			}
@@ -337,15 +370,28 @@
 			var right = new Ele.Layout("ele_file_content_bar_edge");
 			right.setAlign("right");
 			var context = this;
-			var mn_add = new Ele.IconLabel({text:"添加文件",icon:Ele._pathPrefix+"ele/assets/64/icon_add.png",onclick:function (){
+			var mn_add = new Ele.IconLabel({text:"添加文件",icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_add.png",
+			focusIcon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_add_focus.png",onclick:function (){
 				context._pages.pushView(context._initPageAdd());
 			}});
-			var mn_delete = new Ele.IconLabel({text:"删除该分组",icon:Ele._pathPrefix+"ele/assets/64/icon_remove.png",onclick:function (){
+			var mn_delete = new Ele.IconLabel({text:"删除该分组",icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_remove.png",
+			focusIcon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_remove_focus.png",onclick:function (){
+				if(context.confirm == null){
+					var value = context._items[context._groupSelect].ele.value;
+					if(context._groupDeleteUrl.url != null && context._groupDeleteUrl.url.trim() != ""){
+						context.gDeleteController.loadData(context._groupDeleteUrl.url+"?group="+value);
+						return ;
+					}
+					if(typeof(context._viewEvent) == "function"){
+						context._viewEvent("groupDelete", {group:value});
+					}
+					return ;
+				}
 				context.confirm.setMsg("确认要删除该分组吗？");
 				context.confirm.setSureHandler(function(){
 					var value = context._items[context._groupSelect].ele.value;
-					if(context._groupDeleteUrl != null && context._groupDeleteUrl.trim() != ""){
-						context.gDeleteController.loadData(context._groupDeleteUrl+"?group="+value);
+					if(context._groupDeleteUrl.url != null && context._groupDeleteUrl.url.trim() != ""){
+						context.gDeleteController.loadData(context._groupDeleteUrl.url+"?group="+value);
 						return ;
 					}
 					if(typeof(context._viewEvent) == "function"){
@@ -368,7 +414,7 @@
 			this.listView = new Ele.Layout("ele_file_content_body ele_scrollbar");
 			this.fileView = new Ele.Layout("ele_file_list_view");
 			this.emptyView = new Ele.VLayout("ele_file_empty");
-			var emptyImage = new Ele.Img(Ele._pathPrefix+"ele/assets/empty.svg","ele_file_empty_image");
+			var emptyImage = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/empty.png","ele_file_empty_image");
 			var label = new Ele.Label("暂无数据");
 			this.emptyView.add(emptyImage,{padding:"96px 0 0 0"});
 			this.emptyView.add(label);
@@ -386,10 +432,11 @@
 			var right = new Ele.Layout("ele_file_content_bar_edge");
 			right.setAlign("right");
 			var context = this;
-			var mn_back = new Ele.IconLabel({text:"返回",icon:Ele._pathPrefix+"ele/assets/64/icon_previous.png",onclick:function (isRoot, data){
+			var mn_back = new Ele.IconLabel({text:"返回",icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_previous.png",
+			focusIcon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_previous_focus.png",onclick:function (isRoot, data){
 				context._pages.pullView();
 			}});
-			var mn_position = new Ele.IconLabel({text:"文件列表 / 添加文件",style:"ele_icon_label ele_icon_label_none",icon:Ele._pathPrefix+"ele/assets/64/icon_position.png"});
+			var mn_position = new Ele.IconLabel({text:"文件列表 / 添加文件",style:"ele_icon_label ele_icon_label_none",icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_position.png"});
 			right.add(mn_position);
 			left.add(mn_back);
 			barView.add(left, {width:"40%"});
@@ -418,7 +465,7 @@
 			var btnView = new Ele.HLayout("ele_file_form_button_panel");
 			var reset = new Ele.Button({
 				text:"重置",
-				icon:Ele._pathPrefix+"ele/assets/64/icon_reset.png",
+				icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_reset.png",
 				onclick:function(){
 					formView.reset();
 					if(typeof(context._viewEvent) == "function"){
@@ -428,13 +475,14 @@
 			});
 			var submit = new Ele.Button({
 				text:"提交",
-				icon:Ele._pathPrefix+"ele/assets/64/icon_submit.png",
+				icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_submit.png",
 				onclick:function(){
 					if(!formView.validate()){
 						return ;
 					}
-					if(context._uploadUrl != null && context._uploadUrl.trim() != ""){
-						formView.setAction(context._uploadUrl+"?group="+context._items[context._groupSelect].ele.value);
+					if(context._uploadUrl.url != null && context._uploadUrl.url.trim() != ""){
+						formView.setAction(context._uploadUrl.url+"?group="+context._items[context._groupSelect].ele.value);
+						formView.setMethod(context._uploadUrl.method);
 						formView.submitFormAjax(function(res){
 							var result = JSON.parse(res);
 							if(result.resCode != 1000 && context._errorEvent != null){
@@ -447,8 +495,8 @@
 							}
 							context._pages.pullView();
 							var value = context._items[context._groupSelect].ele.value;
-							if(context._fileListUrl != null && context._fileListUrl.trim() != ""){
-								context.fileController.loadData(context._fileListUrl+"?group="+value);
+							if(context._fileListUrl.url != null && context._fileListUrl.url.trim() != ""){
+								context.fileController.loadData(context._fileListUrl.url+"?group="+value);
 							}
 						});
 						return ;
@@ -477,10 +525,11 @@
 			var right = new Ele.Layout("ele_file_content_bar_edge");
 			right.setAlign("right");
 			var context = this;
-			var mn_back = new Ele.IconLabel({text:"返回",icon:Ele._pathPrefix+"ele/assets/64/icon_previous.png",onclick:function (isRoot, data){
+			var mn_back = new Ele.IconLabel({text:"返回",icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_previous.png",
+			focusIcon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_previous_focus.png",onclick:function (isRoot, data){
 				context._pages.pullView();
 			}});
-			var mn_position = new Ele.IconLabel({text:"文件列表 / 修改文件",style:"ele_icon_label ele_icon_label_none",icon:Ele._pathPrefix+"ele/assets/64/icon_position.png"});
+			var mn_position = new Ele.IconLabel({text:"文件列表 / 修改文件",style:"ele_icon_label ele_icon_label_none",icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_position.png"});
 			right.add(mn_position);
 			left.add(mn_back);
 			barView.add(left, {width:"40%"});
@@ -510,7 +559,7 @@
 			var btnView = new Ele.HLayout("ele_file_form_button_panel");
 			var reset = new Ele.Button({
 				text:"重置",
-				icon:Ele._pathPrefix+"ele/assets/64/icon_reset.png",
+				icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_reset.png",
 				onclick:function(){
 					formView.reset();
 					if(typeof(context._viewEvent) == "function"){
@@ -520,14 +569,15 @@
 			});
 			var submit = new Ele.Button({
 				text:"提交",
-				icon:Ele._pathPrefix+"ele/assets/64/icon_submit.png",
+				icon:Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_submit.png",
 				onclick:function(){
 					if(!formView.validate()){
 						return ;
 					}
 					
-					if(context._updateUrl != null && context._updateUrl.trim() != ""){
-						formView.setAction(context._updateUrl);
+					if(context._updateUrl.url != null && context._updateUrl.url.trim() != ""){
+						formView.setAction(context._updateUrl.url);
+						formView.setMethod(context._updateUrl.method);
 						formView.submitAjax(function(res){
 							var result = JSON.parse(res);
 							if(result.resCode != 1000 && context._errorEvent != null){
@@ -540,8 +590,8 @@
 							}
 							context._pages.pullView();
 							var value = context._items[context._groupSelect].ele.value;
-							if(context._fileListUrl != null && context._fileListUrl.trim() != ""){
-								context.fileController.loadData(context._fileListUrl+"?group="+value);
+							if(context._fileListUrl.url != null && context._fileListUrl.url.trim() != ""){
+								context.fileController.loadData(context._fileListUrl.url+"?group="+value);
 							}
 						});
 						return ;

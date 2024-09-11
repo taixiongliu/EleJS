@@ -200,7 +200,7 @@
 			}
 			contentView.add(this.edit);
 			var iconView = new Ele.Layout("ele_datebox_icon_view");
-			var icon = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_date.png","ele_datebox_icon");
+			var icon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/96/icon_date.png","ele_datebox_icon");
 			iconView.add(icon);
 			contentView.add(iconView);
 			
@@ -246,21 +246,21 @@
 			titleCenter.setAlign("center");
 			var titleRight = new Ele.Layout("ele_dateview_title_right_view");
 			titleRight.setAlign("center");
-			var iconLeft = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_left.png", "ele_dateview_title_icon ele_ml20");
+			var iconLeft = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/96/icon_left.png", "ele_dateview_title_icon ele_ml20");
 			iconLeft.ele.onclick = function(){
 				context.previousMonth();
 			};
-			var icon2Left = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_2_left.png", "ele_dateview_title_icon");
+			var icon2Left = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/96/icon_2_left.png", "ele_dateview_title_icon");
 			icon2Left.ele.onclick = function(){
 				context.previousYear();
 			};
 			this.dateText = new Ele.Label(this._year+"-"+this._month, "ele_dateview_date_txt");
-			var iconRight = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_right.png", "ele_dateview_title_icon");
+			var iconRight = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/96/icon_right.png", "ele_dateview_title_icon");
 			iconRight.ele.onclick = function(){
 				context.nextMonth();
 			};
 			
-			var icon2Right = new Ele.Img(Ele._pathPrefix+"ele/assets/24/icon_2_right.png", "ele_dateview_title_icon ele_ml20");
+			var icon2Right = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/96/icon_2_right.png", "ele_dateview_title_icon ele_ml20");
 			icon2Right.ele.onclick = function(){
 				context.nextYear();
 			};

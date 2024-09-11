@@ -6,15 +6,12 @@
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta name="Description" content=""/>
 		<meta name="Keywords" content=""/>
-		<title>管理后台</title>
-		<script src="../../ele/ele.js" type="text/javascript" charset="utf-8"></script>
-		<script src="main.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="../../ele/ele.css"/>
-		<link rel="stylesheet" type="text/css" href="main.css"/>
+		<title>示例 - 首页</title>
+		<script src="../../ele/ele-all.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="template/all.js" type="text/javascript" charset="utf-8"></script>
 		
 		<!-- 主布局样式导入 -->
-		<link rel="stylesheet" type="text/css" href="page/index.css"/>
-		<script src="page/index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="views/index.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body id="main">
 		
@@ -24,17 +21,26 @@
 	window.onload = init;
 	
 	function init(){
-		
-		Ele.initPath("EleJs");
+		var skin = localStorage.getItem("skin");
+		if(skin == null){
+			skin = "skin";
+			//skin = "skin-black";
+		}
+		Ele.initSkin(skin);
+		Ele.importCSS(skin+"/style.css");
+		Ele.initPath("EleJS");
 		//动态导入JS
-		Ele.importJS("views/left.js");
-		Ele.importJS("views/top.js");
-		Ele.importJS("views/bottom.js");
+		// Ele.importJS("template/left.js");
+		// Ele.importJS("template/top.js");
+		// Ele.importJS("template/bottom.js");
+		// Ele.importJS("template/main.js");
 		Ele.initView("main");
 		
 		Ele.load(function(rootView){
 			console.log("ele .load ...");
-			new Index(rootView);
+			var mainView = new MainView(rootView);
+			//new Index(rootView);
+			program.viewLoad(mainView);
 		});
 	}
 </script>

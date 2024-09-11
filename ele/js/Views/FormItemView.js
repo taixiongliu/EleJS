@@ -60,7 +60,7 @@
 			}
 			this.label = new Ele.Label(text, "ele_form_item_text");
 			this.tip = new Ele.HLayout("ele_form_item_tip");
-			var errorIcon = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_error.png", "ele_form_item_tip_icon");
+			var errorIcon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_error.png", "ele_form_item_tip_icon");
 			this.tipText = new Ele.Label("","ele_form_item_tip_text"); 
 			this.tip.add(errorIcon);
 			this.tip.add(this.tipText, {padding:"0 0 0 8px"});
@@ -170,6 +170,7 @@
 		
 		DateBoxItem.prototype.reset = function(){
 			this.clearMessage();
+			this.dateBox.clearErrorStyle();
 			this.dateBox.reset();
 		};
 		DateBoxItem.prototype.readOnly = function(readOnly){
@@ -268,6 +269,20 @@
 			this.hditem.setValue("");
 		};
 		
+		CheckBoxItem.prototype.getSelectTextString = function(){
+			var arr = this.checkGroup.getSelectedText();
+			var res = "";
+			if(arr.length > 0){
+				for(var i = 0; i < arr.length; i ++){
+					res += arr[i];
+					if(i < arr.length - 1){
+						res += ","
+					}
+				}
+			}
+			return res;
+		};
+		
 		CheckBoxItem.prototype.getValueString = function(){
 			var arr = this.checkGroup.getSelectedValue();
 			var value = "";
@@ -278,6 +293,16 @@
 				}
 			}
 			return value;
+		};
+		
+		CheckBoxItem.prototype.setValueString = function(value){
+			if(typeof(value) != "string" || value.trim() == ""){
+				return ;
+			}
+			var arr = value.split(",");
+			for(var i in arr){
+				this.setValue(arr[i]);
+			}
 		};
 		
 		CheckBoxItem.prototype.getValues = function(){
@@ -439,11 +464,11 @@
 			return this.name+"="+this.getValue();
 		};
 		
-		SelectBoxItem.prototype.loadDataSourcesUrl = function(url, funError){
-			this.selectBox.loadDataSourcesUrl(url, funError);
+		SelectBoxItem.prototype.loadDataSourcesUrl = function(url, method, funError){
+			this.selectBox.loadDataSourcesUrl(url, method, funError);
 		};
-		SelectBoxItem.prototype.loadFilterDataSourcesUrl = function(url, keyValue,funError){
-			this.selectBox.loadFilterDataSourcesUrl(url, keyValue, funError);
+		SelectBoxItem.prototype.loadFilterDataSourcesUrl = function(url, keyValue, method, funError){
+			this.selectBox.loadFilterDataSourcesUrl(url, keyValue, method, funError);
 		};
 		
 		SelectBoxItem.prototype.setValue = function(value){
@@ -606,7 +631,7 @@
 			this.valueView.setHtml("请选择文件...");
 			this.value = "";
 			this.fileView.clear();
-			var icon = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_file_add.png", "ele_form_file_icon");
+			var icon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_file_add.png", "ele_form_file_icon");
 			this.fileView.add(icon);
 			this.hditem.setValue("");
 		};
@@ -712,13 +737,13 @@
 			this.valueView.setHtml("请选择文件...");
 			this.value = "";
 			this.fileView = new Ele.Layout("ele_form_file_view");
-			var icon = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_file_add.png", "ele_form_file_icon");
+			var icon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_file_add.png", "ele_form_file_icon");
 			this.fileView.add(icon);
 			this.fileView.ele.onclick = function(){
 				context._onFile();
 			};
 			this.deleteView = new Ele.Layout("ele_form_file_delete_view");
-			var delIcon = new Ele.Img(Ele._pathPrefix+"ele/assets/64/icon_delete.png", "ele_form_file_delete_icon");
+			var delIcon = new Ele.Img(Ele._pathPrefix+"ele/"+Ele._skin+"/assets/64/icon_delete.png", "ele_form_file_delete_icon");
 			this.deleteView.add(delIcon);
 			this.deleteView.ele.onclick = function(){
 				context._onDelete();
@@ -857,6 +882,7 @@
 		
 		TextAreaItem.prototype.reset = function(){
 			this.clearMessage();
+			this.item.clearErrorStyle();
 			this.setValue("");
 		};
 		
@@ -938,6 +964,7 @@
 		
 		TextBoxItem.prototype.reset = function(){
 			this.clearMessage();
+			this.item.clearErrorStyle();
 			this.setValue("");
 		};
 		
