@@ -480,6 +480,10 @@
 			this.selectBox.reset();
 			this.hditem.setValue("");
 		};
+		SelectBoxItem.prototype.clear = function(){
+			this.reset();
+			this.selectBox.setOptions([]);
+		};
 		SelectBoxItem.prototype.readOnly = function(readOnly){
 			this.selectBox.setDisable(readOnly);
 		};

@@ -74,6 +74,7 @@
 			this.optionList.clear();
 			this._options = [];
 			this._selectIndex = -1;
+			this.count = 0;
 			this.edit.setValue("");
 			var context = this;
 			var empty = new Option("--请选择--", -1);

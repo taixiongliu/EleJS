@@ -2992,6 +2992,7 @@ var Ele = window.Ele = Ele || {
 			this.optionList.clear();
 			this._options = [];
 			this._selectIndex = -1;
+			this.count = 0;
 			this.edit.setValue("");
 			var context = this;
 			var empty = new Option("--请选择--", -1);
@@ -8096,6 +8097,10 @@ var Ele = window.Ele = Ele || {
 			this.clearMessage();
 			this.selectBox.reset();
 			this.hditem.setValue("");
+		};
+		SelectBoxItem.prototype.clear = function(){
+			this.reset();
+			this.selectBox.setOptions([]);
 		};
 		SelectBoxItem.prototype.readOnly = function(readOnly){
 			this.selectBox.setDisable(readOnly);
